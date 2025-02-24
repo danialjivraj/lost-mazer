@@ -1,0 +1,234 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[RequireComponent(typeof(CharacterController))]
+public class PlayerController : MonoBehaviour
+{
+    public Camera playerCam;
+
+    public float walkSpeed = 3f;
+    public float runSpeed = 5f;
+    public float crouchSpeed = 1.5f;
+    public float jumpPower = 6f;
+    public float crouchJumpPower = 3f;
+    public float gravity = 10f;
+
+    public float lookSpeed = 2f;
+    public float lookXLimit = 75f;
+    public float cameraRotationSmooth = 5f;
+
+    public AudioClip[] woodFootstepSounds;
+    public AudioClip[] tileFootstepSounds;
+    public AudioClip[] carpetFootstepSounds;
+    public Transform footstepAudioPosition;
+    public AudioSource audioSource;
+
+    private bool isWalking = false;
+    private bool isFootstepCoroutineRunning = false;
+    private AudioClip[] currentFootstepSounds;
+
+    Vector3 moveDirection = Vector3.zero;
+    float rotationX = 0;
+    float rotationY = 0;
+
+    public int ZoomFOV = 35;
+    public int initialFOV;
+    public float cameraZoomSmooth = 1;
+    private bool isZoomed = false;
+
+    private bool isCrouching = false;
+    private float standingHeight = 2f;
+    private float crouchHeight = 1f;
+    private float currentHeight;
+    private float crouchTransitionSpeed = 5f;
+
+    private bool isPeekingLeft = false;
+    private bool isPeekingRight = false;
+    private Vector3 normalCameraPosition;
+    private Vector3 peekLeftPosition = new Vector3(-0.7f, 0, 0);
+    private Vector3 peekRightPosition = new Vector3(0.7f, 0, 0);
+    private float peekTiltAngle = 30f;
+    private Vector3 currentCameraVelocity;
+    private Quaternion currentRotationVelocity;
+
+    private bool canMove = true;
+
+    CharacterController characterController;
+    private LockerInteraction lockerInteraction;
+
+    void Start()
+    {
+        characterController = GetComponent<CharacterController>();
+        currentHeight = standingHeight;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        normalCameraPosition = playerCam.transform.localPosition;
+        currentFootstepSounds = woodFootstepSounds;
+
+        lockerInteraction = FindObjectOfType<LockerInteraction>();
+
+        if (lockerInteraction == null)
+        {
+            Debug.LogError("LockerInteraction script not found");
+        }
+    }
+
+    void Update()
+    {
+        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+        {
+            Debug.Log("hiding!");
+        }
+
+        Vector3 forward = transform.TransformDirection(Vector3.forward);
+        Vector3 right = transform.TransformDirection(Vector3.right);
+
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && !isCrouching;
+        isCrouching = Input.GetKey(KeyCode.LeftControl);
+
+        float currentSpeed = isCrouching ? crouchSpeed : (isRunning ? runSpeed : walkSpeed);
+
+        float curSpeedX = canMove ? currentSpeed * Input.GetAxis("Vertical") : 0;
+        float curSpeedY = canMove ? currentSpeed * Input.GetAxis("Horizontal") : 0;
+        float movementDirectionY = moveDirection.y;
+        moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+        if (Input.GetButtonDown("Jump") && canMove && characterController.isGrounded)
+        {
+            moveDirection.y = isCrouching ? crouchJumpPower : jumpPower;
+        }
+        else
+        {
+            moveDirection.y = movementDirectionY;
+        }
+
+        if (!characterController.isGrounded)
+        {
+            moveDirection.y -= gravity * Time.deltaTime;
+        }
+
+        characterController.Move(moveDirection * Time.deltaTime);
+
+        bool hasHorizontalInput = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f;
+        bool hasVerticalInput = Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
+        bool isGrounded = characterController.isGrounded;
+
+        if (isGrounded && (hasHorizontalInput || hasVerticalInput) && !isCrouching)
+        {
+            if (!isWalking)
+            {
+                isWalking = true;
+                if (!isFootstepCoroutineRunning)
+                {
+                    StartCoroutine(PlayFootstepSounds());
+                }
+            }
+        }
+        else
+        {
+            isWalking = false;
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+
+        float targetHeight = isCrouching ? crouchHeight : standingHeight;
+        currentHeight = Mathf.SmoothDamp(currentHeight, targetHeight, ref currentCameraVelocity.y, 0.1f);
+        characterController.height = currentHeight;
+
+        if (canMove)
+        {
+            rotationX -= Input.GetAxis("Mouse Y") * lookSpeed;
+            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+
+            rotationY += Input.GetAxis("Mouse X") * lookSpeed;
+            transform.rotation = Quaternion.Euler(0, rotationY, 0);
+        }
+
+        isPeekingLeft = Input.GetKey(KeyCode.Q);
+        isPeekingRight = Input.GetKey(KeyCode.E);
+
+        Vector3 targetPosition = normalCameraPosition;
+        float targetTilt = 0f;
+
+        Vector3 leftPeekDirection = transform.right * -0.7f;
+        Vector3 rightPeekDirection = transform.right * 0.7f;
+
+        bool canPeekLeft = !Physics.Raycast(transform.position, leftPeekDirection, 0.7f);
+        bool canPeekRight = !Physics.Raycast(transform.position, rightPeekDirection, 0.7f);
+
+        if (isPeekingLeft && canPeekLeft)
+        {
+            targetPosition += peekLeftPosition;
+            targetTilt = peekTiltAngle;
+        }
+        else if (isPeekingRight && canPeekRight)
+        {
+            targetPosition += peekRightPosition;
+            targetTilt = -peekTiltAngle;
+        }
+
+        playerCam.transform.localPosition = Vector3.SmoothDamp(playerCam.transform.localPosition, targetPosition, ref currentCameraVelocity, 0.1f);
+        playerCam.transform.localRotation = Quaternion.Lerp(playerCam.transform.localRotation, Quaternion.Euler(rotationX, 0, targetTilt), Time.deltaTime * 10f);
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            isZoomed = true;
+        }
+
+        if (Input.GetButtonUp("Fire2"))
+        {
+            isZoomed = false;
+        }
+
+        playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, isZoomed ? ZoomFOV : initialFOV, Time.deltaTime * cameraZoomSmooth);
+    }
+
+    IEnumerator PlayFootstepSounds()
+    {
+        isFootstepCoroutineRunning = true;
+        
+        while (isWalking)
+        {
+            if (currentFootstepSounds.Length > 0)
+            {
+                bool running = Input.GetKey(KeyCode.LeftShift) && !isCrouching;
+
+                int randomIndex = Random.Range(0, currentFootstepSounds.Length);
+                audioSource.transform.position = footstepAudioPosition.position;
+                audioSource.clip = currentFootstepSounds[randomIndex];
+                audioSource.pitch = running ? 1.5f : 1f; // speed for when running vs walking
+                audioSource.volume = running ? 1.2f : 0.5f; // volume for when running vs walking
+                audioSource.Play();
+
+                // delay between each step
+                yield return new WaitForSeconds(running ? 0.3f : 0.5f);
+            }
+            else
+            {
+                yield break;
+            }
+        }
+
+        isFootstepCoroutineRunning = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Wood"))
+        {
+            currentFootstepSounds = woodFootstepSounds;
+        }
+        else if (other.CompareTag("Tile"))
+        {
+            currentFootstepSounds = tileFootstepSounds;
+        }
+        else if (other.CompareTag("Carpet"))
+        {
+            currentFootstepSounds = carpetFootstepSounds;
+        }
+    }
+}
