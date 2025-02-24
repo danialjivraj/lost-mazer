@@ -31,7 +31,6 @@ public class ReadNotes : MonoBehaviour
         if (hud != null) hud.SetActive(true);
         if (inv != null) inv.SetActive(true);
         if (handUI != null) handUI.SetActive(false);
-
         if (readableNoteUI != null) readableNoteUI.SetActive(false);
 
         inReach = false;
@@ -57,14 +56,17 @@ public class ReadNotes : MonoBehaviour
 
     void Update()
     {
-        if (inReach && Input.GetButtonDown("Interact"))
+        if (Time.timeScale != 0)
         {
-            OpenNote();
-        }
+            if (inReach && Input.GetButtonDown("Interact"))
+            {
+                OpenNote();
+            }
 
-        if (noteUI.activeSelf && Input.GetKeyDown(KeyCode.E))
-        {
-            ToggleReadableNote();
+            if (noteUI.activeSelf && Input.GetKeyDown(KeyCode.E))
+            {
+                ToggleReadableNote();
+            }
         }
     }
 

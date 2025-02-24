@@ -38,8 +38,8 @@ public class PlayerController : MonoBehaviour
     private bool isZoomed = false;
 
     private bool isCrouching = false;
-    private float standingHeight = 2f;
-    private float crouchHeight = 1f;
+    private float standingHeight = 2.5f;
+    private float crouchHeight = 1.5f;
     private float currentHeight;
     private float crouchTransitionSpeed = 5f;
 
@@ -222,13 +222,13 @@ public class PlayerController : MonoBehaviour
         {
             currentFootstepSounds = woodFootstepSounds;
         }
-        else if (other.CompareTag("Tile"))
-        {
-            currentFootstepSounds = tileFootstepSounds;
-        }
-        else if (other.CompareTag("Carpet"))
-        {
-            currentFootstepSounds = carpetFootstepSounds;
-        }
+        //else if (other.CompareTag("Tile"))
+        //{
+        //    currentFootstepSounds = tileFootstepSounds;
+        //}
+        //else if (other.CompareTag("Carpet"))
+        //{
+        //    currentFootstepSounds = carpetFootstepSounds;
+        //}
     }
 }
