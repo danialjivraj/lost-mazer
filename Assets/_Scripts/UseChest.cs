@@ -83,7 +83,6 @@ public class UseChest : MonoBehaviour
             OB.GetComponent<BoxCollider>().enabled = false;
         }
 
-        // set the chest as open
         isChestOpen = true;
 
         if (pickUpNotification != null)

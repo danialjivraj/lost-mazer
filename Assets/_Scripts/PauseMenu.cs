@@ -51,9 +51,14 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        AudioListener.pause = true;
-        isPaused = true;
+        
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audio in allAudioSources)
+        {
+            audio.Pause();
+        }
 
+        isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -69,7 +74,13 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
-        AudioListener.pause = false;
+
+        AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
+        foreach (AudioSource audio in allAudioSources)
+        {
+            audio.UnPause();
+        }
+
         isPaused = false;
 
         ReadNotes noteScript = FindObjectOfType<ReadNotes>();
