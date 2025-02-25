@@ -51,6 +51,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
+        AudioListener.pause = true;
         isPaused = true;
 
         Cursor.lockState = CursorLockMode.None;
@@ -68,6 +69,7 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
+        AudioListener.pause = false;
         isPaused = false;
 
         ReadNotes noteScript = FindObjectOfType<ReadNotes>();

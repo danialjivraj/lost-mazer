@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     private bool isZoomed = false;
 
     private bool isCrouching = false;
-    private float standingHeight = 2.5f;
+    private float standingHeight = 2.5f; // needs to be same as the capsule height
     private float crouchHeight = 1.5f;
     private float currentHeight;
     private float crouchTransitionSpeed = 5f;
@@ -213,6 +213,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        isFootstepCoroutineRunning = false;
+    }
+
+    public void StopFootsteps()
+    {
+        isWalking = false;
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+        StopCoroutine(PlayFootstepSounds());
         isFootstepCoroutineRunning = false;
     }
 

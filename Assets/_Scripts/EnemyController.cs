@@ -5,14 +5,17 @@ using System.Collections;
 public class EnemyController : MonoBehaviour
 {
     public Transform[] waypoints;
-    public float idleTime = 2f;
-    public float walkSpeed = 2f;
-    public float chaseSpeed = 4f;
-    public float sightDistance = 10f;
+    public float idleTime = 4f;
+    public float walkSpeed = 3.5f;
+    public float chaseSpeed = 6.5f;
+    public float sightDistance = 30f;
+    public float attackRange = 2f;
+    public float attackCooldown = 1.5f;
+    public int attackDamage = 20;
+    private float nextAttackTime = 0f;
     public AudioClip idleSound;
     public AudioClip walkingSound;
     public AudioClip chasingSound;
-
     private int currentWaypointIndex = 0;
     private NavMeshAgent agent;
     private Animator animator;
@@ -23,23 +26,16 @@ public class EnemyController : MonoBehaviour
     private enum EnemyState { Idle, Walk, Chase, Attack }
     private EnemyState currentState = EnemyState.Idle;
 
-    private bool isChasingAnimation = false;
-
-    public float attackRange = 2f;
-    public float attackCooldown = 1.5f;
-    public int attackDamage = 20;
-    private bool isAttacking = false;
-    private float nextAttackTime = 0f;
-
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = true;
+
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         audioSource = GetComponent<AudioSource>();
 
-        agent.angularSpeed = 360f;
-        agent.acceleration = 8f;
         agent.stoppingDistance = 1.5f;
 
         SetDestinationToWaypoint();
@@ -88,15 +84,6 @@ public class EnemyController : MonoBehaviour
                 animator.SetBool("IsAttacking", false);
                 PlaySound(chasingSound);
 
-                Vector3 directionToPlayer = (player.position - transform.position).normalized;
-                float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-
-                if (angleToPlayer > 10f)
-                {
-                    Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 8f);
-                }
-
                 if (Vector3.Distance(transform.position, player.position) <= attackRange && Time.time >= nextAttackTime)
                 {
                     currentState = EnemyState.Attack;
@@ -119,7 +106,6 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator AttackPlayer()
     {
-        isAttacking = true;
         currentState = EnemyState.Attack;
         transform.LookAt(player.position);
         animator.SetBool("IsAttacking", true);
@@ -145,7 +131,6 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(1f); // Stop time
 
         // Resume Chasing
-        isAttacking = false;
         animator.SetBool("IsAttacking", false);
         currentState = EnemyState.Chase;
 

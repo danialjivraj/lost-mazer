@@ -13,6 +13,7 @@ public class ReadNotes : MonoBehaviour
     public GameObject readableNoteUI;
 
     public AudioSource pickUpSound;
+    public AudioSource closeSound;
 
     private bool inReach;
     private PlayerController playerController;
@@ -58,7 +59,7 @@ public class ReadNotes : MonoBehaviour
     {
         if (Time.timeScale != 0)
         {
-            if (inReach && Input.GetButtonDown("Interact"))
+            if (inReach && !IsReadingNote && Input.GetButtonDown("Interact"))
             {
                 OpenNote();
             }
@@ -84,6 +85,10 @@ public class ReadNotes : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
+
+        playerController.StopFootsteps();
+        playerController.enabled = false;
+
         IsReadingNote = true;
     }
 
@@ -98,6 +103,9 @@ public class ReadNotes : MonoBehaviour
 
     public void ExitButton()
     {
+        if (closeSound != null)
+            closeSound.Play();
+
         if (noteUI != null) noteUI.SetActive(false);
         if (readableNoteUI != null) readableNoteUI.SetActive(false);
 
