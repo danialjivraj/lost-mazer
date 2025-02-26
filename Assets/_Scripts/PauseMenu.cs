@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject audioSettingsMenu;
+    public GameObject buttons;
     public GameObject crosshair;
     public bool isPaused;
     public MonoBehaviour player;
@@ -16,6 +18,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         pauseMenu.SetActive(false);
+        audioSettingsMenu.SetActive(false);
         if (crosshair != null) crosshair.SetActive(true);
         LockCursor();
     }
@@ -26,7 +29,14 @@ public class PauseMenu : MonoBehaviour
         {
             if (isPaused)
             {
-                ResumeGame();
+                if (audioSettingsMenu.activeSelf)
+                {
+                    CloseAudioSettings();
+                }
+                else
+                {
+                    ResumeGame();
+                }
             }
             else
             {
@@ -73,6 +83,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
+        audioSettingsMenu.SetActive(false);
         Time.timeScale = 1f;
 
         AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
@@ -131,5 +142,19 @@ public class PauseMenu : MonoBehaviour
     public void OnCrosshairDragEnd()
     {
         isDragging = false;
+    }
+
+    public void OpenAudioSettings()
+    {
+        Debug.Log("Opening Audio Settings");
+        buttons.SetActive(false);
+        audioSettingsMenu.SetActive(true);
+    }
+
+    public void CloseAudioSettings()
+    {
+        Debug.Log("Closing Audio Settings");
+        audioSettingsMenu.SetActive(false);
+        buttons.SetActive(true);
     }
 }
