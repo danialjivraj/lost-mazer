@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] carpetFootstepSounds;
     public Transform footstepAudioPosition;
     public AudioSource audioSource;
+    public AudioMixerGroup footstepMixerGroup;
 
     private bool isWalking = false;
     private bool isFootstepCoroutineRunning = false;
@@ -72,6 +74,11 @@ public class PlayerController : MonoBehaviour
         if (lockerInteraction == null)
         {
             Debug.LogError("LockerInteraction script not found");
+        }
+
+        if (audioSource != null && footstepMixerGroup != null)
+        {
+            audioSource.outputAudioMixerGroup = footstepMixerGroup;
         }
     }
 

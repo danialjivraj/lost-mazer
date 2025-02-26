@@ -5,10 +5,10 @@ using UnityEngine;
 public class UseChest : MonoBehaviour
 {
     private GameObject OB;
-    public GameObject handUI;
+    public HandUIHandler handUIHandler;
     public GameObject[] objectsToActivate;
 
-    public AudioClip chestOpenSound;
+    public AudioSource chestOpenSound;
     public float soundVolume = 1.0f;
 
     private bool inReach;
@@ -19,12 +19,18 @@ public class UseChest : MonoBehaviour
     {
         OB = this.gameObject;
 
-        if (handUI != null)
-            handUI.SetActive(false);
-
         foreach (GameObject obj in objectsToActivate)
         {
             obj.SetActive(false);
+        }
+
+        if (chestOpenSound != null)
+        {
+            chestOpenSound.volume = soundVolume;
+        }
+        else
+        {
+            Debug.LogWarning("Chest open sound AudioSource is not assigned.");
         }
     }
 
@@ -33,8 +39,8 @@ public class UseChest : MonoBehaviour
         if (other.CompareTag("Reach") && !isChestOpen)
         {
             inReach = true;
-            if (handUI != null)
-                handUI.SetActive(true);
+            if (handUIHandler != null)
+                handUIHandler.ShowHandUI();
         }
     }
 
@@ -43,13 +49,16 @@ public class UseChest : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = false;
-            if (handUI != null)
-                handUI.SetActive(false);
+            if (handUIHandler != null)
+                handUIHandler.HideHandUI();
         }
     }
 
     void Update()
     {
+        if (handUIHandler != null && handUIHandler.IsGamePaused())
+            return;
+
         if (inReach && Input.GetButtonDown("Interact") && !isChestOpen)
         {
             OpenChest();
@@ -58,21 +67,23 @@ public class UseChest : MonoBehaviour
 
     void OpenChest()
     {
-        if (chestOpenSound != null)
+        if (chestOpenSound != null && !chestOpenSound.isPlaying)
         {
-            AudioSource.PlayClipAtPoint(chestOpenSound, transform.position, soundVolume);
+            chestOpenSound.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Chest open sound AudioSource is not assigned or is already playing.");
         }
 
-        if (handUI != null)
-            handUI.SetActive(false);
+        if (handUIHandler != null)
+            handUIHandler.HideHandUI();
 
-        // activate all objects in the array
         foreach (GameObject obj in objectsToActivate)
         {
             obj.SetActive(true);
         }
 
-        // animation
         if (OB.GetComponent<Animator>() != null)
         {
             OB.GetComponent<Animator>().SetBool("open", true);

@@ -9,7 +9,7 @@ public class ReadNotes : MonoBehaviour
     public GameObject noteUI;
     public GameObject hud;
     public GameObject inv;
-    public GameObject handUI;
+    public HandUIHandler handUIHandler;
     public GameObject readableNoteUI;
 
     public AudioSource pickUpSound;
@@ -31,7 +31,6 @@ public class ReadNotes : MonoBehaviour
         if (noteUI != null) noteUI.SetActive(false);
         if (hud != null) hud.SetActive(true);
         if (inv != null) inv.SetActive(true);
-        if (handUI != null) handUI.SetActive(false);
         if (readableNoteUI != null) readableNoteUI.SetActive(false);
 
         inReach = false;
@@ -42,7 +41,7 @@ public class ReadNotes : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = true;
-            if (handUI != null) handUI.SetActive(true);
+            if (handUIHandler != null) handUIHandler.ShowHandUI();
         }
     }
 
@@ -51,12 +50,15 @@ public class ReadNotes : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = false;
-            if (handUI != null) handUI.SetActive(false);
+            if (handUIHandler != null) handUIHandler.HideHandUI();
         }
     }
 
     void Update()
     {
+        if (handUIHandler != null && handUIHandler.IsGamePaused())
+            return;
+
         if (Time.timeScale != 0)
         {
             if (inReach && !IsReadingNote && Input.GetButtonDown("Interact"))
@@ -77,7 +79,7 @@ public class ReadNotes : MonoBehaviour
         if (pickUpSound != null) pickUpSound.Play();
         if (hud != null) hud.SetActive(false);
         if (inv != null) inv.SetActive(false);
-        if (handUI != null) handUI.SetActive(false);
+        if (handUIHandler != null) handUIHandler.HideHandUI();
 
         if (playerController != null)
         {

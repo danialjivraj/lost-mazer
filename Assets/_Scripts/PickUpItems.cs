@@ -3,25 +3,31 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
-    public GameObject handUI;
+    public HandUIHandler handUIHandler;
     public GameObject objToActivate;
     public bool destroyAfterPickup = true;
     public float destroyDelay = 0.01f;
 
-    public AudioClip pickupSound;
+    public AudioSource pickupSound;
     public float soundVolume = 1.0f;
-    public bool playGlobalSound = true;
+    private bool playGlobalSound = true;
     public PickUpNotification pickUpNotification;
 
     private bool inReach;
 
     void Start()
     {
-        if (handUI != null)
-            handUI.SetActive(false);
-
         if (objToActivate != null)
             objToActivate.SetActive(false);
+
+        if (pickupSound != null)
+        {
+            pickupSound.volume = soundVolume;
+        }
+        else
+        {
+            Debug.LogWarning("Pickup sound AudioSource is not assigned.");
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -29,8 +35,8 @@ public class PickUpItems : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = true;
-            if (handUI != null)
-                handUI.SetActive(true);
+            if (handUIHandler != null)
+                handUIHandler.ShowHandUI();
         }
     }
 
@@ -39,13 +45,16 @@ public class PickUpItems : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = false;
-            if (handUI != null)
-                handUI.SetActive(false);
+            if (handUIHandler != null)
+                handUIHandler.HideHandUI();
         }
     }
 
     void Update()
     {
+        if (handUIHandler != null && handUIHandler.IsGamePaused())
+            return;
+
         if (inReach && Input.GetButtonDown("Interact"))
         {
             PickUpItem();
@@ -54,24 +63,30 @@ public class PickUpItems : MonoBehaviour
 
     void PickUpItem()
     {
-        if (pickupSound != null)
+        if (pickupSound != null && !pickupSound.isPlaying)
         {
             if (playGlobalSound)
             {
-                AudioSource globalAudioSource = new GameObject("GlobalAudio").AddComponent<AudioSource>();
-                globalAudioSource.clip = pickupSound;
+                GameObject globalAudioObject = new GameObject("GlobalAudio");
+                AudioSource globalAudioSource = globalAudioObject.AddComponent<AudioSource>();
+                globalAudioSource.clip = pickupSound.clip;
                 globalAudioSource.volume = soundVolume;
+                globalAudioSource.outputAudioMixerGroup = pickupSound.outputAudioMixerGroup;
                 globalAudioSource.Play();
-                Destroy(globalAudioSource.gameObject, pickupSound.length);
+                Destroy(globalAudioObject, pickupSound.clip.length);
             }
             else
             {
-                AudioSource.PlayClipAtPoint(pickupSound, transform.position, soundVolume);
+                pickupSound.Play();
             }
         }
+        else
+        {
+            Debug.LogWarning("Pickup sound AudioSource is not assigned or is already playing.");
+        }
 
-        if (handUI != null)
-            handUI.SetActive(false);
+        if (handUIHandler != null)
+            handUIHandler.HideHandUI();
 
         if (objToActivate != null)
             objToActivate.SetActive(true);

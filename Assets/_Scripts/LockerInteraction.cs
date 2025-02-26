@@ -5,7 +5,7 @@ using UnityEngine;
 public class LockerInteraction : MonoBehaviour
 {
     private GameObject locker;
-    public GameObject handUI;
+    public HandUIHandler handUIHandler;
     public Animator lockerAnimator;
     public Transform player;
 
@@ -13,8 +13,8 @@ public class LockerInteraction : MonoBehaviour
     private bool isLockerOpen = false;
     private bool isPlayerInside = false;
 
-    public AudioClip lockerOpenSound;
-    public AudioClip lockerCloseSound;
+    public AudioSource lockerOpenSound;
+    public AudioSource lockerCloseSound;
     public float soundVolume = 1.0f;
     public LockerTrigger lockerTrigger;
 
@@ -22,8 +22,11 @@ public class LockerInteraction : MonoBehaviour
     {
         locker = this.gameObject;
 
-        if (handUI != null)
-            handUI.SetActive(false);
+        if (lockerOpenSound != null)
+            lockerOpenSound.volume = soundVolume;
+
+        if (lockerCloseSound != null)
+            lockerCloseSound.volume = soundVolume;
     }
 
     void OnTriggerEnter(Collider other)
@@ -31,8 +34,8 @@ public class LockerInteraction : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = true;
-            if (handUI != null)
-                handUI.SetActive(true);
+            if (handUIHandler != null)
+                handUIHandler.ShowHandUI();
         }
 
         if (other.CompareTag("Player"))
@@ -46,8 +49,8 @@ public class LockerInteraction : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = false;
-            if (handUI != null)
-                handUI.SetActive(false);
+            if (handUIHandler != null)
+                handUIHandler.HideHandUI();
         }
 
         if (other.CompareTag("Player"))
@@ -58,6 +61,9 @@ public class LockerInteraction : MonoBehaviour
 
     void Update()
     {
+        if (handUIHandler != null && handUIHandler.IsGamePaused())
+            return;
+
         if (inReach && Input.GetButtonDown("Interact"))
         {
             ToggleLocker();
@@ -68,9 +74,14 @@ public class LockerInteraction : MonoBehaviour
     {
         isLockerOpen = !isLockerOpen;
 
-        AudioClip clip = isLockerOpen ? lockerOpenSound : lockerCloseSound;
-        if (clip != null)
-            AudioSource.PlayClipAtPoint(clip, transform.position, soundVolume);
+        if (isLockerOpen && lockerOpenSound != null && !lockerOpenSound.isPlaying)
+        {
+            lockerOpenSound.Play();
+        }
+        else if (!isLockerOpen && lockerCloseSound != null && !lockerCloseSound.isPlaying)
+        {
+            lockerCloseSound.Play();
+        }
 
         if (lockerAnimator != null)
         {

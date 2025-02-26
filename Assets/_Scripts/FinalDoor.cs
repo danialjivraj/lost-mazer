@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FinalDoor : MonoBehaviour
 {
-    public GameObject handUI;
+    public HandUIHandler handUIHandler;
     public GameObject invKey;
     public Animator doorAnimator;
     public PickUpNotification doorNotification;
@@ -15,26 +15,26 @@ public class FinalDoor : MonoBehaviour
 
     void Start()
     {
-        if (handUI != null) handUI.SetActive(false);
         if (doorNotification != null) doorNotification.ResetNotification();
     }
 
     void Update()
     {
+        if (handUIHandler != null && handUIHandler.IsGamePaused())
+            return;
+
         if (inReach && Input.GetButtonDown("Interact"))
         {
             if (isLocked)
             {
                 if (invKey != null && invKey.activeInHierarchy)
                 {
-                    // player has the key
                     UnlockDoor();
                     if (doorNotification != null)
                         doorNotification.ResetNotification();
                 }
                 else
                 {
-                    // player does not have the key
                     PlayLockedAnimation();
                     if (doorNotification != null)
                     {
@@ -50,8 +50,8 @@ public class FinalDoor : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = true;
-            if (handUI != null && isLocked)
-                handUI.SetActive(true);
+            if (handUIHandler != null && isLocked)
+                handUIHandler.ShowHandUI();
         }
     }
 
@@ -60,8 +60,8 @@ public class FinalDoor : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = false;
-            if (handUI != null)
-                handUI.SetActive(false);
+            if (handUIHandler != null)
+                handUIHandler.HideHandUI();
         }
 
         if (doorNotification != null)
@@ -79,8 +79,8 @@ public class FinalDoor : MonoBehaviour
             openingAudioSource.Play();
         }
 
-        if (handUI != null)
-            handUI.SetActive(false);
+        if (handUIHandler != null)
+            handUIHandler.HideHandUI();
 
         Debug.Log("Door is unlocked");
     }
