@@ -24,6 +24,8 @@ public class LevelCompleted : MonoBehaviour
             if (fadeFX != null)
                 fadeFX.SetActive(true);
 
+            ScoreManager.instance.SaveScore();
+
             int currentLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
             if (levelToUnlock > currentLevel)
             {
