@@ -8,7 +8,6 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
     public Camera playerCam;
-
     public float walkSpeed = 3f;
     public float runSpeed = 5f;
     public float crouchSpeed = 1.5f;
@@ -41,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private bool isZoomed = false;
 
     private bool isCrouching = false;
-    private float standingHeight = 2.5f; // needs to be same as the capsule height
+    private float standingHeight = 2.5f;
     private float crouchHeight = 1.5f;
     private float currentHeight;
     private float crouchTransitionSpeed = 5f;
@@ -56,10 +55,8 @@ public class PlayerController : MonoBehaviour
     private Quaternion currentRotationVelocity;
 
     private bool canMove = true;
-
     CharacterController characterController;
-    private LockerInteraction lockerInteraction;
-
+    
     public float runningHearingRange = 20f;
     public float walkingHearingRange = 10f;
     public float crouchingHearingRange = 5f;
@@ -74,13 +71,6 @@ public class PlayerController : MonoBehaviour
         normalCameraPosition = playerCam.transform.localPosition;
         currentFootstepSounds = woodFootstepSounds;
 
-        lockerInteraction = FindObjectOfType<LockerInteraction>();
-
-        if (lockerInteraction == null)
-        {
-            Debug.LogError("LockerInteraction script not found");
-        }
-
         if (audioSource != null && footstepMixerGroup != null)
         {
             audioSource.outputAudioMixerGroup = footstepMixerGroup;
@@ -89,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+        if (LockerInteraction.IsAnyLockerHiding())
         {
             Debug.Log("hiding!");
         }
@@ -101,7 +91,6 @@ public class PlayerController : MonoBehaviour
         isCrouching = Input.GetKey(KeyCode.LeftControl);
 
         float currentSpeed = isCrouching ? crouchSpeed : (isRunning ? runSpeed : walkSpeed);
-
         float curSpeedX = canMove ? currentSpeed * Input.GetAxis("Vertical") : 0;
         float curSpeedY = canMove ? currentSpeed * Input.GetAxis("Horizontal") : 0;
         float movementDirectionY = moveDirection.y;

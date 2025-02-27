@@ -8,7 +8,7 @@ public class LanternController : MonoBehaviour
     public GameObject arm;
     private bool hasLantern = false;
     private bool isAnimating = false;
-    private LockerInteraction lockerInteraction;
+    private LockerInteraction[] lockerInteractions;
 
     public PickUpNotification lanternWarning;
 
@@ -30,10 +30,10 @@ public class LanternController : MonoBehaviour
             Debug.LogError("Animator NOT found in Awake!");
         }
 
-        lockerInteraction = FindObjectOfType<LockerInteraction>();
-        if (lockerInteraction == null)
+        lockerInteractions = FindObjectsOfType<LockerInteraction>();
+        if (lockerInteractions.Length == 0)
         {
-            Debug.LogError("🚨 LockerInteraction script NOT found!");
+            Debug.LogError("🚨 No LockerInteraction scripts found!");
         }
     }
 
@@ -54,19 +54,19 @@ public class LanternController : MonoBehaviour
     {
         // toggles lantern if player presses X and has the lantern, is not animating, not reading a note, and not hiding
         if (Input.GetKeyDown(KeyCode.X) && hasLantern && !isAnimating && 
-            !ReadNotes.IsReadingNote && !lockerInteraction.IsPlayerHiding())
+            !ReadNotes.IsReadingNote && !LockerInteraction.IsAnyLockerHiding())
         {
             ToggleLantern();
         }
 
         // if the player is hiding and the lantern is active, turn it off
-        if (lockerInteraction.IsPlayerHiding() && isLanternActive)
-        {   
+        if (LockerInteraction.IsAnyLockerHiding() && isLanternActive)
+        {
             ToggleLantern();
         }
 
         // shows warning if player presses X while hiding AND has the lantern
-        if (Input.GetKeyDown(KeyCode.X) && lockerInteraction.IsPlayerHiding() && hasLantern)
+        if (Input.GetKeyDown(KeyCode.X) && LockerInteraction.IsAnyLockerHiding() && hasLantern)
         {
             ShowWarning();
         }

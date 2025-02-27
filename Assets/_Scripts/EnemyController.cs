@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
     private Vector3 lastHeardPosition;
     private bool isInvestigating = false;
 
-    private LockerInteraction lockerInteraction;
+    private LockerInteraction[] lockerInteractions;
 
     private enum EnemyState { Idle, Walk, Chase, Attack }
     private EnemyState currentState = EnemyState.Idle;
@@ -50,7 +50,7 @@ public class EnemyController : MonoBehaviour
 
         agent.stoppingDistance = 1.5f;
 
-        lockerInteraction = FindObjectOfType<LockerInteraction>();
+        lockerInteractions = FindObjectsOfType<LockerInteraction>();
 
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
@@ -63,7 +63,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnPlayerFootstep(Vector3 position, float volume)
     {
-        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+        if (LockerInteraction.IsAnyLockerHiding())
             return;
 
         if (currentState == EnemyState.Idle || currentState == EnemyState.Walk)
@@ -89,8 +89,9 @@ public class EnemyController : MonoBehaviour
         }
         
         // if the player is now hiding, cancel investigation/chase.
-        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+        if (LockerInteraction.IsAnyLockerHiding())
         {
+            // Cancel chase/investigation
             if (currentState == EnemyState.Chase || currentState == EnemyState.Attack || isInvestigating)
             {
                 isInvestigating = false;
@@ -220,7 +221,7 @@ public class EnemyController : MonoBehaviour
 
     private void CheckForPlayerDetection(float currentSightDistance)
     {
-        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+        if (LockerInteraction.IsAnyLockerHiding())
             return;
 
         RaycastHit hit;

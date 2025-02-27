@@ -1,32 +1,39 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LockerInteraction : MonoBehaviour
 {
-    private GameObject locker;
+    // Static list of all active LockerInteraction instances.
+    private static List<LockerInteraction> allLockers = new List<LockerInteraction>();
+
+    // Existing fields...
     public HandUIHandler handUIHandler;
     public Animator lockerAnimator;
     public Transform player;
-
     private bool inReach;
     private bool isLockerOpen = false;
     private bool isPlayerInside = false;
-
     public AudioSource lockerOpenSound;
     public AudioSource lockerCloseSound;
     public float soundVolume = 1.0f;
     public LockerTrigger lockerTrigger;
 
-    void Start()
+    void Awake()
     {
-        locker = this.gameObject;
+        // Add this instance to the static list.
+        allLockers.Add(this);
 
+        // Set up audio volumes.
         if (lockerOpenSound != null)
             lockerOpenSound.volume = soundVolume;
-
         if (lockerCloseSound != null)
             lockerCloseSound.volume = soundVolume;
+    }
+
+    void OnDestroy()
+    {
+        // Remove this instance when it's destroyed.
+        allLockers.Remove(this);
     }
 
     void OnTriggerEnter(Collider other)
@@ -81,8 +88,16 @@ public class LockerInteraction : MonoBehaviour
 
     public bool IsPlayerHiding()
     {   
-        //Debug.Log("Is player inside: " + isPlayerInside);
-        //Debug.Log("Is locker open: " + !isLockerOpen);
         return lockerTrigger != null && lockerTrigger.isPlayerInside && !isLockerOpen;
+    }
+
+    public static bool IsAnyLockerHiding()
+    {
+        foreach (var locker in allLockers)
+        {
+            if (locker.IsPlayerHiding())
+                return true;
+        }
+        return false;
     }
 }
