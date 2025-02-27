@@ -161,4 +161,9 @@ public class LanternController : MonoBehaviour
         if (animator != null)
             animator.SetBool("isLanternActive", true);
     }
+
+    public bool IsLanternActive()
+    {
+        return isLanternActive;
+    }
 }

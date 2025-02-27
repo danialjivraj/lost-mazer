@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
@@ -58,6 +59,10 @@ public class PlayerController : MonoBehaviour
 
     CharacterController characterController;
     private LockerInteraction lockerInteraction;
+
+    public float runningHearingRange = 20f;
+    public float walkingHearingRange = 10f;
+    public float crouchingHearingRange = 5f;
 
     void Start()
     {
@@ -194,10 +199,11 @@ public class PlayerController : MonoBehaviour
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, isZoomed ? ZoomFOV : initialFOV, Time.deltaTime * cameraZoomSmooth);
     }
 
+    public UnityEvent<Vector3, float> OnFootstep;
     IEnumerator PlayFootstepSounds()
     {
         isFootstepCoroutineRunning = true;
-        
+
         while (isWalking)
         {
             if (currentFootstepSounds.Length > 0)
@@ -207,11 +213,14 @@ public class PlayerController : MonoBehaviour
                 int randomIndex = Random.Range(0, currentFootstepSounds.Length);
                 audioSource.transform.position = footstepAudioPosition.position;
                 audioSource.clip = currentFootstepSounds[randomIndex];
-                audioSource.pitch = running ? 1.5f : 1f; // speed for when running vs walking
-                audioSource.volume = running ? 1.2f : 0.5f; // volume for when running vs walking
+                audioSource.pitch = running ? 1.5f : 1f;
+                audioSource.volume = running ? 1.2f : 0.5f;
                 audioSource.Play();
 
-                // delay between each step
+                // Emit sound event
+                float volume = running ? 1.2f : 0.5f; // Running is louder
+                OnFootstep.Invoke(transform.position, volume);
+
                 yield return new WaitForSeconds(running ? 0.3f : 0.5f);
             }
             else
@@ -240,13 +249,32 @@ public class PlayerController : MonoBehaviour
         {
             currentFootstepSounds = woodFootstepSounds;
         }
-        //else if (other.CompareTag("Tile"))
-        //{
-        //    currentFootstepSounds = tileFootstepSounds;
-        //}
-        //else if (other.CompareTag("Carpet"))
-        //{
-        //    currentFootstepSounds = carpetFootstepSounds;
-        //}
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (isWalking)
+        {
+            float hearingRange = 0f;
+
+            if (Input.GetKey(KeyCode.LeftShift)) // running
+            {
+                hearingRange = runningHearingRange;
+                Gizmos.color = Color.red; // red for running
+            }
+            else if (isCrouching) // crouching
+            {
+                hearingRange = crouchingHearingRange;
+                Gizmos.color = Color.green; // green for crouching
+            }
+            else // walking
+            {
+                hearingRange = walkingHearingRange;
+                Gizmos.color = Color.yellow; // yellow for walking
+            }
+
+            // hearing range
+            Gizmos.DrawWireSphere(transform.position, hearingRange);
+        }
     }
 }

@@ -1226,13 +1226,16 @@ MonoBehaviour:
   idleTime: 4
   walkSpeed: 3.5
   chaseSpeed: 6.5
-  sightDistance: 30
+  sightDistance: 10
+  lanternSightMultiplier: 2
   attackRange: 2
   attackCooldown: 2
   attackDamage: 1
   idleSound: {fileID: 0}
   walkingSound: {fileID: 0}
   chasingSound: {fileID: 0}
+  hearingRange: 15
+  runningSoundMultiplier: 2
 --- !u!95 &174415785
 Animator:
   serializedVersion: 3
@@ -14862,6 +14865,12 @@ MonoBehaviour:
   ZoomFOV: 50
   initialFOV: 80
   cameraZoomSmooth: 1
+  runningHearingRange: 20
+  walkingHearingRange: 10
+  crouchingHearingRange: 5
+  OnFootstep:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!143 &1477248155
 CharacterController:
   m_ObjectHideFlags: 0
@@ -19362,7 +19371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2468697161125097220
 MeshCollider:
   m_ObjectHideFlags: 0
