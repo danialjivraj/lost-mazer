@@ -11833,7 +11833,7 @@ Transform:
   m_Children:
   - {fileID: 2647898423518475926}
   m_Father: {fileID: 543450652326444145}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1149851457
 Animator:
@@ -15525,7 +15525,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 543450652326444145}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1622009990
 BoxCollider:
@@ -15694,7 +15694,7 @@ RectTransform:
   m_Children:
   - {fileID: 680385462}
   m_Father: {fileID: 543450652326444145}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -18266,10 +18266,10 @@ Transform:
   m_LocalPosition: {x: -4.779091, y: -1.5464095, z: -7.0415955}
   m_LocalScale: {x: 0.30611038, y: 0.28813696, z: 0.33262354}
   m_Children:
+  - {fileID: 1622009989}
   - {fileID: 1149851456}
   - {fileID: 961430028138890561}
   - {fileID: 1653933435}
-  - {fileID: 1622009989}
   - {fileID: 449185882}
   m_Father: {fileID: 286467820}
   m_RootOrder: 0
@@ -18497,7 +18497,7 @@ Transform:
   m_Children:
   - {fileID: 5277409955347856792}
   m_Father: {fileID: 543450652326444145}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &983749561863620305 stripped
 Transform:
@@ -19482,11 +19482,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.028, y: 0.020000001, z: 0.064}
+  m_Extents: {x: 0.028, y: 0.015, z: 0.064}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.004, z: 0}
   m_TimeToStationary: 0.5
 --- !u!33 &3194306241462406385
 MeshFilter:

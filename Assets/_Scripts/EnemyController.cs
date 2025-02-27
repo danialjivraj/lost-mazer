@@ -33,6 +33,8 @@ public class EnemyController : MonoBehaviour
     private Vector3 lastHeardPosition;
     private bool isInvestigating = false;
 
+    private LockerInteraction lockerInteraction;
+
     private enum EnemyState { Idle, Walk, Chase, Attack }
     private EnemyState currentState = EnemyState.Idle;
 
@@ -48,6 +50,8 @@ public class EnemyController : MonoBehaviour
 
         agent.stoppingDistance = 1.5f;
 
+        lockerInteraction = FindObjectOfType<LockerInteraction>();
+
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
         {
@@ -59,6 +63,9 @@ public class EnemyController : MonoBehaviour
 
     private void OnPlayerFootstep(Vector3 position, float volume)
     {
+        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+            return;
+
         if (currentState == EnemyState.Idle || currentState == EnemyState.Walk)
         {
             float distanceToSound = Vector3.Distance(transform.position, position);
@@ -76,12 +83,25 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         float currentSightDistance = sightDistance;
-
         if (playerLantern != null && playerLantern.IsLanternActive())
         {
             currentSightDistance *= lanternSightMultiplier;
         }
-
+        
+        // if the player is now hiding, cancel investigation/chase.
+        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+        {
+            if (currentState == EnemyState.Chase || currentState == EnemyState.Attack || isInvestigating)
+            {
+                isInvestigating = false;
+                lastHeardPosition = Vector3.zero;
+                currentState = EnemyState.Idle;
+                agent.speed = walkSpeed;
+                SetDestinationToWaypoint();
+                return;
+            }
+        }
+        
         switch (currentState)
         {
             case EnemyState.Idle:
@@ -104,12 +124,12 @@ public class EnemyController : MonoBehaviour
                 animator.SetBool("IsAttacking", false);
                 PlaySound(walkingSound);
 
-                // move toward the last heard position
+                // moves toward the last heard position if investigating
                 if (isInvestigating)
                 {
                     agent.SetDestination(lastHeardPosition);
 
-                    // enemy reaches the last heard position, so stop investigating
+                    // stops investigating when reaching the destination.
                     if (agent.remainingDistance <= agent.stoppingDistance)
                     {
                         isInvestigating = false;
@@ -118,21 +138,17 @@ public class EnemyController : MonoBehaviour
                 }
                 else
                 {
-                    // normal patrol behavior
                     if (agent.remainingDistance <= agent.stoppingDistance)
                     {
                         currentState = EnemyState.Idle;
                     }
                 }
-
                 CheckForPlayerDetection(currentSightDistance);
                 break;
             case EnemyState.Chase:
                 idleTimer = 0f;
                 agent.speed = chaseSpeed;
-
                 agent.SetDestination(player.position);
-
                 animator.SetBool("IsWalking", false);
                 animator.SetBool("IsChasing", true);
                 animator.SetBool("IsAttacking", false);
@@ -192,21 +208,23 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
 
         agent.isStopped = true;
-        yield return new WaitForSeconds(1f); // stop time
+        yield return new WaitForSeconds(1f);
 
-        // resume Chasing
+        // resume chasing
         animator.SetBool("IsAttacking", false);
         currentState = EnemyState.Chase;
-
         agent.isStopped = false;
         agent.ResetPath();
         agent.SetDestination(player.position);
     }
+
     private void CheckForPlayerDetection(float currentSightDistance)
     {
+        if (lockerInteraction != null && lockerInteraction.IsPlayerHiding())
+            return;
+
         RaycastHit hit;
         Vector3 playerDirection = player.position - transform.position;
-
         if (Physics.Raycast(transform.position, playerDirection.normalized, out hit, currentSightDistance))
         {
             if (hit.collider.CompareTag("Player"))
@@ -243,21 +261,14 @@ public class EnemyController : MonoBehaviour
     private void OnDrawGizmos()
     {
         float currentSightDistance = sightDistance;
-
         if (playerLantern != null && playerLantern.IsLanternActive())
         {
             currentSightDistance *= lanternSightMultiplier;
         }
-
-        // sight range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, currentSightDistance);
-
-        // hearing range
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, hearingRange);
-
-        // line to last heard position (if investigating)
         if (isInvestigating)
         {
             Gizmos.color = Color.red;
