@@ -8,11 +8,14 @@ public class EnemyController : MonoBehaviour
     public float idleTime = 4f;
     public float walkSpeed = 3.5f;
     public float chaseSpeed = 6.5f;
+    public float chaseDelay = 2f;
+    private float chaseEndTime = 0f;
     public float sightDistance = 30f;
     public float lanternSightMultiplier = 2f;
     public float attackRange = 2f;
     public float attackCooldown = 1.5f;
-    public int attackDamage = 20;
+    public int attackDamage = 1;
+    private bool hasDealtDamage = false;
     private float nextAttackTime = 0f;
     public AudioClip idleSound;
     public AudioClip walkingSound;
@@ -56,16 +59,17 @@ public class EnemyController : MonoBehaviour
 
     private void OnPlayerFootstep(Vector3 position, float volume)
     {
-        float distanceToSound = Vector3.Distance(transform.position, position);
-
-        float effectiveHearingRange = hearingRange * (volume * runningSoundMultiplier);
-
-        if (distanceToSound <= effectiveHearingRange)
+        if (currentState == EnemyState.Idle || currentState == EnemyState.Walk)
         {
-            lastHeardPosition = position;
-            isInvestigating = true;
-            currentState = EnemyState.Walk;
-            agent.SetDestination(lastHeardPosition);
+            float distanceToSound = Vector3.Distance(transform.position, position);
+            float effectiveHearingRange = hearingRange * (volume * runningSoundMultiplier);
+            if (distanceToSound <= effectiveHearingRange)
+            {
+                lastHeardPosition = position;
+                isInvestigating = true;
+                currentState = EnemyState.Walk;
+                agent.SetDestination(lastHeardPosition);
+            }
         }
     }
 
@@ -142,8 +146,20 @@ public class EnemyController : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, player.position) > currentSightDistance)
                 {
-                    currentState = EnemyState.Walk;
-                    agent.speed = walkSpeed;
+                    if (chaseEndTime == 0f)
+                    {
+                        chaseEndTime = Time.time + chaseDelay;
+                    }
+                    else if (Time.time >= chaseEndTime)
+                    {
+                        currentState = EnemyState.Walk;
+                        agent.speed = walkSpeed;
+                        chaseEndTime = 0f;
+                    }
+                }
+                else
+                {
+                    chaseEndTime = 0f;
                 }
                 break;
             case EnemyState.Attack:
@@ -159,18 +175,33 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("IsAttacking", true);
         nextAttackTime = Time.time + attackCooldown;
 
+        yield return new WaitForSeconds(0.3f);
+
+        Vector3 attackDirection = (player.position - transform.position).normalized;
+        agent.SetDestination(transform.position + attackDirection * 0.5f);
+
+        if (Vector3.Distance(transform.position, player.position) <= attackRange + 0.5f)
+        {
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(attackDamage);
+            }
+        }
+
+        yield return new WaitForSeconds(0.4f);
+
         agent.isStopped = true;
-        agent.velocity = Vector3.zero;
+        yield return new WaitForSeconds(1f); // stop time
 
-        yield return new WaitForSeconds(1.16f);
-
+        // resume Chasing
         animator.SetBool("IsAttacking", false);
         currentState = EnemyState.Chase;
 
         agent.isStopped = false;
+        agent.ResetPath();
         agent.SetDestination(player.position);
     }
-
     private void CheckForPlayerDetection(float currentSightDistance)
     {
         RaycastHit hit;
