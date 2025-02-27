@@ -37,11 +37,6 @@ public class LockerInteraction : MonoBehaviour
             if (handUIHandler != null)
                 handUIHandler.ShowHandUI();
         }
-
-        if (other.CompareTag("Player"))
-        {
-            isPlayerInside = true;
-        }
     }
 
     void OnTriggerExit(Collider other)
@@ -51,11 +46,6 @@ public class LockerInteraction : MonoBehaviour
             inReach = false;
             if (handUIHandler != null)
                 handUIHandler.HideHandUI();
-        }
-
-        if (other.CompareTag("Player"))
-        {
-            isPlayerInside = false;
         }
     }
 
@@ -70,7 +60,7 @@ public class LockerInteraction : MonoBehaviour
         }
     }
 
-    void ToggleLocker()
+    public void ToggleLocker()
     {
         isLockerOpen = !isLockerOpen;
 
@@ -90,7 +80,9 @@ public class LockerInteraction : MonoBehaviour
     }
 
     public bool IsPlayerHiding()
-    {
+    {   
+        //Debug.Log("Is player inside: " + isPlayerInside);
+        //Debug.Log("Is locker open: " + !isLockerOpen);
         return lockerTrigger != null && lockerTrigger.isPlayerInside && !isLockerOpen;
     }
 }

@@ -61,7 +61,7 @@ public class LanternController : MonoBehaviour
 
         // if the player is hiding and the lantern is active, turn it off
         if (lockerInteraction.IsPlayerHiding() && isLanternActive)
-        {
+        {   
             ToggleLantern();
         }
 
