@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using BackendlessAPI;
+using BackendlessAPI.Persistence;
+using System.Threading.Tasks;
 
 public class MainMenuLogic : MonoBehaviour
 {
@@ -20,6 +23,8 @@ public class MainMenuLogic : MonoBehaviour
 
     void Start()
     {
+        UpdateScoreDisplay();
+
         mainMenu = GameObject.Find("MainMenuCanvas");
         settingsMenu = GameObject.Find("OptionsCanvas");
         score = GameObject.Find("ScoreCanvas");
@@ -86,29 +91,61 @@ public class MainMenuLogic : MonoBehaviour
         controls.SetActive(false);
         level.SetActive(false);
         Audio.SetActive(true);
-
-        UpdateScoreDisplay();
     }
 
-    private void UpdateScoreDisplay()
+    async void UpdateScoreDisplay()
     {
-        string leftScores = "";
-        string rightScores = "";
-
-        for (int i = 0; i < 5; i++)
+        try
         {
-            int loadedScore = PlayerPrefs.GetInt("HighScore" + i, 0);
-            leftScores += (i + 1) + ". " + loadedScore + " Coins\n";
-        }
+            Debug.Log("Updating score display...");
 
-        for (int i = 5; i < 10; i++)
+            if (scoreTextLeft == null)
+                Debug.LogError("scoreTextLeft is null!");
+            if (scoreTextRight == null)
+                Debug.LogError("scoreTextRight is null!");
+
+            string playerId = PlayerIdManager.instance.GetPlayerId();
+
+            var dataStore = Backendless.Data.Of("HighScores");
+            var query = DataQueryBuilder.Create();
+            query.SetWhereClause($"playerId = '{playerId}'");
+            query.SetPageSize(10).SetSortBy(new List<string> { "score DESC" });
+
+            Debug.Log("Fetching scores from Backendless...");
+            var result = await dataStore.FindAsync(query);
+
+            if (result == null)
+            {
+                Debug.LogError("Result is null!");
+                return;
+            }
+
+            Debug.Log($"Found {result.Count} scores for player {playerId}.");
+
+            string leftScores = "";
+            string rightScores = "";
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                if (i < 5)
+                {
+                    leftScores += (i + 1) + ". " + result[i]["score"] + " Coins\n";
+                }
+                else
+                {
+                    rightScores += (i + 1) + ". " + result[i]["score"] + " Coins\n";
+                }
+            }
+
+            scoreTextLeft.text = leftScores;
+            scoreTextRight.text = rightScores;
+
+            Debug.Log("Score display updated successfully.");
+        }
+        catch (System.Exception ex)
         {
-            int loadedScore = PlayerPrefs.GetInt("HighScore" + i, 0);
-            rightScores += (i + 1) + ". " + loadedScore + " Coins\n";
+            Debug.LogError("Error updating score display: " + ex.Message);
         }
-
-        scoreTextLeft.text = leftScores;
-        scoreTextRight.text = rightScores;
     }
 
     public void SettingsButton()
