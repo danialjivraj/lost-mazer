@@ -7,6 +7,7 @@ using TMPro;
 using BackendlessAPI;
 using BackendlessAPI.Persistence;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class MainMenuLogic : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class MainMenuLogic : MonoBehaviour
     public Button[] levelButtons;
     public TMP_Text scoreTextLeft;
     public TMP_Text scoreTextRight;
+    public int selectedLevel = 1;
 
     void Start()
     {
@@ -56,20 +58,35 @@ public class MainMenuLogic : MonoBehaviour
         }
     }
 
-    public void StartButton(string selectedSceneName)
+public void StartButton(string selectedSceneName)
+{
+    mainMenu.GetComponent<Canvas>().enabled = false;
+
+    if (buttonSound != null)
+        buttonSound.Play();
+    else
+        Debug.LogWarning("Button sound not assigned!");
+
+    if (!string.IsNullOrEmpty(selectedSceneName))
     {
-        mainMenu.GetComponent<Canvas>().enabled = false;
-
-        if (buttonSound != null)
-            buttonSound.Play();
+        var digits = new string(selectedSceneName.Where(char.IsDigit).ToArray());
+        if (int.TryParse(digits, out int levelNumber))
+        {
+            PlayerPrefs.SetInt("CurrentLevel", levelNumber);
+        }
         else
-            Debug.LogWarning("Button sound not assigned!");
-
-        if (!string.IsNullOrEmpty(selectedSceneName))
-            SceneManager.LoadScene(selectedSceneName);
-        else
-            Debug.LogError("Scene name is empty!");
+        {
+            Debug.LogWarning("Could not determine level number from scene name: " + selectedSceneName);
+        }
+        
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(selectedSceneName);
     }
+    else
+    {
+        Debug.LogError("Scene name is empty!");
+    }
+}
 
     public void LevelButton()
     {
@@ -108,7 +125,7 @@ public class MainMenuLogic : MonoBehaviour
 
             var dataStore = Backendless.Data.Of("HighScores");
             var query = DataQueryBuilder.Create();
-            query.SetWhereClause($"playerId = '{playerId}'");
+            query.SetWhereClause($"playerId = '{playerId}' AND level = {selectedLevel}");
             query.SetPageSize(10).SetSortBy(new List<string> { "score DESC" });
 
             Debug.Log("Fetching scores from Backendless...");
@@ -185,5 +202,44 @@ public class MainMenuLogic : MonoBehaviour
         settingsMenu.GetComponent<Canvas>().enabled = false;
         score.SetActive(false);
         level.SetActive(false);
+    }
+
+    public async void OnLevelButtonClicked(int level)
+    {
+        buttonSound.Play();
+
+        // fetchs the high scores for the selected level
+        string playerId = PlayerIdManager.instance.GetPlayerId();
+        var dataStore = Backendless.Data.Of("HighScores");
+        var query = DataQueryBuilder.Create();
+        query.SetWhereClause($"playerId = '{playerId}' AND level = {level}");
+        query.SetPageSize(10).SetSortBy(new List<string> { "score DESC" });
+
+        var result = await dataStore.FindAsync(query);
+
+        string leftScores = "";
+        string rightScores = "";
+
+        for (int i = 0; i < result.Count; i++)
+        {
+            string scoreLine = (i + 1) + ". " + result[i]["score"] + " Coins\n";
+            if (i < 5)
+                leftScores += scoreLine;
+            else
+                rightScores += scoreLine;
+        }
+
+        scoreTextLeft.text = leftScores;
+        scoreTextRight.text = rightScores;
+    }
+
+    public void OnLevel1ButtonClicked()
+    {
+        OnLevelButtonClicked(1);
+    }
+
+    public void OnLevel2ButtonClicked()
+    {
+        OnLevelButtonClicked(2);
     }
 }

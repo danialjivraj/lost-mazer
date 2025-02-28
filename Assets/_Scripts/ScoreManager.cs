@@ -6,29 +6,23 @@ using BackendlessAPI;
 using BackendlessAPI.Persistence;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
     public TMP_Text scoreText;
-    int score = 0;
-    List<int> highScores = new List<int>();
+
+    private int score = 0;
+
+    private List<Dictionary<string, object>> levelHighScoreRows = new List<Dictionary<string, object>>(); // stores the entire row data for the current level's high scores
 
     private string playerId;
 
     void Awake()
     {
         instance = this;
-
-        //playerId = PlayerIdManager.instance.GetPlayerId(); // use this if you want to create the game object in the levels and drag the playerid script onto it
-
-        LoadHighScores().ContinueWith(task =>
-        {
-            if (task.IsFaulted)
-            {
-                Debug.LogError("Error loading high scores: " + task.Exception);
-            }
-        });
+        playerId = PlayerIdManager.instance.GetPlayerId();
     }
 
     void Start()
@@ -44,100 +38,112 @@ public class ScoreManager : MonoBehaviour
 
     public async void SaveScore()
     {
-        await LoadHighScores();
+        int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
 
-        highScores.Add(score);
+        await LoadHighScoresForLevel(currentLevel);
 
-        highScores.Sort((a, b) => b.CompareTo(a));
+        SortScoreRowsDescending();
 
-        // keeps only the top 10 scores
-        if (highScores.Count > 10)
+        bool shouldSave = false;
+        if (levelHighScoreRows.Count < 10)
         {
-            // removes the lowest score from the database
-            int lowestScore = highScores[highScores.Count - 1];
-            await DeleteScore(lowestScore);
-
-            highScores = highScores.GetRange(0, 10);
-        }
-
-        if (highScores.Contains(score))
-        {
-            await SaveCurrentScore(score);
+            // fewer than 10 rows, so it should save
+            shouldSave = true;
         }
         else
         {
+            // this compares the score with the 10th best (index 9)
+            int tenthBestScore = GetScoreFromRow(levelHighScoreRows[9]);
+            if (score > tenthBestScore)
+                shouldSave = true;
+        }
+
+        if (!shouldSave)
+        {
             Debug.Log("Score did not make it into the top 10. Not saving to database.");
+            return;
+        }
+
+        // saves the new score first
+        await SaveCurrentScore(score, currentLevel);
+        Debug.Log("New score inserted. Now we trim to top 10 if needed...");
+
+        // re-query's the DB for top 11
+        await LoadHighScoresForLevel(currentLevel);
+        SortScoreRowsDescending();
+
+        if (levelHighScoreRows.Count > 10)
+        {
+            // and then, identifies the single lowest row (the 11th in sorted order)
+            var lowestRow = levelHighScoreRows[10];
+            await DeleteScoreRow(lowestRow);
+            levelHighScoreRows.RemoveAt(10);
         }
     }
 
-    async Task DeleteScore(int scoreToDelete)
+    private void SortScoreRowsDescending()
+    {
+        levelHighScoreRows.Sort((rowA, rowB) =>
+        {
+            int scoreA = GetScoreFromRow(rowA);
+            int scoreB = GetScoreFromRow(rowB);
+            return scoreB.CompareTo(scoreA);
+        });
+    }
+
+    private int GetScoreFromRow(Dictionary<string, object> row)
+    {
+        if (row.TryGetValue("score", out object value))
+            return Convert.ToInt32(value);
+        return 0;
+    }
+
+    private async Task DeleteScoreRow(Dictionary<string, object> row)
     {
         try
         {
             var dataStore = Backendless.Data.Of("HighScores");
+            await dataStore.RemoveAsync(row);
 
-            var query = DataQueryBuilder.Create();
-            query.SetWhereClause($"playerId = '{playerId}' AND score = {scoreToDelete}");
-
-            var deleteResult = await dataStore.RemoveAsync(query.GetWhereClause());
-            Debug.Log($"Deleted score {scoreToDelete} for player {playerId}. Result: {deleteResult}");
+            Debug.Log($"Deleted row with objectId {row["objectId"]} and score {row["score"]} for player {playerId}.");
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             Debug.LogError($"Error deleting score: {ex.Message}");
         }
     }
 
-    async Task SaveCurrentScore(int newScore)
+    private async Task SaveCurrentScore(int newScore, int currentLevel)
     {
         var dataStore = Backendless.Data.Of("HighScores");
 
-        // saves the new score with the player ID
         var highScoreDict = new Dictionary<string, object>
         {
             { "score", newScore },
-            { "playerId", playerId }
+            { "playerId", playerId },
+            { "level", currentLevel }
         };
 
         await dataStore.SaveAsync(highScoreDict);
-        Debug.Log($"Score {newScore} saved successfully for player {playerId}.");
+        Debug.Log($"Score {newScore} for level {currentLevel} saved successfully for player {playerId}.");
     }
 
-    async Task LoadHighScores()
+    private async Task LoadHighScoresForLevel(int selectedLevel)
     {
-        highScores.Clear();
+        levelHighScoreRows.Clear();
 
         var dataStore = Backendless.Data.Of("HighScores");
         var query = DataQueryBuilder.Create();
-        query.SetWhereClause($"playerId = '{playerId}'");
-        query.SetPageSize(10).SetSortBy(new List<string> { "score DESC" });
+        query.SetWhereClause($"playerId = '{playerId}' AND level = {selectedLevel}");
+        query.SetPageSize(100).SetSortBy(new List<string> { "score DESC" });
 
         var result = await dataStore.FindAsync(query);
 
-        foreach (var item in result)
+        foreach (var row in result)
         {
-            if (item.ContainsKey("score"))
-            {
-                highScores.Add(Convert.ToInt32(item["score"]));
-            }
+            levelHighScoreRows.Add(row);
         }
 
-        Debug.Log($"Top 10 high scores loaded successfully for player {playerId}.");
+        Debug.Log($"Loaded {levelHighScoreRows.Count} high scores for player {playerId}, level {selectedLevel}.");
     }
-
-    public void LogScores()
-    {
-        Debug.Log("=== Top 10 Scores ===");
-        for (int i = 0; i < highScores.Count; i++)
-        {
-            Debug.Log("Score " + (i + 1) + ": " + highScores[i]);
-        }
-    }
-}
-
-public class HighScore
-{
-    public string objectId { get; set; }
-    public int score { get; set; }
-    public string playerId { get; set; }
 }
