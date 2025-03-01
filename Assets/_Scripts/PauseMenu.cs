@@ -272,6 +272,12 @@ public class PauseMenu : MonoBehaviour
                 data.lockerStates.Add(locker.GetLockerState());
             }
 
+            // enemy
+            EnemyController enemy = FindObjectOfType<EnemyController>();
+            if (enemy != null) {
+                data.enemyStates.Add(enemy.GetEnemyState());
+            }
+
             SaveLoadManager.SaveGame(data);
             Debug.Log("Game state saved. Returning to main menu.");
         }

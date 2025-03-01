@@ -34,6 +34,29 @@ public class LockerState
 }
 
 [System.Serializable]
+public class EnemyStateData {
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 destination;
+    public float agentSpeed;
+
+    public int currentWaypointIndex;
+    public int currentState;
+
+    public float idleTimer;
+    public Vector3 lastHeardPosition;
+    public bool isInvestigating;
+    public float chaseEndTime;
+    public float nextAttackTime;
+
+    public bool animIsWalking;
+    public bool animIsChasing;
+    public bool animIsAttacking;
+    public float currentAnimNormalizedTime;
+    public string currentAnimStateName;
+}
+
+[System.Serializable]
 public class GameStateData
 {
 
@@ -62,4 +85,6 @@ public class GameStateData
     public LanternState lanternState;
 
     public List<LockerState> lockerStates = new List<LockerState>();
+
+    public List<EnemyStateData> enemyStates = new List<EnemyStateData>();
 }

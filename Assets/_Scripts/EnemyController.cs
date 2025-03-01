@@ -57,8 +57,16 @@ public class EnemyController : MonoBehaviour
         {
             playerController.OnFootstep.AddListener(OnPlayerFootstep);
         }
-
-        SetDestinationToWaypoint();
+        
+        GameStateData gameState = SaveLoadManager.LoadGame();
+        if (gameState != null && gameState.enemyStates.Count > 0)
+        {
+            LoadEnemyState(gameState.enemyStates[0]);
+        }
+        else
+        {
+            SetDestinationToWaypoint();
+        }
     }
 
     private void OnPlayerFootstep(Vector3 position, float volume)
@@ -257,6 +265,75 @@ public class EnemyController : MonoBehaviour
         currentState = EnemyState.Walk;
         agent.speed = walkSpeed;
         animator.enabled = true;
+    }
+
+    public EnemyStateData GetEnemyState() {
+        EnemyStateData state = new EnemyStateData();
+        state.position = transform.position;
+        state.rotation = transform.rotation;
+
+        state.destination = agent.destination;
+        state.agentSpeed = agent.speed;
+
+        state.currentWaypointIndex = currentWaypointIndex;
+        state.currentState = (int) currentState;
+
+        state.idleTimer = idleTimer;
+        state.lastHeardPosition = lastHeardPosition;
+        state.isInvestigating = isInvestigating;
+        state.chaseEndTime = chaseEndTime;
+        state.nextAttackTime = nextAttackTime;
+
+        state.animIsWalking = animator.GetBool("IsWalking");
+        state.animIsChasing = animator.GetBool("IsChasing");
+        state.animIsAttacking = animator.GetBool("IsAttacking");
+
+        AnimatorStateInfo animInfo = animator.GetCurrentAnimatorStateInfo(0);
+        state.currentAnimNormalizedTime = animInfo.normalizedTime;
+        state.currentAnimStateName = animInfo.IsName("Enemy_Idle") ? "Enemy_Idle" :
+                                    animInfo.IsName("Enemy_Walk") ? "Enemy_Walk" :
+                                    animInfo.IsName("Enemy_Run") ? "Enemy_Run" :
+                                    animInfo.IsName("Enemy_Attack") ? "Enemy_Attack" : "Unknown";
+
+        return state;
+    }
+
+    public void LoadEnemyState(EnemyStateData state) {
+        if(agent != null) {
+            agent.Warp(state.position);
+        } else {
+            transform.position = state.position;
+        }
+        
+        transform.rotation = state.rotation;
+
+        agent.speed = state.agentSpeed;
+        agent.SetDestination(state.destination);
+
+        currentWaypointIndex = state.currentWaypointIndex;
+        currentState = (EnemyState) state.currentState;
+
+        idleTimer = state.idleTimer;
+        lastHeardPosition = state.lastHeardPosition;
+        isInvestigating = state.isInvestigating;
+        chaseEndTime = state.chaseEndTime;
+        nextAttackTime = state.nextAttackTime;
+
+        animator.SetBool("IsWalking", state.animIsWalking);
+        animator.SetBool("IsChasing", state.animIsChasing);
+        animator.SetBool("IsAttacking", state.animIsAttacking);
+
+        animator.Play(state.currentAnimStateName, 0, state.currentAnimNormalizedTime);
+
+        if (state.currentAnimStateName == "Enemy_Attack")
+        {
+            currentState = EnemyState.Chase;
+            animator.SetBool("IsAttacking", false);
+            agent.isStopped = false;
+            agent.ResetPath();
+            agent.SetDestination(player.position);
+            nextAttackTime = Time.time;
+        }
     }
 
     private void OnDrawGizmos()
