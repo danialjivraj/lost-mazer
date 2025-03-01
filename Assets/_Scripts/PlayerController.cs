@@ -82,8 +82,17 @@ public class PlayerController : MonoBehaviour
             {
                 transform.position = data.playerPosition;
                 transform.rotation = data.playerRotation;
+                
+                rotationY = data.playerRotation.eulerAngles.y;
+                
+                float loadedCameraPitch = data.cameraRotation.eulerAngles.x;
+                if (loadedCameraPitch > 180f)
+                    loadedCameraPitch -= 360f;
+                rotationX = loadedCameraPitch;
+                
                 Debug.Log("Player state restored from saved game.");
             }
+
             SaveLoadManager.DeleteSave();
         }
     }

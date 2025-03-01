@@ -5,5 +5,5 @@ public class GameStateData
 {
     public Vector3 playerPosition;
     public Quaternion playerRotation;
-    // Add additional fields here (e.g., player health, inventory, etc.)
+    public Quaternion cameraRotation;
 }

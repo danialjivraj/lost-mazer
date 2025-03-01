@@ -167,6 +167,7 @@ public class PauseMenu : MonoBehaviour
             GameStateData data = new GameStateData();
             data.playerPosition = playerController.transform.position;
             data.playerRotation = playerController.transform.rotation;
+            data.cameraRotation = playerController.playerCam.transform.localRotation;
             SaveLoadManager.SaveGame(data);
             Debug.Log("Game state saved. Returning to main menu.");
         }
@@ -174,6 +175,7 @@ public class PauseMenu : MonoBehaviour
         {
             Debug.LogError("PlayerController not found!");
         }
+
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
