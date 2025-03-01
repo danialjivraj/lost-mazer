@@ -7,7 +7,7 @@ public static class SaveLoadManager
 
     public static void SaveGame(GameStateData data)
     {
-        string json = JsonUtility.ToJson(data);
+        string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
         Debug.Log("Game saved at: " + saveFilePath);
     }

@@ -168,6 +168,14 @@ public class PauseMenu : MonoBehaviour
             data.playerPosition = playerController.transform.position;
             data.playerRotation = playerController.transform.rotation;
             data.cameraRotation = playerController.playerCam.transform.localRotation;
+            
+            data.rotationX = playerController.RotationX;
+            data.rotationY = playerController.RotationY;
+            data.isCrouching = playerController.IsCrouching;
+            data.isZoomed = false;
+            data.currentHeight = playerController.CurrentHeight;
+            data.cameraFOV = playerController.playerCam.fieldOfView;
+            
             SaveLoadManager.SaveGame(data);
             Debug.Log("Game state saved. Returning to main menu.");
         }

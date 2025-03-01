@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
             audioSource.outputAudioMixerGroup = footstepMixerGroup;
         }
 
-        // if saved game data exists, restores the player’s state
+        // if saved game data exists, restore the player’s state
         if (SaveLoadManager.SaveExists())
         {
             GameStateData data = SaveLoadManager.LoadGame();
@@ -83,16 +83,21 @@ public class PlayerController : MonoBehaviour
                 transform.position = data.playerPosition;
                 transform.rotation = data.playerRotation;
                 
-                rotationY = data.playerRotation.eulerAngles.y;
+                // Restore the stored rotation values.
+                rotationY = data.rotationY;
+                rotationX = data.rotationX;
                 
-                float loadedCameraPitch = data.cameraRotation.eulerAngles.x;
-                if (loadedCameraPitch > 180f)
-                    loadedCameraPitch -= 360f;
-                rotationX = loadedCameraPitch;
+                // Restore camera rotation and FOV.
+                playerCam.transform.localRotation = data.cameraRotation;
+                playerCam.fieldOfView = data.cameraFOV;
+                
+                // Restore additional states.
+                isCrouching = data.isCrouching;
+                isZoomed = data.isZoomed;
+                currentHeight = data.currentHeight;
                 
                 Debug.Log("Player state restored from saved game.");
             }
-
             SaveLoadManager.DeleteSave();
         }
     }
@@ -284,4 +289,11 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, hearingRange);
         }
     }
+
+    public float RotationX { get { return rotationX; } }
+    public float RotationY { get { return rotationY; } }
+    public bool IsCrouching { get { return isCrouching; } }
+    public bool IsZoomed { get { return isZoomed; } }
+    public float CurrentHeight { get { return currentHeight; } }
+
 }
