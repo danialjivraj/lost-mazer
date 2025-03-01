@@ -162,9 +162,12 @@ public class PauseMenu : MonoBehaviour
     public void SaveAndGoBackToMainMenu()
     {
         PlayerController playerController = FindObjectOfType<PlayerController>();
-        if (playerController != null)
+        PlayerHealth playerHealthScript = FindObjectOfType<PlayerHealth>();
+
+        if (playerController != null && playerHealthScript != null)
         {
             GameStateData data = new GameStateData();
+            // player related position, etc
             data.playerPosition = playerController.transform.position;
             data.playerRotation = playerController.transform.rotation;
             data.cameraRotation = playerController.playerCam.transform.localRotation;
@@ -178,11 +181,16 @@ public class PauseMenu : MonoBehaviour
             
             data.score = ScoreManager.instance.CurrentScore;
 
+            // player's health
+            data.playerHealth = playerHealthScript.CurrentHealth;
+
+            // key
             if (KeyController.instance != null)
             {
                 data.playerHasKey = KeyController.instance.hasKey;
             }
 
+            // chest states
             UseChest[] chests = FindObjectsOfType<UseChest>();
             foreach (UseChest chest in chests)
             {
@@ -202,7 +210,7 @@ public class PauseMenu : MonoBehaviour
                 data.chestStates.Add(chestState);
             }
             
-            // Save pickup item states
+            // pickup item states
             List<PickupItemState> pickupStates = new List<PickupItemState>();
             PickUpItems[] pickups = FindObjectsOfType<PickUpItems>();
             foreach (PickUpItems pickup in pickups)
@@ -228,6 +236,7 @@ public class PauseMenu : MonoBehaviour
             }
             data.pickupItemStates = pickupStates;
 
+            // lantern
             LanternController lanternController = FindObjectOfType<LanternController>();
             if (lanternController != null)
             {
@@ -236,6 +245,7 @@ public class PauseMenu : MonoBehaviour
                 data.lanternState.isLanternActive = lanternController.IsLanternActive();
             }
 
+            // locker
             foreach (LockerInteraction locker in LockerInteraction.allLockers)
             {
                 data.lockerStates.Add(locker.GetLockerState());
@@ -246,7 +256,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            Debug.LogError("PlayerController not found!");
+            Debug.LogError("PlayerController or PlayerHealth not found!");
         }
 
         Time.timeScale = 1f;

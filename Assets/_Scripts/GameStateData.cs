@@ -36,6 +36,7 @@ public class LockerState
 [System.Serializable]
 public class GameStateData
 {
+
     public Vector3 playerPosition;
     public Quaternion playerRotation;
     public Quaternion cameraRotation;
@@ -46,6 +47,8 @@ public class GameStateData
     public bool isZoomed;
     public float currentHeight;
     public float cameraFOV;
+
+    public int playerHealth;
 
     public int score;
     public bool playerHasKey;

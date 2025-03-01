@@ -11,7 +11,15 @@ public class PlayerHealth : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        GameStateData data = SaveLoadManager.LoadGame();
+        if (data != null && data.playerHealth > 0)
+        {
+            currentHealth = data.playerHealth;
+        }
+        else
+        {
+            currentHealth = maxHealth;
+        }
     }
 
     public void TakeDamage(int damage)
