@@ -24,6 +24,16 @@ public class LanternState
 }
 
 [System.Serializable]
+public class LockerState
+{
+    public string lockerId;
+    public bool isOpen;
+    public bool isPlayerInside;
+    
+    public float animNormalizedTime;
+}
+
+[System.Serializable]
 public class GameStateData
 {
     public Vector3 playerPosition;
@@ -43,4 +53,6 @@ public class GameStateData
     public List<PickupItemState> pickupItemStates = new List<PickupItemState>();
 
     public LanternState lanternState;
+
+    public List<LockerState> lockerStates = new List<LockerState>();
 }

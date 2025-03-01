@@ -233,6 +233,11 @@ public class PauseMenu : MonoBehaviour
                 data.lanternState.isLanternActive = lanternController.IsLanternActive();
             }
 
+            foreach (LockerInteraction locker in LockerInteraction.allLockers)
+            {
+                data.lockerStates.Add(locker.GetLockerState());
+            }
+
             SaveLoadManager.SaveGame(data);
             Debug.Log("Game state saved. Returning to main menu.");
         }

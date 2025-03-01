@@ -4,15 +4,15 @@ using UnityEngine;
 public class LockerInteraction : MonoBehaviour
 {
     // Static list of all active LockerInteraction instances.
-    private static List<LockerInteraction> allLockers = new List<LockerInteraction>();
+    public static List<LockerInteraction> allLockers = new List<LockerInteraction>();
 
-    // Existing fields...
+    public string lockerId;
+
     public HandUIHandler handUIHandler;
     public Animator lockerAnimator;
     public Transform player;
     private bool inReach;
     private bool isLockerOpen = false;
-    private bool isPlayerInside = false;
     public AudioSource lockerOpenSound;
     public AudioSource lockerCloseSound;
     public float soundVolume = 1.0f;
@@ -20,19 +20,37 @@ public class LockerInteraction : MonoBehaviour
 
     void Awake()
     {
-        // Add this instance to the static list.
+        if (string.IsNullOrEmpty(lockerId))
+        {
+            lockerId = gameObject.name + "_" + transform.position.x + "_" + transform.position.y + "_" + transform.position.z;
+        }
+
         allLockers.Add(this);
 
-        // Set up audio volumes.
         if (lockerOpenSound != null)
             lockerOpenSound.volume = soundVolume;
         if (lockerCloseSound != null)
             lockerCloseSound.volume = soundVolume;
     }
 
+    void Start()
+    {
+        GameStateData data = SaveLoadManager.LoadGame();
+        if (data != null)
+        {
+            foreach (LockerState state in data.lockerStates)
+            {
+                LockerInteraction locker = LockerInteraction.allLockers.Find(l => l.lockerId == state.lockerId);
+                if (locker != null)
+                {
+                    locker.ApplyLockerState(state);
+                }
+            }
+        }
+    }
+
     void OnDestroy()
     {
-        // Remove this instance when it's destroyed.
         allLockers.Remove(this);
     }
 
@@ -82,6 +100,38 @@ public class LockerInteraction : MonoBehaviour
 
         if (lockerAnimator != null)
         {
+            lockerAnimator.SetBool("isOpen", isLockerOpen);
+        }
+    }
+
+    public LockerState GetLockerState()
+    {
+        LockerState state = new LockerState
+        {
+            lockerId = lockerId,
+            isOpen = isLockerOpen,
+            isPlayerInside = lockerTrigger != null ? lockerTrigger.isPlayerInside : false
+        };
+
+        if (lockerAnimator != null)
+        {
+            AnimatorStateInfo stateInfo = lockerAnimator.GetCurrentAnimatorStateInfo(0);
+            state.animNormalizedTime = stateInfo.normalizedTime;
+        }
+
+        return state;
+    }
+
+    public void ApplyLockerState(LockerState state)
+    {
+        isLockerOpen = state.isOpen;
+
+        if (lockerAnimator != null)
+        {
+            string clipName = isLockerOpen ? "Locker_Open" : "Locker_Closed";
+            
+            lockerAnimator.Play(clipName, 0, state.animNormalizedTime);
+            
             lockerAnimator.SetBool("isOpen", isLockerOpen);
         }
     }
