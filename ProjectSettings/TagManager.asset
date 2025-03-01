@@ -10,6 +10,7 @@ TagManager:
   - Coin
   - Wood
   - Locker
+  - Key
   layers:
   - Default
   - TransparentFX
