@@ -115,7 +115,7 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
-        SaveLoadManager.DeleteSave();
+        //SaveLoadManager.DeleteSave();
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
@@ -159,10 +159,8 @@ public class PauseMenu : MonoBehaviour
         buttons.SetActive(true);
     }
 
-    // New method to save the game and return to the main menu
     public void SaveAndGoBackToMainMenu()
     {
-        // Find the PlayerController in the scene
         PlayerController playerController = FindObjectOfType<PlayerController>();
         if (playerController != null)
         {

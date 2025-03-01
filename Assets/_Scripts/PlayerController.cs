@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
             audioSource.outputAudioMixerGroup = footstepMixerGroup;
         }
 
-        // If there is saved game data, restore the player’s state.
+        // if saved game data exists, restores the player’s state
         if (SaveLoadManager.SaveExists())
         {
             GameStateData data = SaveLoadManager.LoadGame();
@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = data.playerRotation;
                 Debug.Log("Player state restored from saved game.");
             }
+            SaveLoadManager.DeleteSave();
         }
     }
 

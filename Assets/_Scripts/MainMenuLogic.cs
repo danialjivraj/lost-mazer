@@ -23,7 +23,7 @@ public class MainMenuLogic : MonoBehaviour
     public TMP_Text scoreTextRight;
     public int selectedLevel = 1;
 
-    public GameObject continueGameCanvas; // assign this in the Inspector
+    public GameObject continueGameCanvas;
     public TMP_Text continueGameText;
 
     void Start()
@@ -48,7 +48,6 @@ public class MainMenuLogic : MonoBehaviour
         Audio.SetActive(false);
         continueGameCanvas.SetActive(false);
         
-        // If a saved game exists, you could highlight the ContinueGameCanvas option
         if (SaveLoadManager.SaveExists())
         {
             int savedLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
@@ -73,7 +72,6 @@ public class MainMenuLogic : MonoBehaviour
         }
     }
 
-    // Called by the Play button if a scene name is provided
     public void StartButton(string selectedSceneName)
     {
         mainMenu.GetComponent<Canvas>().enabled = false;
@@ -83,7 +81,6 @@ public class MainMenuLogic : MonoBehaviour
         else
             Debug.LogWarning("Button sound not assigned!");
 
-        // If a saved game exists, open the Continue Game Canvas instead of level selection
         if (SaveLoadManager.SaveExists())
         {
             continueGameCanvas.SetActive(true);
@@ -111,16 +108,13 @@ public class MainMenuLogic : MonoBehaviour
         }
     }
 
-    // Called when the player selects "Yes, Continue" on the ContinueGameCanvas
     public void ContinueGameYes()
     {
         GameStateData data = SaveLoadManager.LoadGame();
         if (data != null)
         {
-            // Assume the saved level number is stored in PlayerPrefs "CurrentLevel"
             int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
             SceneManager.LoadScene("Level " + currentLevel);
-            // In the level scene, the PlayerController (or a game manager) will restore the player's state
         }
         else
         {
@@ -128,7 +122,6 @@ public class MainMenuLogic : MonoBehaviour
         }
     }
 
-    // Called when the player selects "No, delete saved game"
     public void ContinueGameNo()
     {
         SaveLoadManager.DeleteSave();
@@ -136,7 +129,6 @@ public class MainMenuLogic : MonoBehaviour
         level.SetActive(true);
     }
 
-    // Updated LevelButton() method: if a saved game exists, enable the ContinueGameCanvas instead.
     public void LevelButton()
     {
         buttonSound.Play();
@@ -144,7 +136,6 @@ public class MainMenuLogic : MonoBehaviour
         
         if (SaveLoadManager.SaveExists())
         {
-            // If there's a saved game, disable all other canvases and enable Continue Game
             level.SetActive(false);
             controls.SetActive(false);
             score.SetActive(false);
@@ -153,7 +144,6 @@ public class MainMenuLogic : MonoBehaviour
         }
         else
         {
-            // No saved game, so open the Level selection canvas
             continueGameCanvas.SetActive(false);
             level.SetActive(true);
             controls.SetActive(false);
