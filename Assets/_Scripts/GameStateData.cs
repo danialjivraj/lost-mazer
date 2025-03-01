@@ -48,6 +48,7 @@ public class GameStateData
     public float cameraFOV;
 
     public int score;
+    public bool playerHasKey;
 
     public List<ChestState> chestStates = new List<ChestState>();
     public List<PickupItemState> pickupItemStates = new List<PickupItemState>();

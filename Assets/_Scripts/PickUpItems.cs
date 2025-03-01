@@ -115,6 +115,15 @@ public class PickUpItems : MonoBehaviour
         if (objToActivate != null)
             objToActivate.SetActive(true);
 
+        // if item is key
+        if (objToActivate.CompareTag("Key"))
+        {
+            if (KeyController.instance != null)
+            {
+                KeyController.instance.PickUpKey();
+            }
+        }
+
         // if item is lantern
         LanternController lanternController = FindObjectOfType<LanternController>();
         if (lanternController != null && objToActivate != null && objToActivate.CompareTag("Lantern"))

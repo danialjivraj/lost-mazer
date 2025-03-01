@@ -176,10 +176,13 @@ public class PauseMenu : MonoBehaviour
             data.currentHeight = playerController.CurrentHeight;
             data.cameraFOV = playerController.playerCam.fieldOfView;
             
-            // NEW: Save the current score from ScoreManager.
-            data.score = ScoreManager.instance.CurrentScore; // Use a public property (see below)
-            
-            // Save chest states (unchanged)
+            data.score = ScoreManager.instance.CurrentScore;
+
+            if (KeyController.instance != null)
+            {
+                data.playerHasKey = KeyController.instance.hasKey;
+            }
+
             UseChest[] chests = FindObjectsOfType<UseChest>();
             foreach (UseChest chest in chests)
             {
@@ -199,7 +202,7 @@ public class PauseMenu : MonoBehaviour
                 data.chestStates.Add(chestState);
             }
             
-            // Save pickup item states (unchanged)
+            // Save pickup item states
             List<PickupItemState> pickupStates = new List<PickupItemState>();
             PickUpItems[] pickups = FindObjectsOfType<PickUpItems>();
             foreach (PickUpItems pickup in pickups)
