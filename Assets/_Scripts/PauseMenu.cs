@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
 
     private bool isDragging = false;
     private Vector3 dragOffset;
+    public AudioSource buttonSound;
 
     void Start()
     {
@@ -59,6 +60,7 @@ public class PauseMenu : MonoBehaviour
 
     public void PauseGame()
     {
+        buttonSound.Play();
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         
@@ -82,6 +84,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        buttonSound.Play();
         pauseMenu.SetActive(false);
         audioSettingsMenu.SetActive(false);
         Time.timeScale = 1f;
@@ -115,15 +118,24 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        buttonSound.Play();
         //SaveLoadManager.DeleteSave();
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 
+    private IEnumerator RetryAfterSound()
+    {
+        yield return new WaitForSeconds(buttonSound.clip.length);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     public void Retry()
     {
+        buttonSound.Play();
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        StartCoroutine(RetryAfterSound());
     }
 
     private void LockCursor()
@@ -147,6 +159,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenAudioSettings()
     {
+        buttonSound.Play();
         Debug.Log("Opening Audio Settings");
         buttons.SetActive(false);
         audioSettingsMenu.SetActive(true);
@@ -154,6 +167,7 @@ public class PauseMenu : MonoBehaviour
 
     public void CloseAudioSettings()
     {
+        buttonSound.Play();
         Debug.Log("Closing Audio Settings");
         audioSettingsMenu.SetActive(false);
         buttons.SetActive(true);
@@ -161,6 +175,8 @@ public class PauseMenu : MonoBehaviour
 
     public void SaveAndGoBackToMainMenu()
     {
+        buttonSound.Play();
+
         PlayerController playerController = FindObjectOfType<PlayerController>();
         PlayerHealth playerHealthScript = FindObjectOfType<PlayerHealth>();
 

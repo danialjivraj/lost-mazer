@@ -110,6 +110,7 @@ public class MainMenuLogic : MonoBehaviour
 
     public void ContinueGameYes()
     {
+        buttonSound.Play();
         GameStateData data = SaveLoadManager.LoadGame();
         if (data != null)
         {
@@ -124,6 +125,7 @@ public class MainMenuLogic : MonoBehaviour
 
     public void ContinueGameNo()
     {
+        buttonSound.Play();
         SaveLoadManager.DeleteSave(); // later on find a way to actually delete all this stuff as soon as player enters the game
         PickupItemManager.pickedUpItemIds.Clear(); // later on find a way to actually delete all this stuff as soon as player enters the game
         continueGameCanvas.SetActive(false);
