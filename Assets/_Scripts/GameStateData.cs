@@ -53,6 +53,9 @@ public class GameStateData
     public int score;
     public bool playerHasKey;
 
+    public bool isReadingNote;
+    public bool isReadableViewActive;
+
     public List<ChestState> chestStates = new List<ChestState>();
     public List<PickupItemState> pickupItemStates = new List<PickupItemState>();
 

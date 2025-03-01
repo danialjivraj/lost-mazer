@@ -179,6 +179,7 @@ public class PauseMenu : MonoBehaviour
 
         PlayerController playerController = FindObjectOfType<PlayerController>();
         PlayerHealth playerHealthScript = FindObjectOfType<PlayerHealth>();
+        ReadNotes readNotes = FindObjectOfType<ReadNotes>();
 
         if (playerController != null && playerHealthScript != null)
         {
@@ -205,6 +206,10 @@ public class PauseMenu : MonoBehaviour
             {
                 data.playerHasKey = KeyController.instance.hasKey;
             }
+
+            // reading note
+            data.isReadingNote = ReadNotes.IsReadingNote;
+            data.isReadableViewActive = readNotes.GetIsReadableViewActive();
 
             // chest states
             UseChest[] chests = FindObjectsOfType<UseChest>();

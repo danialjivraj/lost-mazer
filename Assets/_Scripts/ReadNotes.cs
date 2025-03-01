@@ -32,8 +32,59 @@ public class ReadNotes : MonoBehaviour
         if (hud != null) hud.SetActive(true);
         if (inv != null) inv.SetActive(true);
         if (readableNoteUI != null) readableNoteUI.SetActive(false);
-
         inReach = false;
+
+        if (SaveLoadManager.SaveExists())
+        {
+            GameStateData data = SaveLoadManager.LoadGame();
+            if (data != null)
+            {
+                if (data.isReadingNote)
+                {
+                    if (noteUI != null)
+                        noteUI.SetActive(true);
+                    if (hud != null)
+                        hud.SetActive(false);
+                    if (inv != null)
+                        inv.SetActive(false);
+                    if (handUIHandler != null)
+                        handUIHandler.HideHandUI();
+
+                    if (playerController != null)
+                    {
+                        playerController.StopFootsteps();
+                        StartCoroutine(DisablePlayerControllerNextFrame());
+                    }
+
+                    IsReadingNote = true;
+                }
+                else
+                {
+                    if (noteUI != null)
+                        noteUI.SetActive(false);
+                    IsReadingNote = false;
+                }
+
+                if (readableNoteUI != null)
+                {
+                    readableNoteUI.SetActive(data.isReadableViewActive);
+                    isReadableViewActive = data.isReadableViewActive;
+                }
+
+                Debug.Log("Note reading state restored from saved game.");
+            }
+        }
+    }
+
+    IEnumerator DisablePlayerControllerNextFrame()
+    {
+        yield return null;
+        if (playerController != null)
+        {
+            playerController.enabled = false;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -83,14 +134,12 @@ public class ReadNotes : MonoBehaviour
 
         if (playerController != null)
         {
+            playerController.StopFootsteps();
             playerController.enabled = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-
-        playerController.StopFootsteps();
-        playerController.enabled = false;
-
+        
         IsReadingNote = true;
     }
 
@@ -123,5 +172,10 @@ public class ReadNotes : MonoBehaviour
 
         isReadableViewActive = false;
         IsReadingNote = false;
+    }
+
+    public bool GetIsReadableViewActive()
+    {
+        return isReadableViewActive;
     }
 }
