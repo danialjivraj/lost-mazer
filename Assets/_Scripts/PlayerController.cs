@@ -20,8 +20,6 @@ public class PlayerController : MonoBehaviour
     public float cameraRotationSmooth = 5f;
 
     public AudioClip[] woodFootstepSounds;
-    public AudioClip[] tileFootstepSounds;
-    public AudioClip[] carpetFootstepSounds;
     public Transform footstepAudioPosition;
     public AudioSource audioSource;
     public AudioMixerGroup footstepMixerGroup;
