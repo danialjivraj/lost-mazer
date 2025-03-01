@@ -115,6 +115,7 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        SaveLoadManager.DeleteSave();
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
@@ -156,5 +157,26 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Closing Audio Settings");
         audioSettingsMenu.SetActive(false);
         buttons.SetActive(true);
+    }
+
+    // New method to save the game and return to the main menu
+    public void SaveAndGoBackToMainMenu()
+    {
+        // Find the PlayerController in the scene
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+        if (playerController != null)
+        {
+            GameStateData data = new GameStateData();
+            data.playerPosition = playerController.transform.position;
+            data.playerRotation = playerController.transform.rotation;
+            SaveLoadManager.SaveGame(data);
+            Debug.Log("Game state saved. Returning to main menu.");
+        }
+        else
+        {
+            Debug.LogError("PlayerController not found!");
+        }
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(0);
     }
 }

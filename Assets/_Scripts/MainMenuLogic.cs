@@ -23,6 +23,9 @@ public class MainMenuLogic : MonoBehaviour
     public TMP_Text scoreTextRight;
     public int selectedLevel = 1;
 
+    public GameObject continueGameCanvas; // assign this in the Inspector
+    public TMP_Text continueGameText;
+
     void Start()
     {
         UpdateScoreDisplay();
@@ -43,6 +46,18 @@ public class MainMenuLogic : MonoBehaviour
         level.SetActive(false);
         controls.SetActive(false);
         Audio.SetActive(false);
+        continueGameCanvas.SetActive(false);
+        
+        // If a saved game exists, you could highlight the ContinueGameCanvas option
+        if (SaveLoadManager.SaveExists())
+        {
+            int savedLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+            if (continueGameText != null)
+            {
+                continueGameText.text = "YOU HAVE A SAVED GAME FOR LEVEL " + savedLevel + ".\nDO YOU WISH TO CONTINUE?";
+            }
+            Debug.Log("Saved game found. ContinueGameCanvas will be used.");
+        }
 
         LockLevels();
     }
@@ -58,45 +73,93 @@ public class MainMenuLogic : MonoBehaviour
         }
     }
 
-public void StartButton(string selectedSceneName)
-{
-    mainMenu.GetComponent<Canvas>().enabled = false;
-
-    if (buttonSound != null)
-        buttonSound.Play();
-    else
-        Debug.LogWarning("Button sound not assigned!");
-
-    if (!string.IsNullOrEmpty(selectedSceneName))
+    // Called by the Play button if a scene name is provided
+    public void StartButton(string selectedSceneName)
     {
-        var digits = new string(selectedSceneName.Where(char.IsDigit).ToArray());
-        if (int.TryParse(digits, out int levelNumber))
+        mainMenu.GetComponent<Canvas>().enabled = false;
+
+        if (buttonSound != null)
+            buttonSound.Play();
+        else
+            Debug.LogWarning("Button sound not assigned!");
+
+        // If a saved game exists, open the Continue Game Canvas instead of level selection
+        if (SaveLoadManager.SaveExists())
         {
-            PlayerPrefs.SetInt("CurrentLevel", levelNumber);
+            continueGameCanvas.SetActive(true);
+            return;
+        }
+
+        if (!string.IsNullOrEmpty(selectedSceneName))
+        {
+            var digits = new string(selectedSceneName.Where(char.IsDigit).ToArray());
+            if (int.TryParse(digits, out int levelNumber))
+            {
+                PlayerPrefs.SetInt("CurrentLevel", levelNumber);
+            }
+            else
+            {
+                Debug.LogWarning("Could not determine level number from scene name: " + selectedSceneName);
+            }
+            
+            PlayerPrefs.Save();
+            SceneManager.LoadScene(selectedSceneName);
         }
         else
         {
-            Debug.LogWarning("Could not determine level number from scene name: " + selectedSceneName);
+            Debug.LogError("Scene name is empty!");
         }
-        
-        PlayerPrefs.Save();
-        SceneManager.LoadScene(selectedSceneName);
     }
-    else
-    {
-        Debug.LogError("Scene name is empty!");
-    }
-}
 
+    // Called when the player selects "Yes, Continue" on the ContinueGameCanvas
+    public void ContinueGameYes()
+    {
+        GameStateData data = SaveLoadManager.LoadGame();
+        if (data != null)
+        {
+            // Assume the saved level number is stored in PlayerPrefs "CurrentLevel"
+            int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+            SceneManager.LoadScene("Level " + currentLevel);
+            // In the level scene, the PlayerController (or a game manager) will restore the player's state
+        }
+        else
+        {
+            Debug.LogError("No saved game data found!");
+        }
+    }
+
+    // Called when the player selects "No, delete saved game"
+    public void ContinueGameNo()
+    {
+        SaveLoadManager.DeleteSave();
+        continueGameCanvas.SetActive(false);
+        level.SetActive(true);
+    }
+
+    // Updated LevelButton() method: if a saved game exists, enable the ContinueGameCanvas instead.
     public void LevelButton()
     {
         buttonSound.Play();
-
         mainMenu.GetComponent<Canvas>().enabled = false;
-        level.SetActive(true);
-        controls.SetActive(false);
-        score.SetActive(false);
-        Audio.SetActive(true);
+        
+        if (SaveLoadManager.SaveExists())
+        {
+            // If there's a saved game, disable all other canvases and enable Continue Game
+            level.SetActive(false);
+            controls.SetActive(false);
+            score.SetActive(false);
+            Audio.SetActive(false);
+            continueGameCanvas.SetActive(true);
+        }
+        else
+        {
+            // No saved game, so open the Level selection canvas
+            continueGameCanvas.SetActive(false);
+            level.SetActive(true);
+            controls.SetActive(false);
+            score.SetActive(false);
+            Audio.SetActive(true);
+        }
     }
 
     public void ScoreButton()
@@ -202,13 +265,13 @@ public void StartButton(string selectedSceneName)
         settingsMenu.GetComponent<Canvas>().enabled = false;
         score.SetActive(false);
         level.SetActive(false);
+        continueGameCanvas.SetActive(false);
     }
 
     public async void OnLevelButtonClicked(int level)
     {
         buttonSound.Play();
 
-        // fetchs the high scores for the selected level
         string playerId = PlayerIdManager.instance.GetPlayerId();
         var dataStore = Backendless.Data.Of("HighScores");
         var query = DataQueryBuilder.Create();

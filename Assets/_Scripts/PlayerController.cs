@@ -73,6 +73,18 @@ public class PlayerController : MonoBehaviour
         {
             audioSource.outputAudioMixerGroup = footstepMixerGroup;
         }
+
+        // If there is saved game data, restore the player’s state.
+        if (SaveLoadManager.SaveExists())
+        {
+            GameStateData data = SaveLoadManager.LoadGame();
+            if (data != null)
+            {
+                transform.position = data.playerPosition;
+                transform.rotation = data.playerRotation;
+                Debug.Log("Player state restored from saved game.");
+            }
+        }
     }
 
     void Update()
@@ -204,8 +216,7 @@ public class PlayerController : MonoBehaviour
                 audioSource.volume = running ? 1.2f : 0.5f;
                 audioSource.Play();
 
-                // Emit sound event
-                float volume = running ? 1.2f : 0.5f; // Running is louder
+                float volume = running ? 1.2f : 0.5f;
                 OnFootstep.Invoke(transform.position, volume);
 
                 yield return new WaitForSeconds(running ? 0.3f : 0.5f);
@@ -244,23 +255,22 @@ public class PlayerController : MonoBehaviour
         {
             float hearingRange = 0f;
 
-            if (Input.GetKey(KeyCode.LeftShift)) // running
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 hearingRange = runningHearingRange;
-                Gizmos.color = Color.red; // red for running
+                Gizmos.color = Color.red;
             }
-            else if (isCrouching) // crouching
+            else if (isCrouching)
             {
                 hearingRange = crouchingHearingRange;
-                Gizmos.color = Color.green; // green for crouching
+                Gizmos.color = Color.green;
             }
-            else // walking
+            else
             {
                 hearingRange = walkingHearingRange;
-                Gizmos.color = Color.yellow; // yellow for walking
+                Gizmos.color = Color.yellow;
             }
 
-            // hearing range
             Gizmos.DrawWireSphere(transform.position, hearingRange);
         }
     }
