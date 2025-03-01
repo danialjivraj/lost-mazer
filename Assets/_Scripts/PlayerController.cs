@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
                 
                 Debug.Log("Player state restored from saved game.");
             }
-            SaveLoadManager.DeleteSave();
+            //SaveLoadManager.DeleteSave();
         }
     }
 

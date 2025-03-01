@@ -48,6 +48,23 @@ public class LanternController : MonoBehaviour
 
         if (lanternWarning != null)
             lanternWarning.ResetNotification();
+
+        // Attempt to load the lantern state from saved data.
+        GameStateData data = SaveLoadManager.LoadGame();
+        if (data != null && data.lanternState != null)
+        {
+            hasLantern = data.lanternState.hasLantern;
+            isLanternActive = data.lanternState.isLanternActive;
+            
+            // If the player has the lantern, update the visuals accordingly.
+            if (hasLantern)
+            {
+                if (arm != null)
+                    arm.SetActive(isLanternActive);
+                if (animator != null)
+                    animator.SetBool("isLanternActive", isLanternActive);
+            }
+        }
     }
 
     void Update()
@@ -166,4 +183,10 @@ public class LanternController : MonoBehaviour
     {
         return isLanternActive;
     }
+
+    public bool HasLantern()
+{
+    return hasLantern;
+}
+
 }

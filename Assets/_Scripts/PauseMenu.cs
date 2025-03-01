@@ -176,6 +176,63 @@ public class PauseMenu : MonoBehaviour
             data.currentHeight = playerController.CurrentHeight;
             data.cameraFOV = playerController.playerCam.fieldOfView;
             
+            // NEW: Save the current score from ScoreManager.
+            data.score = ScoreManager.instance.CurrentScore; // Use a public property (see below)
+            
+            // Save chest states (unchanged)
+            UseChest[] chests = FindObjectsOfType<UseChest>();
+            foreach (UseChest chest in chests)
+            {
+                ChestState chestState = new ChestState
+                {
+                    chestId = chest.chestId,
+                    isOpen = chest.GetChestState(),
+                    itemPickedUpStates = new List<bool>()
+                };
+
+                for (int i = 0; i < chest.objectsToActivate.Length; i++)
+                {
+                    bool pickedUp = chest.objectsToActivate[i] == null;
+                    chestState.itemPickedUpStates.Add(pickedUp);
+                }
+
+                data.chestStates.Add(chestState);
+            }
+            
+            // Save pickup item states (unchanged)
+            List<PickupItemState> pickupStates = new List<PickupItemState>();
+            PickUpItems[] pickups = FindObjectsOfType<PickUpItems>();
+            foreach (PickUpItems pickup in pickups)
+            {
+                PickupItemState state = new PickupItemState
+                {
+                    itemId = pickup.itemId,
+                    isPickedUp = false
+                };
+                pickupStates.Add(state);
+            }
+            foreach (string id in PickupItemManager.pickedUpItemIds)
+            {
+                if (!pickupStates.Exists(s => s.itemId == id))
+                {
+                    PickupItemState state = new PickupItemState
+                    {
+                        itemId = id,
+                        isPickedUp = true
+                    };
+                    pickupStates.Add(state);
+                }
+            }
+            data.pickupItemStates = pickupStates;
+
+            LanternController lanternController = FindObjectOfType<LanternController>();
+            if (lanternController != null)
+            {
+                data.lanternState = new LanternState();
+                data.lanternState.hasLantern = lanternController.HasLantern();
+                data.lanternState.isLanternActive = lanternController.IsLanternActive();
+            }
+
             SaveLoadManager.SaveGame(data);
             Debug.Log("Game state saved. Returning to main menu.");
         }

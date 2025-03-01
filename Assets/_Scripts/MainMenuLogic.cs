@@ -124,7 +124,8 @@ public class MainMenuLogic : MonoBehaviour
 
     public void ContinueGameNo()
     {
-        SaveLoadManager.DeleteSave();
+        SaveLoadManager.DeleteSave(); // later on find a way to actually delete all this stuff as soon as player enters the game
+        PickupItemManager.pickedUpItemIds.Clear();
         continueGameCanvas.SetActive(false);
         level.SetActive(true);
     }

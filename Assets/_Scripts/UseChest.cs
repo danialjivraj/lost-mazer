@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UseChest : MonoBehaviour
 {
+    public string chestId;
+
     private GameObject OB;
     public HandUIHandler handUIHandler;
     public GameObject[] objectsToActivate;
@@ -14,6 +16,14 @@ public class UseChest : MonoBehaviour
     private bool inReach;
     private bool isChestOpen = false;
     public PickUpNotification pickUpNotification;
+
+    void Awake()
+    {
+        if (string.IsNullOrEmpty(chestId))
+        {
+            chestId = gameObject.name + "_" + transform.position.x + "_" + transform.position.y + "_" + transform.position.z;
+        }
+    }
 
     void Start()
     {
@@ -31,6 +41,23 @@ public class UseChest : MonoBehaviour
         else
         {
             Debug.LogWarning("Chest open sound AudioSource is not assigned.");
+        }
+
+        // Load chest state
+        LoadChestState();
+    }
+
+    void LoadChestState()
+    {
+        GameStateData data = SaveLoadManager.LoadGame();
+        if (data != null)
+        {
+            ChestState chestState = data.chestStates.Find(c => c.chestId == chestId);
+            if (chestState != null && chestState.isOpen)
+            {
+                // Open the chest without playing the sound and pass in the item states.
+                OpenChest(false, chestState.itemPickedUpStates);
+            }
         }
     }
 
@@ -65,40 +92,72 @@ public class UseChest : MonoBehaviour
         }
     }
 
-    void OpenChest()
+    void OpenChest(bool playSound = true, List<bool> itemPickedUpStates = null)
     {
-        if (chestOpenSound != null && !chestOpenSound.isPlaying)
+        if (playSound)
         {
-            chestOpenSound.Play();
+            if (chestOpenSound != null && !chestOpenSound.isPlaying)
+            {
+                chestOpenSound.Play();
+            }
+            else
+            {
+                Debug.LogWarning("Chest open sound AudioSource is not assigned or is already playing.");
+            }
         }
-        else
-        {
-            Debug.LogWarning("Chest open sound AudioSource is not assigned or is already playing.");
-        }
-
+        
         if (handUIHandler != null)
             handUIHandler.HideHandUI();
 
-        foreach (GameObject obj in objectsToActivate)
+        // Loop over each item and decide whether to activate it.
+        for (int i = 0; i < objectsToActivate.Length; i++)
         {
-            obj.SetActive(true);
+            // If we have saved states and the corresponding state is true, then the item was picked up.
+            bool pickedUp = itemPickedUpStates != null 
+                            && itemPickedUpStates.Count > i 
+                            && itemPickedUpStates[i];
+            if (pickedUp)
+            {
+                // Optionally, destroy the object if it still exists.
+                if (objectsToActivate[i] != null)
+                    Destroy(objectsToActivate[i]);
+            }
+            else
+            {
+                // Activate the object if it wasn’t picked up.
+                if (objectsToActivate[i] != null)
+                    objectsToActivate[i].SetActive(true);
+            }
         }
 
         if (OB.GetComponent<Animator>() != null)
-        {
             OB.GetComponent<Animator>().SetBool("open", true);
-        }
 
         if (OB.GetComponent<BoxCollider>() != null)
-        {
             OB.GetComponent<BoxCollider>().enabled = false;
-        }
 
         isChestOpen = true;
 
         if (pickUpNotification != null)
-        {
             pickUpNotification.ShowNotification();
+    }
+
+
+    void SaveChestState()
+    {
+        GameStateData data = SaveLoadManager.LoadGame() ?? new GameStateData();
+        ChestState chestState = data.chestStates.Find(c => c.chestId == chestId);
+        if (chestState == null)
+        {
+            chestState = new ChestState { chestId = chestId };
+            data.chestStates.Add(chestState);
         }
+        chestState.isOpen = isChestOpen;
+        SaveLoadManager.SaveGame(data);
+    }
+
+    public bool GetChestState()
+    {
+        return isChestOpen;
     }
 }

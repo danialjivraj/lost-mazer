@@ -14,7 +14,7 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text scoreText;
 
     private int score = 0;
-
+    public int CurrentScore { get { return score; } }
     private List<Dictionary<string, object>> levelHighScoreRows = new List<Dictionary<string, object>>(); // stores the entire row data for the current level's high scores
 
     private string playerId;
@@ -27,6 +27,11 @@ public class ScoreManager : MonoBehaviour
 
     void Start()
     {
+        GameStateData data = SaveLoadManager.LoadGame();
+        if (data != null)
+        {
+            score = data.score;
+        }
         scoreText.text = score.ToString();
     }
 
