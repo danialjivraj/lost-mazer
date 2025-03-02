@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    public Camera playerCam;
+    // novement and physics
     public float walkSpeed = 3f;
     public float runSpeed = 5f;
     public float crouchSpeed = 1.5f;
@@ -15,34 +15,27 @@ public class PlayerController : MonoBehaviour
     public float crouchJumpPower = 3f;
     public float gravity = 10f;
 
+    private Vector3 moveDirection = Vector3.zero;
+    private CharacterController characterController;
+    private bool canMove = true;
+
+    // camera and look
+    public Camera playerCam;
     public float lookSpeed = 2f;
     public float lookXLimit = 75f;
     public float cameraRotationSmooth = 5f;
 
-    public AudioClip[] woodFootstepSounds;
-    public Transform footstepAudioPosition;
-    public AudioSource audioSource;
-    public AudioMixerGroup footstepMixerGroup;
+    private float rotationX = 0;
+    private float rotationY = 0;
 
-    private bool isWalking = false;
-    private bool isFootstepCoroutineRunning = false;
-    private AudioClip[] currentFootstepSounds;
-
-    Vector3 moveDirection = Vector3.zero;
-    float rotationX = 0;
-    float rotationY = 0;
-
-    public int ZoomFOV = 35;
-    public int initialFOV;
-    public float cameraZoomSmooth = 1;
-    private bool isZoomed = false;
-
+    // crouching
     private bool isCrouching = false;
     private float standingHeight = 2.5f;
     private float crouchHeight = 1.5f;
     private float currentHeight;
     private float crouchTransitionSpeed = 5f;
 
+    // peeking
     private bool isPeekingLeft = false;
     private bool isPeekingRight = false;
     private Vector3 normalCameraPosition;
@@ -52,9 +45,28 @@ public class PlayerController : MonoBehaviour
     private Vector3 currentCameraVelocity;
     private Quaternion currentRotationVelocity;
 
-    private bool canMove = true;
-    CharacterController characterController;
-    
+    // zoom
+    public int ZoomFOV = 35;
+    public int initialFOV;
+    public float cameraZoomSmooth = 1;
+    private bool isZoomed = false;
+
+    // footstep sounds
+    public AudioClip[] woodFootstepSounds;
+    public Transform footstepAudioPosition;
+    public AudioSource audioSource;
+    public AudioMixerGroup footstepMixerGroup;
+    private bool isWalking = false;
+    private bool isFootstepCoroutineRunning = false;
+    private AudioClip[] currentFootstepSounds;
+
+    // breathing sounds
+    public AudioSource breathingSlowSource;
+    public AudioSource breathingFastSource;
+    public float breathingFadeDuration = 1.0f;
+    private bool wasRunning = false;
+
+    // hearing range
     public float runningHearingRange = 20f;
     public float walkingHearingRange = 10f;
     public float crouchingHearingRange = 5f;
@@ -75,7 +87,17 @@ public class PlayerController : MonoBehaviour
             audioSource.outputAudioMixerGroup = footstepMixerGroup;
         }
 
-        // if saved game data exists, restore the player’s state
+        if (breathingFastSource != null)
+        {
+            breathingFastSource.loop = true;
+            breathingFastSource.volume = 0f;
+        }
+        if (breathingSlowSource != null)
+        {
+            breathingSlowSource.loop = false;
+            breathingSlowSource.volume = 0f;
+        }
+
         if (SaveLoadManager.SaveExists())
         {
             GameStateData data = SaveLoadManager.LoadGame();
@@ -83,33 +105,35 @@ public class PlayerController : MonoBehaviour
             {
                 transform.position = data.playerPosition;
                 transform.rotation = data.playerRotation;
-                
-                // Restore the stored rotation values.
+
                 rotationY = data.rotationY;
                 rotationX = data.rotationX;
-                
-                // Restore camera rotation and FOV.
+
                 playerCam.transform.localRotation = data.cameraRotation;
                 playerCam.fieldOfView = data.cameraFOV;
-                
-                // Restore additional states.
+
                 isCrouching = data.isCrouching;
                 isZoomed = data.isZoomed;
                 currentHeight = data.currentHeight;
-                
+
                 Debug.Log("Player state restored from saved game.");
             }
-            //SaveLoadManager.DeleteSave();
         }
     }
 
     void Update()
     {
-        if (LockerInteraction.IsAnyLockerHiding())
-        {
-            Debug.Log("hiding!");
-        }
+        HandleMovement();
+        HandleCrouching();
+        HandleCameraLook();
+        HandlePeeking();
+        HandleZoom();
+        HandleFootsteps();
+        HandleBreathingSounds();
+    }
 
+    private void HandleMovement()
+    {
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -137,35 +161,17 @@ public class PlayerController : MonoBehaviour
         }
 
         characterController.Move(moveDirection * Time.deltaTime);
+    }
 
-        bool hasHorizontalInput = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f;
-        bool hasVerticalInput = Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
-        bool isGrounded = characterController.isGrounded;
-
-        if (isGrounded && (hasHorizontalInput || hasVerticalInput) && !isCrouching)
-        {
-            if (!isWalking)
-            {
-                isWalking = true;
-                if (!isFootstepCoroutineRunning)
-                {
-                    StartCoroutine(PlayFootstepSounds());
-                }
-            }
-        }
-        else
-        {
-            isWalking = false;
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-        }
-
+    private void HandleCrouching()
+    {
         float targetHeight = isCrouching ? crouchHeight : standingHeight;
         currentHeight = Mathf.SmoothDamp(currentHeight, targetHeight, ref currentCameraVelocity.y, 0.1f);
         characterController.height = currentHeight;
+    }
 
+    private void HandleCameraLook()
+    {
         if (canMove)
         {
             rotationX -= Input.GetAxis("Mouse Y") * lookSpeed;
@@ -174,7 +180,10 @@ public class PlayerController : MonoBehaviour
             rotationY += Input.GetAxis("Mouse X") * lookSpeed;
             transform.rotation = Quaternion.Euler(0, rotationY, 0);
         }
+    }
 
+    private void HandlePeeking()
+    {
         isPeekingLeft = Input.GetKey(KeyCode.Q);
         isPeekingRight = Input.GetKey(KeyCode.E);
 
@@ -200,7 +209,10 @@ public class PlayerController : MonoBehaviour
 
         playerCam.transform.localPosition = Vector3.SmoothDamp(playerCam.transform.localPosition, targetPosition, ref currentCameraVelocity, 0.1f);
         playerCam.transform.localRotation = Quaternion.Lerp(playerCam.transform.localRotation, Quaternion.Euler(rotationX, 0, targetTilt), Time.deltaTime * 10f);
+    }
 
+    private void HandleZoom()
+    {
         if (Input.GetButtonDown("Fire2"))
         {
             isZoomed = true;
@@ -212,6 +224,64 @@ public class PlayerController : MonoBehaviour
         }
 
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, isZoomed ? ZoomFOV : initialFOV, Time.deltaTime * cameraZoomSmooth);
+    }
+
+    private void HandleFootsteps()
+    {
+        bool hasHorizontalInput = Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f;
+        bool hasVerticalInput = Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f;
+        bool isGrounded = characterController.isGrounded;
+
+        if (isGrounded && (hasHorizontalInput || hasVerticalInput) && !isCrouching)
+        {
+            if (!isWalking)
+            {
+                isWalking = true;
+                if (!isFootstepCoroutineRunning)
+                {
+                    StartCoroutine(PlayFootstepSounds());
+                }
+            }
+        }
+        else
+        {
+            isWalking = false;
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
+
+    private void HandleBreathingSounds()
+    {
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && !isCrouching;
+
+        if (isRunning && !wasRunning)
+        {
+            if (breathingSlowSource != null && breathingSlowSource.isPlaying)
+            {
+                breathingSlowSource.Stop();
+            }
+            if (breathingFastSource != null && !breathingFastSource.isPlaying)
+            {
+                breathingFastSource.volume = 1f;
+                breathingFastSource.Play();
+            }
+        }
+        else if (!isRunning && wasRunning)
+        {
+            if (breathingFastSource != null && breathingFastSource.isPlaying)
+            {
+                breathingFastSource.Stop();
+            }
+            if (breathingSlowSource != null && !breathingSlowSource.isPlaying)
+            {
+                breathingSlowSource.volume = 1f;
+                breathingSlowSource.Play();
+            }
+        }
+        wasRunning = isRunning;
     }
 
     IEnumerator PlayFootstepSounds()
@@ -290,10 +360,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // getters
     public float RotationX { get { return rotationX; } }
     public float RotationY { get { return rotationY; } }
     public bool IsCrouching { get { return isCrouching; } }
     public bool IsZoomed { get { return isZoomed; } }
     public float CurrentHeight { get { return currentHeight; } }
-
 }
