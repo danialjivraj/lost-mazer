@@ -17,9 +17,13 @@ public class EnemyController : MonoBehaviour
     public int attackDamage = 1;
     private bool hasDealtDamage = false;
     private float nextAttackTime = 0f;
-    public AudioClip idleSound;
-    public AudioClip walkingSound;
-    public AudioClip chasingSound;
+    public AudioSource idleSound;
+    public AudioSource walkingSound;
+    public AudioSource chasingSound;
+    public AudioSource attackSound;
+    public AudioSource chaseTrack;
+    public float chaseTrackFadeSpeed = 1f;
+    private float chaseTrackTargetVolume;
     private int currentWaypointIndex = 0;
     private NavMeshAgent agent;
     private Animator animator;
@@ -40,6 +44,7 @@ public class EnemyController : MonoBehaviour
 
     private void Start()
     {
+        chaseTrackTargetVolume = chaseTrack.volume;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = true;
 
@@ -110,6 +115,8 @@ public class EnemyController : MonoBehaviour
                 return;
             }
         }
+        
+        ManageChaseTrack();
         
         switch (currentState)
         {
@@ -200,6 +207,8 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("IsAttacking", true);
         nextAttackTime = Time.time + attackCooldown;
 
+        PlaySound(attackSound);
+
         yield return new WaitForSeconds(0.3f);
 
         Vector3 attackDirection = (player.position - transform.position).normalized;
@@ -244,12 +253,50 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void PlaySound(AudioClip soundClip)
+    private void PlaySound(AudioSource soundSource)
     {
-        if (!audioSource.isPlaying || audioSource.clip != soundClip)
+        if (soundSource != idleSound) idleSound.Stop();
+        if (soundSource != walkingSound) walkingSound.Stop();
+        if (soundSource != chasingSound) chasingSound.Stop();
+        if (soundSource != attackSound) attackSound.Stop();
+
+        if (Time.timeScale == 0f)
+            return;
+
+        if (!soundSource.isPlaying)
         {
-            audioSource.clip = soundClip;
-            audioSource.Play();
+            soundSource.Play();
+        }
+    }
+
+    private void ManageChaseTrack()
+    {
+        if (Time.timeScale == 0f)
+            return;
+
+        if (currentState == EnemyState.Chase || currentState == EnemyState.Attack)
+        {
+            if (!chaseTrack.isPlaying)
+            {
+                chaseTrack.volume = 0f;
+                chaseTrack.Play();
+            }
+            if (chaseTrack.volume < chaseTrackTargetVolume)
+            {
+                chaseTrack.volume = Mathf.Min(chaseTrackTargetVolume, chaseTrack.volume + chaseTrackFadeSpeed * Time.deltaTime);
+            }
+        }
+        else
+        {
+            if (chaseTrack.isPlaying)
+            {
+                chaseTrack.volume = Mathf.Max(0f, chaseTrack.volume - chaseTrackFadeSpeed * Time.deltaTime);
+                if (chaseTrack.volume <= 0f)
+                {
+                    chaseTrack.Stop();
+                    chaseTrack.volume = chaseTrackTargetVolume;
+                }
+            }
         }
     }
 

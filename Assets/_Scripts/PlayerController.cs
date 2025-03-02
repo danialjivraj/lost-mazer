@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     public float runningHearingRange = 20f;
     public float walkingHearingRange = 10f;
     public float crouchingHearingRange = 5f;
+    public UnityEvent<Vector3, float> OnFootstep;
 
     void Start()
     {
@@ -213,7 +214,6 @@ public class PlayerController : MonoBehaviour
         playerCam.fieldOfView = Mathf.Lerp(playerCam.fieldOfView, isZoomed ? ZoomFOV : initialFOV, Time.deltaTime * cameraZoomSmooth);
     }
 
-    public UnityEvent<Vector3, float> OnFootstep;
     IEnumerator PlayFootstepSounds()
     {
         isFootstepCoroutineRunning = true;
