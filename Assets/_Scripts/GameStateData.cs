@@ -14,6 +14,7 @@ public class PickupItemState
 {
     public string itemId;
     public bool isPickedUp;
+    public float remainingRespawnTime;
 }
 
 [System.Serializable]

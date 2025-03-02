@@ -184,21 +184,17 @@ public class PauseMenu : MonoBehaviour
         if (playerController != null && playerHealthScript != null)
         {
             GameStateData data = new GameStateData();
-            // player related position, etc
+            // player-related state
             data.playerPosition = playerController.transform.position;
             data.playerRotation = playerController.transform.rotation;
             data.cameraRotation = playerController.playerCam.transform.localRotation;
-            
             data.rotationX = playerController.RotationX;
             data.rotationY = playerController.RotationY;
             data.isCrouching = playerController.IsCrouching;
             data.isZoomed = false;
             data.currentHeight = playerController.CurrentHeight;
             data.cameraFOV = playerController.playerCam.fieldOfView;
-            
             data.score = ScoreManager.instance.CurrentScore;
-
-            // player's health
             data.playerHealth = playerHealthScript.CurrentHealth;
 
             // key
@@ -230,19 +226,37 @@ public class PauseMenu : MonoBehaviour
 
                 data.chestStates.Add(chestState);
             }
-            
+
             // pickup item states
             List<PickupItemState> pickupStates = new List<PickupItemState>();
-            PickUpItems[] pickups = FindObjectsOfType<PickUpItems>();
-            foreach (PickUpItems pickup in pickups)
+            // respawnable items
+            PickUpItems[] respawnPickups = Resources.FindObjectsOfTypeAll<PickUpItems>();
+            foreach (PickUpItems pickup in respawnPickups)
             {
-                PickupItemState state = new PickupItemState
+                if (pickup.shouldRespawn)
                 {
-                    itemId = pickup.itemId,
-                    isPickedUp = false
-                };
-                pickupStates.Add(state);
+                    PickupItemState state = new PickupItemState
+                    {
+                        itemId = pickup.itemId,
+                        isPickedUp = PickupItemManager.pickedUpItemIds.Contains(pickup.itemId),
+                        remainingRespawnTime = (!pickup.gameObject.activeInHierarchy) ? 
+                            RespawnManager.Instance.GetRemainingRespawnTime(pickup.itemId) : 0
+                    };
+                    pickupStates.Add(state);
+                }
+                else
+                {
+                    // non-respawnable items found in the scene that have NOT been picked up
+                    PickupItemState state = new PickupItemState
+                    {
+                        itemId = pickup.itemId,
+                        isPickedUp = false,
+                        remainingRespawnTime = 0
+                    };
+                    pickupStates.Add(state);
+                }
             }
+            // non-respawnable items found in the scene that HAVE been picked up
             foreach (string id in PickupItemManager.pickedUpItemIds)
             {
                 if (!pickupStates.Exists(s => s.itemId == id))
@@ -250,7 +264,8 @@ public class PauseMenu : MonoBehaviour
                     PickupItemState state = new PickupItemState
                     {
                         itemId = id,
-                        isPickedUp = true
+                        isPickedUp = true,
+                        remainingRespawnTime = 0
                     };
                     pickupStates.Add(state);
                 }
@@ -274,7 +289,8 @@ public class PauseMenu : MonoBehaviour
 
             // enemy
             EnemyController enemy = FindObjectOfType<EnemyController>();
-            if (enemy != null) {
+            if (enemy != null)
+            {
                 data.enemyStates.Add(enemy.GetEnemyState());
             }
 

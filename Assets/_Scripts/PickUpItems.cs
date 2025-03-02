@@ -34,10 +34,22 @@ public class PickUpItems : MonoBehaviour
         if (data != null)
         {
             PickupItemState state = data.pickupItemStates.Find(s => s.itemId == itemId);
-            if (state != null && state.isPickedUp && !shouldRespawn)
+            if (state != null)
             {
-                Destroy(gameObject);
-                return;
+                // destroys non-respawnable items when picked up
+                if (state.isPickedUp && !shouldRespawn)
+                {
+                    Destroy(gameObject);
+                    return;
+                }
+                // resumes the countdown for respawnable
+                if (shouldRespawn && state.isPickedUp)
+                {
+                    gameObject.SetActive(false);
+                    float delay = state.remainingRespawnTime;
+                    RespawnManager.Instance.StartCoroutine(RespawnManager.Instance.RespawnItem(gameObject, delay, itemId));
+                    return;
+                }
             }
         }
 
@@ -53,6 +65,7 @@ public class PickUpItems : MonoBehaviour
             Debug.LogWarning("Pickup sound AudioSource is not assigned.");
         }
     }
+
     void OnEnable()
     {
         inReach = false;
@@ -149,7 +162,7 @@ public class PickUpItems : MonoBehaviour
             gameObject.SetActive(false);
             if (RespawnManager.Instance != null)
             {
-                RespawnManager.Instance.StartCoroutine(RespawnManager.Instance.RespawnItem(gameObject, respawnTime));
+                RespawnManager.Instance.StartCoroutine(RespawnManager.Instance.RespawnItem(gameObject, respawnTime, itemId));
             }
             else
             {
@@ -179,8 +192,7 @@ public class PickUpItems : MonoBehaviour
         Destroy(gameObject);
     }
 }
-
-// Static manager for tracking pickup items.
+// static manager for tracking pickup items
 public static class PickupItemManager
 {
     public static List<string> pickedUpItemIds = new List<string>();
