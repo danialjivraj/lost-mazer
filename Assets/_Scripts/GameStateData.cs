@@ -58,6 +58,13 @@ public class EnemyStateData {
 }
 
 [System.Serializable]
+public class TriggerState
+{
+    public string triggerId;
+    public bool hasTriggered;
+}
+
+[System.Serializable]
 public class GameStateData
 {
 
@@ -88,4 +95,6 @@ public class GameStateData
     public List<LockerState> lockerStates = new List<LockerState>();
 
     public List<EnemyStateData> enemyStates = new List<EnemyStateData>();
+
+    public List<TriggerState> triggerStates = new List<TriggerState>();
 }

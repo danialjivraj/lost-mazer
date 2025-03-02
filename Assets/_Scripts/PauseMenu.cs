@@ -294,6 +294,18 @@ public class PauseMenu : MonoBehaviour
                 data.enemyStates.Add(enemy.GetEnemyState());
             }
 
+            // triggers
+            Trigger[] triggers = FindObjectsOfType<Trigger>();
+            foreach (Trigger trigger in triggers)
+            {
+                TriggerState tState = new TriggerState
+                {
+                    triggerId = trigger.triggerId,
+                    hasTriggered = trigger.GetTriggeredState()
+                };
+                data.triggerStates.Add(tState);
+            }
+
             SaveLoadManager.SaveGame(data);
             Debug.Log("Game state saved. Returning to main menu.");
         }
