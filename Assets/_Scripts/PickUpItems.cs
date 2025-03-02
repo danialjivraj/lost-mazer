@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class PickUpItems : MonoBehaviour
 {
-    public string itemId; // Unique identifier for this pickup item.
+    public string itemId;
     public HandUIHandler handUIHandler;
     public GameObject objToActivate;
     public bool destroyAfterPickup = true;
     public float destroyDelay = 0.01f;
+
+    public bool shouldRespawn = false;
+    public float respawnTime = 5.0f;
 
     public AudioSource pickupSound;
     public float soundVolume = 1.0f;
@@ -21,21 +24,18 @@ public class PickUpItems : MonoBehaviour
     {
         if (string.IsNullOrEmpty(itemId))
         {
-            // Auto-generate a unique id using name and position.
             itemId = gameObject.name + "_" + transform.position.x + "_" + transform.position.y + "_" + transform.position.z;
         }
     }
 
     void Start()
     {
-        // Check if this item was already picked up (loaded state).
         GameStateData data = SaveLoadManager.LoadGame();
         if (data != null)
         {
             PickupItemState state = data.pickupItemStates.Find(s => s.itemId == itemId);
-            if (state != null && state.isPickedUp)
+            if (state != null && state.isPickedUp && !shouldRespawn)
             {
-                // Item was picked up previously, so remove it.
                 Destroy(gameObject);
                 return;
             }
@@ -52,6 +52,10 @@ public class PickUpItems : MonoBehaviour
         {
             Debug.LogWarning("Pickup sound AudioSource is not assigned.");
         }
+    }
+    void OnEnable()
+    {
+        inReach = false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -137,17 +141,30 @@ public class PickUpItems : MonoBehaviour
             ScoreManager.instance.AddPoint();
         }
 
-        // Record that this item was picked up.
         if (!PickupItemManager.pickedUpItemIds.Contains(itemId))
             PickupItemManager.pickedUpItemIds.Add(itemId);
 
-        if (destroyAfterPickup)
+        if (shouldRespawn)
+        {
+            gameObject.SetActive(false);
+            if (RespawnManager.Instance != null)
+            {
+                RespawnManager.Instance.StartCoroutine(RespawnManager.Instance.RespawnItem(gameObject, respawnTime));
+            }
+            else
+            {
+                Debug.LogWarning("RespawnManager instance not found!");
+            }
+        }
+        else if (destroyAfterPickup)
         {
             StartCoroutine(DestroyItemAfterDelay(destroyDelay));
         }
         else
         {
-            GetComponent<MeshRenderer>().enabled = false;
+            MeshRenderer mr = GetComponent<MeshRenderer>();
+            if (mr != null)
+                mr.enabled = false;
         }
 
         if (pickUpNotification != null)
