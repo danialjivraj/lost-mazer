@@ -4,19 +4,33 @@ using System.Collections;
 
 public class EnemyController : MonoBehaviour
 {
+    // movement and navigation
     public Transform[] waypoints;
-    public float idleTime = 4f;
     public float walkSpeed = 3.5f;
     public float chaseSpeed = 6.5f;
     public float chaseDelay = 2f;
-    private float chaseEndTime = 0f;
+    public float idleTime = 4f;
+    private int currentWaypointIndex = 0;
+    private NavMeshAgent agent;
+    private float idleTimer = 0f;
+
+    // player detection and interaction
     public float sightDistance = 30f;
     public float lanternSightMultiplier = 2f;
     public float attackRange = 2f;
     public float attackCooldown = 1.5f;
     public int attackDamage = 1;
-    private bool hasDealtDamage = false;
     private float nextAttackTime = 0f;
+    private Transform player;
+    private LanternController playerLantern;
+
+    // hearing and investigation
+    public float hearingRange = 20f;
+    public float runningSoundMultiplier = 2f;
+    private Vector3 lastHeardPosition;
+    private bool isInvestigating = false;
+
+    // audio
     public AudioSource idleSound;
     public AudioSource walkingSound;
     public AudioSource chasingSound;
@@ -24,45 +38,35 @@ public class EnemyController : MonoBehaviour
     public AudioSource chaseTrack;
     public float chaseTrackFadeSpeed = 1f;
     private float chaseTrackTargetVolume;
-    private int currentWaypointIndex = 0;
-    private NavMeshAgent agent;
+
+    // animation
     private Animator animator;
-    private float idleTimer = 0f;
-    private Transform player;
-    private AudioSource audioSource;
-    private LanternController playerLantern;
 
-    public float hearingRange = 20f;
-    public float runningSoundMultiplier = 2f;
-    private Vector3 lastHeardPosition;
-    private bool isInvestigating = false;
-
-    private LockerInteraction[] lockerInteractions;
-
+    // state management
     private enum EnemyState { Idle, Walk, Chase, Attack }
     private EnemyState currentState = EnemyState.Idle;
+    private float chaseEndTime = 0f;
 
-    private void Start()
+    // locker interaction
+    private LockerInteraction[] lockerInteractions;
+
+    void Start()
     {
-        chaseTrackTargetVolume = chaseTrack.volume;
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = true;
-
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        audioSource = GetComponent<AudioSource>();
         playerLantern = player.GetComponentInChildren<LanternController>();
-
-        agent.stoppingDistance = 1.5f;
-
         lockerInteractions = FindObjectsOfType<LockerInteraction>();
+
+        chaseTrackTargetVolume = chaseTrack.volume;
+        agent.stoppingDistance = 1.5f;
 
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
         {
             playerController.OnFootstep.AddListener(OnPlayerFootstep);
         }
-        
+
         GameStateData gameState = SaveLoadManager.LoadGame();
         if (gameState != null && gameState.enemyStates.Count > 0)
         {
@@ -71,6 +75,45 @@ public class EnemyController : MonoBehaviour
         else
         {
             SetDestinationToWaypoint();
+        }
+    }
+
+    void Update()
+    {
+        float currentSightDistance = sightDistance;
+        if (playerLantern != null && playerLantern.IsLanternActive())
+        {
+            currentSightDistance *= lanternSightMultiplier;
+        }
+
+        if (LockerInteraction.IsAnyLockerHiding())
+        {
+            if (currentState == EnemyState.Chase || currentState == EnemyState.Attack || isInvestigating)
+            {
+                isInvestigating = false;
+                lastHeardPosition = Vector3.zero;
+                currentState = EnemyState.Idle;
+                agent.speed = walkSpeed;
+                SetDestinationToWaypoint();
+                return;
+            }
+        }
+
+        ManageChaseTrack();
+
+        switch (currentState)
+        {
+            case EnemyState.Idle:
+                HandleIdleState(currentSightDistance);
+                break;
+            case EnemyState.Walk:
+                HandleWalkState(currentSightDistance);
+                break;
+            case EnemyState.Chase:
+                HandleChaseState(currentSightDistance);
+                break;
+            case EnemyState.Attack:
+                break;
         }
     }
 
@@ -93,110 +136,81 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void HandleIdleState(float currentSightDistance)
     {
-        float currentSightDistance = sightDistance;
-        if (playerLantern != null && playerLantern.IsLanternActive())
+        idleTimer += Time.deltaTime;
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsChasing", false);
+        animator.SetBool("IsAttacking", false);
+        PlaySound(idleSound);
+
+        if (idleTimer >= idleTime)
         {
-            currentSightDistance *= lanternSightMultiplier;
+            NextWaypoint();
         }
-        
-        // if the player is now hiding, cancel investigation/chase.
-        if (LockerInteraction.IsAnyLockerHiding())
+        CheckForPlayerDetection(currentSightDistance);
+    }
+
+    private void HandleWalkState(float currentSightDistance)
+    {
+        idleTimer = 0f;
+        animator.SetBool("IsWalking", true);
+        animator.SetBool("IsChasing", false);
+        animator.SetBool("IsAttacking", false);
+        PlaySound(walkingSound);
+
+        if (isInvestigating)
         {
-            // Cancel chase/investigation
-            if (currentState == EnemyState.Chase || currentState == EnemyState.Attack || isInvestigating)
+            agent.SetDestination(lastHeardPosition);
+
+            if (agent.remainingDistance <= agent.stoppingDistance)
             {
                 isInvestigating = false;
-                lastHeardPosition = Vector3.zero;
                 currentState = EnemyState.Idle;
-                agent.speed = walkSpeed;
-                SetDestinationToWaypoint();
-                return;
             }
         }
-        
-        ManageChaseTrack();
-        
-        switch (currentState)
+        else
         {
-            case EnemyState.Idle:
-                idleTimer += Time.deltaTime;
-                animator.SetBool("IsWalking", false);
-                animator.SetBool("IsChasing", false);
-                animator.SetBool("IsAttacking", false);
-                PlaySound(idleSound);
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                currentState = EnemyState.Idle;
+            }
+        }
+        CheckForPlayerDetection(currentSightDistance);
+    }
 
-                if (idleTimer >= idleTime)
-                {
-                    NextWaypoint();
-                }
-                CheckForPlayerDetection(currentSightDistance);
-                break;
-            case EnemyState.Walk:
-                idleTimer = 0f;
-                animator.SetBool("IsWalking", true);
-                animator.SetBool("IsChasing", false);
-                animator.SetBool("IsAttacking", false);
-                PlaySound(walkingSound);
+    private void HandleChaseState(float currentSightDistance)
+    {
+        idleTimer = 0f;
+        agent.speed = chaseSpeed;
+        agent.SetDestination(player.position);
+        animator.SetBool("IsWalking", false);
+        animator.SetBool("IsChasing", true);
+        animator.SetBool("IsAttacking", false);
+        PlaySound(chasingSound);
 
-                // moves toward the last heard position if investigating
-                if (isInvestigating)
-                {
-                    agent.SetDestination(lastHeardPosition);
+        if (Vector3.Distance(transform.position, player.position) <= attackRange && Time.time >= nextAttackTime)
+        {
+            currentState = EnemyState.Attack;
+            StartCoroutine(AttackPlayer());
+        }
 
-                    // stops investigating when reaching the destination.
-                    if (agent.remainingDistance <= agent.stoppingDistance)
-                    {
-                        isInvestigating = false;
-                        currentState = EnemyState.Idle;
-                    }
-                }
-                else
-                {
-                    if (agent.remainingDistance <= agent.stoppingDistance)
-                    {
-                        currentState = EnemyState.Idle;
-                    }
-                }
-                CheckForPlayerDetection(currentSightDistance);
-                break;
-            case EnemyState.Chase:
-                idleTimer = 0f;
-                agent.speed = chaseSpeed;
-                agent.SetDestination(player.position);
-                animator.SetBool("IsWalking", false);
-                animator.SetBool("IsChasing", true);
-                animator.SetBool("IsAttacking", false);
-                PlaySound(chasingSound);
-
-                if (Vector3.Distance(transform.position, player.position) <= attackRange && Time.time >= nextAttackTime)
-                {
-                    currentState = EnemyState.Attack;
-                    StartCoroutine(AttackPlayer());
-                }
-
-                if (Vector3.Distance(transform.position, player.position) > currentSightDistance)
-                {
-                    if (chaseEndTime == 0f)
-                    {
-                        chaseEndTime = Time.time + chaseDelay;
-                    }
-                    else if (Time.time >= chaseEndTime)
-                    {
-                        currentState = EnemyState.Walk;
-                        agent.speed = walkSpeed;
-                        chaseEndTime = 0f;
-                    }
-                }
-                else
-                {
-                    chaseEndTime = 0f;
-                }
-                break;
-            case EnemyState.Attack:
-                agent.isStopped = true;
-                break;
+        if (Vector3.Distance(transform.position, player.position) > currentSightDistance)
+        {
+            if (chaseEndTime == 0f)
+            {
+                chaseEndTime = Time.time + chaseDelay;
+            }
+            else if (Time.time >= chaseEndTime)
+            {
+                currentState = EnemyState.Walk;
+                agent.speed = walkSpeed;
+                chaseEndTime = 0f;
+            }
+        }
+        else
+        {
+            chaseEndTime = 0f;
         }
     }
 
@@ -228,7 +242,6 @@ public class EnemyController : MonoBehaviour
         agent.isStopped = true;
         yield return new WaitForSeconds(1f);
 
-        // resume chasing
         animator.SetBool("IsAttacking", false);
         currentState = EnemyState.Chase;
         agent.isStopped = false;
@@ -314,7 +327,8 @@ public class EnemyController : MonoBehaviour
         animator.enabled = true;
     }
 
-    public EnemyStateData GetEnemyState() {
+    public EnemyStateData GetEnemyState()
+    {
         EnemyStateData state = new EnemyStateData();
         state.position = transform.position;
         state.rotation = transform.rotation;
@@ -323,7 +337,7 @@ public class EnemyController : MonoBehaviour
         state.agentSpeed = agent.speed;
 
         state.currentWaypointIndex = currentWaypointIndex;
-        state.currentState = (int) currentState;
+        state.currentState = (int)currentState;
 
         state.idleTimer = idleTimer;
         state.lastHeardPosition = lastHeardPosition;
@@ -345,20 +359,24 @@ public class EnemyController : MonoBehaviour
         return state;
     }
 
-    public void LoadEnemyState(EnemyStateData state) {
-        if(agent != null) {
+    public void LoadEnemyState(EnemyStateData state)
+    {
+        if (agent != null)
+        {
             agent.Warp(state.position);
-        } else {
+        }
+        else
+        {
             transform.position = state.position;
         }
-        
+
         transform.rotation = state.rotation;
 
         agent.speed = state.agentSpeed;
         agent.SetDestination(state.destination);
 
         currentWaypointIndex = state.currentWaypointIndex;
-        currentState = (EnemyState) state.currentState;
+        currentState = (EnemyState)state.currentState;
 
         idleTimer = state.idleTimer;
         lastHeardPosition = state.lastHeardPosition;
