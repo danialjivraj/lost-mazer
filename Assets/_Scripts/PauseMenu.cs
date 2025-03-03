@@ -180,7 +180,8 @@ public class PauseMenu : MonoBehaviour
         PlayerController playerController = FindObjectOfType<PlayerController>();
         PlayerHealth playerHealthScript = FindObjectOfType<PlayerHealth>();
         ReadNotes readNotes = FindObjectOfType<ReadNotes>();
-
+        RagdollController[] allRagdolls = FindObjectsOfType<RagdollController>();
+        
         if (playerController != null && playerHealthScript != null)
         {
             GameStateData data = new GameStateData();
@@ -304,6 +305,12 @@ public class PauseMenu : MonoBehaviour
                     hasTriggered = trigger.GetTriggeredState()
                 };
                 data.triggerStates.Add(tState);
+            }
+
+            foreach (RagdollController ragdoll in allRagdolls)
+            {
+                RagdollState rState = ragdoll.SaveRagdollState();
+                data.ragdollStates.Add(rState);
             }
 
             SaveLoadManager.SaveGame(data);

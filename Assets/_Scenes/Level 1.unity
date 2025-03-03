@@ -1881,6 +1881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dffa82b520a207488f098cbdb074852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ragdollId: 
   ragdollRigidbodies:
   - {fileID: 101592906}
   - {fileID: 469052615}
@@ -1912,6 +1913,7 @@ MonoBehaviour:
   - {fileID: 1897575331}
   - {fileID: 501926184}
   mainCollider: {fileID: 0}
+  physicsActivated: 0
 --- !u!1001 &228450782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24121,7 +24123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &2468697161125097220
 MeshCollider:
   m_ObjectHideFlags: 0

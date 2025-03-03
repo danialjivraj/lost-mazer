@@ -65,6 +65,22 @@ public class TriggerState
 }
 
 [System.Serializable]
+public class RagdollPartState
+{
+    public string partName;
+    public Vector3 position;
+    public Quaternion rotation;
+}
+
+[System.Serializable]
+public class RagdollState
+{
+    public string ragdollId;
+    public bool physicsActivated;
+    public List<RagdollPartState> partStates = new List<RagdollPartState>();
+}
+
+[System.Serializable]
 public class GameStateData
 {
 
@@ -97,4 +113,6 @@ public class GameStateData
     public List<EnemyStateData> enemyStates = new List<EnemyStateData>();
 
     public List<TriggerState> triggerStates = new List<TriggerState>();
+
+    public List<RagdollState> ragdollStates = new List<RagdollState>();
 }
