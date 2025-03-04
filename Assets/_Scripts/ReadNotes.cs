@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class ReadNotes : MonoBehaviour
 {
     public string noteId;
+    public static bool ShouldClearNoteState = false;
+
     public GameObject player;
     public GameObject noteUI;
     public GameObject hud;
@@ -30,54 +32,51 @@ public class ReadNotes : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        if (player != null)
-            playerController = player.GetComponent<PlayerController>();
-        else
-            Debug.LogError("Player GameObject is not assigned in ReadNotes!");
-
-        if (noteUI != null) noteUI.SetActive(false);
-        if (hud != null) hud.SetActive(true);
-        if (inv != null) inv.SetActive(true);
-        if (readableNoteUI != null) readableNoteUI.SetActive(false);
-        inReach = false;
-
-        if (SaveLoadManager.SaveExists())
+        void Start()
         {
-                    GameStateData data = SaveLoadManager.LoadGame();
-                    if (data != null)
+            if (player != null)
+                playerController = player.GetComponent<PlayerController>();
+            else
+                Debug.LogError("Player GameObject is not assigned in ReadNotes!");
+
+            if (noteUI != null) noteUI.SetActive(false);
+            if (hud != null) hud.SetActive(true);
+            if (inv != null) inv.SetActive(true);
+            if (readableNoteUI != null) readableNoteUI.SetActive(false);
+            inReach = false;
+
+            if (ShouldClearNoteState)
+            {
+                if (noteUI != null)
+                    noteUI.SetActive(false);
+                if (readableNoteUI != null)
+                    readableNoteUI.SetActive(false);
+
+                IsReadingNote = false;
+                isReadableViewActive = false;
+                ShouldClearNoteState = false;
+                Debug.Log("Note state cleared on retry.");
+            }
+            else if (SaveLoadManager.SaveExists())
+            {
+                GameStateData data = SaveLoadManager.LoadGame();
+                if (data != null)
+                {
+                    if (!string.IsNullOrEmpty(data.currentNoteId) && data.currentNoteId == noteId)
                     {
-                        if (!string.IsNullOrEmpty(data.currentNoteId) && data.currentNoteId == noteId)
+                        if (noteUI != null)
+                            noteUI.SetActive(true);
+                        if (hud != null)
+                            hud.SetActive(false);
+                        if (inv != null)
+                            inv.SetActive(false);
+                        if (handUIHandler != null)
+                            handUIHandler.HideHandUI();
+
+                        if (playerController != null)
                         {
-                            if (noteUI != null)
-                                noteUI.SetActive(true);
-                            if (hud != null)
-                                hud.SetActive(false);
-                            if (inv != null)
-                                inv.SetActive(false);
-                            if (handUIHandler != null)
-                                handUIHandler.HideHandUI();
-
-                            if (playerController != null)
-                            {
-                                playerController.StopFootsteps();
-                                StartCoroutine(DisablePlayerControllerNextFrame());
-                            }
-
-                            if (readableNoteUI != null)
-                            {
-                                readableNoteUI.SetActive(data.isReadableViewActive);
-                                isReadableViewActive = data.isReadableViewActive;
-                            }
-
-                            ReadNotes.IsReadingNote = true;
-                        }
-                        else
-                        {
-                            if (noteUI != null)
-                                noteUI.SetActive(false);
-                            ReadNotes.IsReadingNote = false;
+                            playerController.StopFootsteps();
+                            StartCoroutine(DisablePlayerControllerNextFrame());
                         }
 
                         if (readableNoteUI != null)
@@ -86,10 +85,25 @@ public class ReadNotes : MonoBehaviour
                             isReadableViewActive = data.isReadableViewActive;
                         }
 
-                        Debug.Log("Note reading state restored from saved game.");
+                        IsReadingNote = true;
                     }
+                    else
+                    {
+                        if (noteUI != null)
+                            noteUI.SetActive(false);
+                        IsReadingNote = false;
+                    }
+
+                    if (readableNoteUI != null)
+                    {
+                        readableNoteUI.SetActive(data.isReadableViewActive);
+                        isReadableViewActive = data.isReadableViewActive;
+                    }
+
+                    Debug.Log("Note reading state restored from saved game.");
                 }
             }
+        }
 
     IEnumerator DisablePlayerControllerNextFrame()
     {
@@ -127,7 +141,7 @@ public class ReadNotes : MonoBehaviour
 
         if (Time.timeScale != 0)
         {
-            if (inReach && !IsReadingNote && Input.GetButtonDown("Interact"))
+            if (inReach && !noteUI.activeSelf && Input.GetButtonDown("Interact"))
             {
                 OpenNote();
             }

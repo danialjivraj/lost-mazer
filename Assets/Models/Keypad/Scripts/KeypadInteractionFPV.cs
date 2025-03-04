@@ -13,6 +13,8 @@ namespace NavKeypad
 
         private void Update()
         {
+            if (Time.timeScale == 0) return;
+
             var ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if (inReach && Input.GetButtonDown("Interact"))

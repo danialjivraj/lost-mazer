@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Audio;
 
 namespace NavKeypad
 {
@@ -43,6 +44,7 @@ namespace NavKeypad
         private bool displayingResult = false;
         private bool deniedState = false;
         private bool accessWasGranted = false;
+        public AudioMixerGroup generalSFX;
 
         private void Awake()
         {
@@ -62,6 +64,11 @@ namespace NavKeypad
                 {
                     LoadState(data.keypadCurrentInput, data.keypadAccessWasGranted, data.keypadDeniedState);
                 }
+            }
+
+            if (generalSFX != null)
+            {
+                audioSource.outputAudioMixerGroup = generalSFX;
             }
         }
 
