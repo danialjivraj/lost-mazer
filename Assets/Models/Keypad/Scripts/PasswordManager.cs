@@ -9,6 +9,17 @@ public class PasswordManager : MonoBehaviour
 
     void Awake()
     {
+        if (SaveLoadManager.SaveExists())
+        {
+            GameStateData data = SaveLoadManager.LoadGame();
+            if (data != null && data.doorPassword != 0)
+            {
+                CurrentPassword = data.doorPassword;
+                Debug.Log("Loaded saved door password: " + CurrentPassword);
+                return;
+            }
+        }
+        
         CurrentPassword = Random.Range(minPassword, maxPassword + 1);
         Debug.Log("New Password: " + CurrentPassword);
     }

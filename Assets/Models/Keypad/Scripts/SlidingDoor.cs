@@ -11,6 +11,18 @@ namespace NavKeypad
         private bool isOpen = false;
         public AudioSource openingSound;
 
+        void Start()
+        {
+            if (SaveLoadManager.SaveExists())
+            {
+                GameStateData data = SaveLoadManager.LoadGame();
+                if(data != null)
+                {
+                    LoadState(data.slidingDoorIsOpen, data.slidingDoorAnimTime);
+                }
+            }
+        }
+
         public void ToggleDoor()
         {
             if (!isOpen)
@@ -48,6 +60,25 @@ namespace NavKeypad
         {
             isOpen = false;
             anim.SetBool("isOpen", isOpen);
+        }
+
+        public void LoadState(bool savedOpen, float savedAnimTime)
+        {
+            isOpen = savedOpen;
+            if (isOpen)
+            {
+                float normalizedTime = savedAnimTime < 1f ? savedAnimTime : 1f;
+                anim.Play("SlidingDoor_Open", 0, normalizedTime);
+            }
+            else
+            {
+                anim.Play("SlidingDoor_Idle", 0, 0f);
+            }
+        }
+
+        public float GetAnimNormalizedTime()
+        {
+            return anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
         }
     }
 }

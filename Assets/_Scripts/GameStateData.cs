@@ -103,6 +103,13 @@ public class GameStateData
     public bool isReadingNote;
     public bool isReadableViewActive;
 
+    public int doorPassword;
+    public string keypadCurrentInput;
+    public bool keypadDeniedState;
+    public bool keypadAccessWasGranted;
+    public bool slidingDoorIsOpen;
+    public float slidingDoorAnimTime;
+
     public List<ChestState> chestStates = new List<ChestState>();
     public List<PickupItemState> pickupItemStates = new List<PickupItemState>();
 

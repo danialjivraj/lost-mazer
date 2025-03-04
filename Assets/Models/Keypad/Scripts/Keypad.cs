@@ -41,6 +41,7 @@ namespace NavKeypad
 
         private string currentInput;
         private bool displayingResult = false;
+        private bool deniedState = false;
         private bool accessWasGranted = false;
 
         private void Awake()
@@ -52,6 +53,17 @@ namespace NavKeypad
             panelMesh.material.SetVector("_EmissionColor", screenNormalColor * screenIntensity);
         }
 
+        void Start()
+        {
+            if (SaveLoadManager.SaveExists())
+            {
+                GameStateData data = SaveLoadManager.LoadGame();
+                if(data != null)
+                {
+                    LoadState(data.keypadCurrentInput, data.keypadAccessWasGranted, data.keypadDeniedState);
+                }
+            }
+        }
 
         //Gets value from pressedbutton
         public void AddInput(string input)
@@ -109,6 +121,7 @@ namespace NavKeypad
 
         private void AccessDenied()
         {
+            deniedState = true;
             keypadDisplayText.text = accessDeniedText;
             onAccessDenied?.Invoke();
             panelMesh.material.SetVector("_EmissionColor", screenDeniedColor * screenIntensity);
@@ -119,6 +132,7 @@ namespace NavKeypad
         {
             currentInput = "";
             keypadDisplayText.text = currentInput;
+            deniedState = false;
         }
 
         private void AccessGranted()
@@ -130,5 +144,52 @@ namespace NavKeypad
             audioSource.PlayOneShot(accessGrantedSfx);
         }
 
+        public string GetCurrentInput() 
+        {
+            return currentInput;
+        }
+
+        public bool GetAccessWasGranted() 
+        {
+            return accessWasGranted;
+        }
+
+        public bool GetDeniedState() 
+        {
+            return deniedState;
+        }
+
+        private IEnumerator ResetDeniedStateRoutine()
+        {
+            yield return new WaitForSeconds(displayResultTime);
+            if (deniedState && !accessWasGranted)
+            {
+                ClearInput();
+                panelMesh.material.SetVector("_EmissionColor", screenNormalColor * screenIntensity);
+            }
+        }
+
+        public void LoadState(string savedInput, bool savedAccessGranted, bool savedDenied)
+        {
+            currentInput = savedInput;
+            accessWasGranted = savedAccessGranted;
+            deniedState = savedDenied;
+            
+            if (accessWasGranted)
+            {
+                keypadDisplayText.text = accessGrantedText;
+                panelMesh.material.SetVector("_EmissionColor", screenGrantedColor * screenIntensity);
+            }
+            else if (deniedState)
+            {
+                keypadDisplayText.text = accessDeniedText;
+                panelMesh.material.SetVector("_EmissionColor", screenDeniedColor * screenIntensity);
+                StartCoroutine(ResetDeniedStateRoutine());
+            }
+            else
+            {
+                keypadDisplayText.text = currentInput;
+            }
+        }
     }
 }

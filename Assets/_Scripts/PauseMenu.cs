@@ -181,7 +181,9 @@ public class PauseMenu : MonoBehaviour
         PlayerHealth playerHealthScript = FindObjectOfType<PlayerHealth>();
         ReadNotes readNotes = FindObjectOfType<ReadNotes>();
         RagdollController[] allRagdolls = FindObjectsOfType<RagdollController>();
-        
+        NavKeypad.Keypad keypad = FindObjectOfType<NavKeypad.Keypad>();
+        NavKeypad.SlidingDoor slidingDoor = FindObjectOfType<NavKeypad.SlidingDoor>();
+
         if (playerController != null && playerHealthScript != null)
         {
             GameStateData data = new GameStateData();
@@ -207,6 +209,28 @@ public class PauseMenu : MonoBehaviour
             // reading note
             data.isReadingNote = ReadNotes.IsReadingNote;
             data.isReadableViewActive = readNotes.GetIsReadableViewActive();
+
+            // keypad
+            if(keypad != null)
+            {
+                data.keypadCurrentInput = keypad.GetCurrentInput();
+                data.keypadDeniedState = keypad.GetDeniedState();
+                data.keypadAccessWasGranted = keypad.GetAccessWasGranted();
+            }
+            data.doorPassword = PasswordManager.CurrentPassword; // password
+            // sliding door
+            if(slidingDoor != null)
+            {
+                data.slidingDoorIsOpen = slidingDoor.IsOpoen;
+                if(data.slidingDoorIsOpen)
+                {
+                    data.slidingDoorAnimTime = slidingDoor.GetAnimNormalizedTime();
+                }
+                else
+                {
+                    data.slidingDoorAnimTime = 0f;
+                }
+            }
 
             // chest states
             UseChest[] chests = FindObjectsOfType<UseChest>();
