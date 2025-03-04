@@ -45,6 +45,9 @@ namespace NavKeypad
 
         private void Awake()
         {
+            // random password
+            keypadCombo = PasswordManager.CurrentPassword;
+
             ClearInput();
             panelMesh.material.SetVector("_EmissionColor", screenNormalColor * screenIntensity);
         }
