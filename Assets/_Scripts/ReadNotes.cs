@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class ReadNotes : MonoBehaviour
 {
+    public string noteId;
     public GameObject player;
     public GameObject noteUI;
     public GameObject hud;
@@ -21,6 +22,14 @@ public class ReadNotes : MonoBehaviour
     private bool isReadableViewActive = false;
     public static bool IsReadingNote { get; private set; } = false;
 
+    void Awake()
+    {
+        if (string.IsNullOrEmpty(noteId))
+        {
+            noteId = gameObject.name + "_" + transform.position.x + "_" + transform.position.y + "_" + transform.position.z;
+        }
+    }
+
     void Start()
     {
         if (player != null)
@@ -36,45 +45,51 @@ public class ReadNotes : MonoBehaviour
 
         if (SaveLoadManager.SaveExists())
         {
-            GameStateData data = SaveLoadManager.LoadGame();
-            if (data != null)
-            {
-                if (data.isReadingNote)
-                {
-                    if (noteUI != null)
-                        noteUI.SetActive(true);
-                    if (hud != null)
-                        hud.SetActive(false);
-                    if (inv != null)
-                        inv.SetActive(false);
-                    if (handUIHandler != null)
-                        handUIHandler.HideHandUI();
-
-                    if (playerController != null)
+                    GameStateData data = SaveLoadManager.LoadGame();
+                    if (data != null)
                     {
-                        playerController.StopFootsteps();
-                        StartCoroutine(DisablePlayerControllerNextFrame());
+                        if (!string.IsNullOrEmpty(data.currentNoteId) && data.currentNoteId == noteId)
+                        {
+                            if (noteUI != null)
+                                noteUI.SetActive(true);
+                            if (hud != null)
+                                hud.SetActive(false);
+                            if (inv != null)
+                                inv.SetActive(false);
+                            if (handUIHandler != null)
+                                handUIHandler.HideHandUI();
+
+                            if (playerController != null)
+                            {
+                                playerController.StopFootsteps();
+                                StartCoroutine(DisablePlayerControllerNextFrame());
+                            }
+
+                            if (readableNoteUI != null)
+                            {
+                                readableNoteUI.SetActive(data.isReadableViewActive);
+                                isReadableViewActive = data.isReadableViewActive;
+                            }
+
+                            ReadNotes.IsReadingNote = true;
+                        }
+                        else
+                        {
+                            if (noteUI != null)
+                                noteUI.SetActive(false);
+                            ReadNotes.IsReadingNote = false;
+                        }
+
+                        if (readableNoteUI != null)
+                        {
+                            readableNoteUI.SetActive(data.isReadableViewActive);
+                            isReadableViewActive = data.isReadableViewActive;
+                        }
+
+                        Debug.Log("Note reading state restored from saved game.");
                     }
-
-                    IsReadingNote = true;
                 }
-                else
-                {
-                    if (noteUI != null)
-                        noteUI.SetActive(false);
-                    IsReadingNote = false;
-                }
-
-                if (readableNoteUI != null)
-                {
-                    readableNoteUI.SetActive(data.isReadableViewActive);
-                    isReadableViewActive = data.isReadableViewActive;
-                }
-
-                Debug.Log("Note reading state restored from saved game.");
             }
-        }
-    }
 
     IEnumerator DisablePlayerControllerNextFrame()
     {

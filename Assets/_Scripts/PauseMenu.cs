@@ -207,8 +207,16 @@ public class PauseMenu : MonoBehaviour
             }
 
             // reading note
-            data.isReadingNote = ReadNotes.IsReadingNote;
-            data.isReadableViewActive = readNotes.GetIsReadableViewActive();
+            if (ReadNotes.IsReadingNote)
+            {
+                data.currentNoteId = readNotes.noteId;
+                data.isReadableViewActive = readNotes.GetIsReadableViewActive();
+            }
+            else
+            {
+                data.currentNoteId = string.Empty;
+                data.isReadableViewActive = false;
+            }
 
             // keypad
             if(keypad != null)
