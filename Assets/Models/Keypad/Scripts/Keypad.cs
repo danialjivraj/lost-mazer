@@ -46,15 +46,15 @@ namespace NavKeypad
 
         private void Awake()
         {
-            // random password
-            keypadCombo = PasswordManager.CurrentPassword;
-
             ClearInput();
             panelMesh.material.SetVector("_EmissionColor", screenNormalColor * screenIntensity);
         }
 
         void Start()
         {
+            // random password
+            keypadCombo = PasswordManager.CurrentPassword;
+
             if (SaveLoadManager.SaveExists())
             {
                 GameStateData data = SaveLoadManager.LoadGame();
