@@ -11391,6 +11391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 349e7a2835b6d1a4a8e890739ea1c6a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noteId: 
   player: {fileID: 1444845148}
   noteUI: {fileID: 1661029399}
   hud: {fileID: 0}
@@ -18453,6 +18454,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2303921294396319334, guid: b47bdf1669865c841ace96330ee3d7ec, type: 3}
+      propertyPath: generalSFX
+      value: 
+      objectReference: {fileID: -637615254521982383, guid: 8e416a8cbb388014f9e35495c938e1bb, type: 2}
+    - target: {fileID: 2303921294396319334, guid: b47bdf1669865c841ace96330ee3d7ec, type: 3}
       propertyPath: screenIntensity
       value: 0.53
       objectReference: {fileID: 0}
@@ -22462,7 +22467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1661029400
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26876,6 +26881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 349e7a2835b6d1a4a8e890739ea1c6a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noteId: 
   player: {fileID: 1444845148}
   noteUI: {fileID: 622043249}
   hud: {fileID: 0}
