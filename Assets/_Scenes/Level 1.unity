@@ -159,20 +159,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1133, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!64 &7981189
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2468697161125097219}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 3633865748600368068, guid: 17c6733cff2c9c84a921d3e21caaaf95, type: 3}
 --- !u!1 &16758282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,7 +1929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 19ea60034f0cd554882092e7f5abc4d0, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 19ea60034f0cd554882092e7f5abc4d0, type: 3}
       propertyPath: m_LocalScale.x
@@ -15531,12 +15517,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364181507}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.37996674, y: 1.4233022, z: -0.122787476}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1463759638}
-  m_Father: {fileID: 1865025075}
-  m_RootOrder: 1
+  m_Father: {fileID: 1659894085}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1364181509
 MonoBehaviour:
@@ -19372,6 +19358,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1364181508}
   - {fileID: 1865025075}
   m_Father: {fileID: 925688204}
   m_RootOrder: 1
@@ -20663,9 +20650,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 134490065}
-  - {fileID: 1364181508}
   m_Father: {fileID: 1659894085}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1865025076
 MonoBehaviour:
@@ -24115,7 +24101,6 @@ GameObject:
   - component: {fileID: 3561771209678435137}
   - component: {fileID: 7036848348660236836}
   - component: {fileID: 2511811755876249768}
-  - component: {fileID: 7981189}
   - component: {fileID: 2468697161125097220}
   m_Layer: 6
   m_Name: Ceiling
