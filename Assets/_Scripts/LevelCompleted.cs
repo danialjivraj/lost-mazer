@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelCompleted : MonoBehaviour
 {
-    public GameObject fadeFX;
+    public GameObject fadeToBlack;
     public string nextSceneName;
     public int levelToUnlock = 2;
 
@@ -12,7 +12,7 @@ public class LevelCompleted : MonoBehaviour
 
     void Start()
     {
-        if (fadeFX != null) fadeFX.SetActive(false);
+        if (fadeToBlack != null) fadeToBlack.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
@@ -21,8 +21,8 @@ public class LevelCompleted : MonoBehaviour
         {
             isTransitioning = true;
 
-            if (fadeFX != null)
-                fadeFX.SetActive(true);
+            if (fadeToBlack != null)
+                fadeToBlack.SetActive(true);
 
             ScoreManager.instance.SaveScore();
 

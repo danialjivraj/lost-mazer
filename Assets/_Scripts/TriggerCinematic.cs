@@ -3,14 +3,23 @@ using UnityEngine.Playables;
 
 public class TriggerCinematic : MonoBehaviour
 {
+    public GameObject fadeFX;
     public PlayableDirector timelineDirector;
     private bool hasPlayed = false;
+
+    void Start()
+    {
+        if (fadeFX != null) fadeFX.SetActive(false);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !hasPlayed)
         {
             hasPlayed = true;
+
+            if (fadeFX != null)
+                fadeFX.SetActive(true);
 
             PlayerController pc = other.GetComponent<PlayerController>();
             if (pc != null)
