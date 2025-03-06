@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 public class TriggerCinematic : MonoBehaviour
 {
+    public static bool isCutsceneActive = false;  // this flag is for the pause menu so that the player cannot move after unpausing
+
     public GameObject fadeFX;
     public PlayableDirector timelineDirector;
     public float timelineStartDelay = 0.25f;
-
     public bool disableOtherSounds = true;
 
     private bool hasPlayed = false;
     private bool isTimelinePlaying = false;
     private bool isSkipping = false;
-
     private List<AudioSource> ambientAudioSources = new List<AudioSource>();
 
     void Start()
@@ -69,6 +69,7 @@ public class TriggerCinematic : MonoBehaviour
 
         timelineDirector.Play();
         isTimelinePlaying = true;
+        isCutsceneActive = true;
         timelineDirector.stopped += OnTimelineStopped;
     }
 
@@ -93,6 +94,7 @@ public class TriggerCinematic : MonoBehaviour
     private void OnTimelineStopped(PlayableDirector director)
     {
         timelineDirector.stopped -= OnTimelineStopped;
+        isCutsceneActive = false;
 
         if (!isSkipping)
         {

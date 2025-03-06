@@ -102,12 +102,22 @@ public class PauseMenu : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            if (player != null) player.enabled = false;
+            if (player != null) 
+                player.enabled = false;
         }
         else
         {
-            LockCursor();
-            if (player != null) player.enabled = true;
+            if (!TriggerCinematic.isCutsceneActive)
+            {
+                LockCursor();
+                if (player != null) 
+                    player.enabled = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
         }
 
         if (crosshair != null && !isDragging)
@@ -119,7 +129,6 @@ public class PauseMenu : MonoBehaviour
     public void BackToMenu()
     {
         buttonSound.Play();
-        //SaveLoadManager.DeleteSave();
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
