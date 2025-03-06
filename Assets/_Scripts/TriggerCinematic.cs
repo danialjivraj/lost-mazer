@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Playables;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ public class TriggerCinematic : MonoBehaviour
     public PlayableDirector timelineDirector;
     public float timelineStartDelay = 0.25f;
     public bool disableOtherSounds = true;
+
+    public AudioMixerGroup menuSFX;
 
     private bool hasPlayed = false;
     private bool isTimelinePlaying = false;
@@ -59,11 +62,14 @@ public class TriggerCinematic : MonoBehaviour
             ambientAudioSources.Clear();
             foreach (AudioSource src in allSources)
             {
-                if (!src.transform.IsChildOf(timelineDirector.transform))
-                {
-                    ambientAudioSources.Add(src);
-                    src.mute = true;
-                }
+                if (src.transform.IsChildOf(timelineDirector.transform))
+                    continue;
+                
+                if (src.outputAudioMixerGroup == menuSFX)
+                    continue;
+                
+                ambientAudioSources.Add(src);
+                src.mute = true;
             }
         }
 
