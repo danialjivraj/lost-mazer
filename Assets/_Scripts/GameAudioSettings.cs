@@ -7,6 +7,7 @@ public class GameAudioSettings : MonoBehaviour
     public AudioMixer audioMixer;
     public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
+    public Slider cutsceneVolumeSlider;
     public Slider playerSFXVolumeSlider;
     public Slider enemySFXVolumeSlider;
     public Slider pickupSFXVolumeSlider;
@@ -16,6 +17,7 @@ public class GameAudioSettings : MonoBehaviour
     {
         masterVolumeSlider.value = PlayerPrefs.GetFloat("GameMasterVolume", 1f);
         musicVolumeSlider.value = PlayerPrefs.GetFloat("GameMusicVolume", 1f);
+        cutsceneVolumeSlider.value = PlayerPrefs.GetFloat("GameCutsceneVolume", 1f);
         playerSFXVolumeSlider.value = PlayerPrefs.GetFloat("GamePlayerSFXVolume", 1f);
         enemySFXVolumeSlider.value = PlayerPrefs.GetFloat("GameEnemySFXVolume", 1f);
         pickupSFXVolumeSlider.value = PlayerPrefs.GetFloat("GamePickUpSFXVolume", 1f);
@@ -23,6 +25,7 @@ public class GameAudioSettings : MonoBehaviour
 
         SetMasterVolume(masterVolumeSlider.value);
         SetMusicVolume(musicVolumeSlider.value);
+        SetCutsceneVolume(cutsceneVolumeSlider.value);
         SetPlayerSFXVolume(playerSFXVolumeSlider.value);
         SetEnemySFXVolume(enemySFXVolumeSlider.value);
         SetPickUpSFXVolume(pickupSFXVolumeSlider.value);
@@ -30,6 +33,7 @@ public class GameAudioSettings : MonoBehaviour
 
         masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
         musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
+        cutsceneVolumeSlider.onValueChanged.AddListener(SetCutsceneVolume);
         playerSFXVolumeSlider.onValueChanged.AddListener(SetPlayerSFXVolume);
         enemySFXVolumeSlider.onValueChanged.AddListener(SetEnemySFXVolume);
         pickupSFXVolumeSlider.onValueChanged.AddListener(SetPickUpSFXVolume);
@@ -46,6 +50,12 @@ public class GameAudioSettings : MonoBehaviour
     {
         audioMixer.SetFloat("GameMusicVolume", Mathf.Log10(volume) * 20);
         PlayerPrefs.SetFloat("GameMusicVolume", volume);
+    }
+
+    public void SetCutsceneVolume(float volume)
+    {
+        audioMixer.SetFloat("GameCutsceneVolume", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("GameCutsceneVolume", volume);
     }
 
     public void SetPlayerSFXVolume(float volume)
