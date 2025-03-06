@@ -81,6 +81,12 @@ public class RagdollState
 }
 
 [System.Serializable]
+public class CutsceneState {
+    public string cutsceneId;
+    public bool hasPlayed;
+}
+
+[System.Serializable]
 public class GameStateData
 {
 
@@ -126,4 +132,6 @@ public class GameStateData
     public List<TriggerState> triggerStates = new List<TriggerState>();
 
     public List<RagdollState> ragdollStates = new List<RagdollState>();
+
+    public List<CutsceneState> cutsceneStates = new List<CutsceneState>();
 }

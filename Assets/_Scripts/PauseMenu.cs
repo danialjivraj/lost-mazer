@@ -200,6 +200,7 @@ public class PauseMenu : MonoBehaviour
         RagdollController[] allRagdolls = FindObjectsOfType<RagdollController>();
         NavKeypad.Keypad keypad = FindObjectOfType<NavKeypad.Keypad>();
         NavKeypad.SlidingDoor slidingDoor = FindObjectOfType<NavKeypad.SlidingDoor>();
+        TriggerCutscene[] cutscenes = FindObjectsOfType<TriggerCutscene>();
 
         if (playerController != null && playerHealthScript != null)
         {
@@ -370,10 +371,18 @@ public class PauseMenu : MonoBehaviour
                 data.triggerStates.Add(tState);
             }
 
+            // ragdoll
             foreach (RagdollController ragdoll in allRagdolls)
             {
                 RagdollState rState = ragdoll.SaveRagdollState();
                 data.ragdollStates.Add(rState);
+            }
+
+            // cutscenes
+            foreach (TriggerCutscene cs in cutscenes)
+            {
+                data.cutsceneStates.RemoveAll(c => c.cutsceneId == cs.cutsceneId);
+                data.cutsceneStates.Add(new CutsceneState { cutsceneId = cs.cutsceneId, hasPlayed = cs.hasPlayed });
             }
 
             SaveLoadManager.SaveGame(data);

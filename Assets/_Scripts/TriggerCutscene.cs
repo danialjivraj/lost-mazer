@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 public class TriggerCutscene : MonoBehaviour
 {
+    public string cutsceneId;
     public static bool isCutsceneActive = false;  // this flag is for the pause menu so that the player cannot move after unpausing
 
     public GameObject fadeFX;
@@ -15,10 +16,34 @@ public class TriggerCutscene : MonoBehaviour
 
     public AudioMixerGroup menuSFX;
 
-    private bool hasPlayed = false;
+    public bool hasPlayed = false;
     private bool isTimelinePlaying = false;
     private bool isSkipping = false;
     private List<AudioSource> ambientAudioSources = new List<AudioSource>();
+
+    void Awake()
+    {
+        if (string.IsNullOrEmpty(cutsceneId))
+        {
+            cutsceneId = gameObject.name + "_" + transform.position.x + "_" + transform.position.y + "_" + transform.position.z;
+        }
+
+        if (SaveLoadManager.SaveExists())
+        {
+            GameStateData data = SaveLoadManager.LoadGame();
+            if (data != null)
+            {
+                foreach (var cs in data.cutsceneStates)
+                {
+                    if (cs.cutsceneId == cutsceneId && cs.hasPlayed)
+                    {
+                        hasPlayed = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
 
     void Start()
     {
@@ -40,6 +65,19 @@ public class TriggerCutscene : MonoBehaviour
         if (!hasPlayed && other.CompareTag("Player"))
         {
             hasPlayed = true;
+
+            GameStateData data;
+            if(SaveLoadManager.SaveExists())
+            {
+                data = SaveLoadManager.LoadGame();
+            }
+            else
+            {
+                data = new GameStateData();
+            }
+            data.cutsceneStates.RemoveAll(cs => cs.cutsceneId == cutsceneId);
+            data.cutsceneStates.Add(new CutsceneState { cutsceneId = cutsceneId, hasPlayed = true });
+            SaveLoadManager.SaveGame(data);
 
             if (fadeFX != null)
                 fadeFX.SetActive(true);
