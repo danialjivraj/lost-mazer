@@ -189,6 +189,7 @@ public class PauseMenu : MonoBehaviour
         PlayerController playerController = FindObjectOfType<PlayerController>();
         PlayerHealth playerHealthScript = FindObjectOfType<PlayerHealth>();
         ReadNotes readNotes = FindObjectOfType<ReadNotes>();
+        FinalDoor finalDoor = FindObjectOfType<FinalDoor>();
         RagdollController[] allRagdolls = FindObjectsOfType<RagdollController>();
         NavKeypad.Keypad keypad = FindObjectOfType<NavKeypad.Keypad>();
         NavKeypad.SlidingDoor slidingDoor = FindObjectOfType<NavKeypad.SlidingDoor>();
@@ -334,6 +335,20 @@ public class PauseMenu : MonoBehaviour
             if (enemy != null)
             {
                 data.enemyStates.Add(enemy.GetEnemyState());
+            }
+
+            if (finalDoor != null)
+            {
+                data.finalDoorIsUnlocked = !finalDoor.IsLocked();
+
+                if(data.finalDoorIsUnlocked)
+                {
+                    data.finalDoorAnimationTime = finalDoor.doorAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                }
+                else
+                {
+                    data.finalDoorAnimationTime = 0f;
+                }
             }
 
             // triggers

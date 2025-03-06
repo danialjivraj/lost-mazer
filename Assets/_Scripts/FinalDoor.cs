@@ -15,7 +15,20 @@ public class FinalDoor : MonoBehaviour
 
     void Start()
     {
-        if (doorNotification != null) doorNotification.ResetNotification();
+        if (SaveLoadManager.SaveExists())
+        {
+            GameStateData data = SaveLoadManager.LoadGame();
+            if (data.finalDoorIsUnlocked)
+            {
+                isLocked = false;
+                doorAnimator.SetBool("IsLocked", false);
+
+                doorAnimator.Play("FinalDoor_Unlocked", 0, data.finalDoorAnimationTime);
+            }
+        }
+
+        if (doorNotification != null)
+            doorNotification.ResetNotification();
     }
 
     void Update()
@@ -110,4 +123,10 @@ public class FinalDoor : MonoBehaviour
 
         isLockedAnimationPlaying = false;
     }
+
+    public bool IsLocked()
+    {
+        return isLocked;
+    }
+
 }

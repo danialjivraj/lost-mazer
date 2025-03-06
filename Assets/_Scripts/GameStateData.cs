@@ -104,6 +104,9 @@ public class GameStateData
     public bool isReadingNote;
     public bool isReadableViewActive;
 
+    public bool finalDoorIsUnlocked;
+    public float finalDoorAnimationTime;
+
     public int doorPassword;
     public string keypadCurrentInput;
     public bool keypadDeniedState;
