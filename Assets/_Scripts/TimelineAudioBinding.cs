@@ -1,14 +1,12 @@
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Audio;
 
 [RequireComponent(typeof(PlayableDirector))]
 public class TimelineAudioBinding : MonoBehaviour
 {
-    public AudioMixerGroup cutsceneMixerGroup;
+    public AudioSource  ;
 
     private PlayableDirector director;
-    private AudioSource timelineAudioSource;
 
     private void Awake()
     {
@@ -17,12 +15,10 @@ public class TimelineAudioBinding : MonoBehaviour
         if (director.playableAsset == null)
             return;
 
-        GameObject audioGO = new GameObject("TimelineAudioSource");
-        audioGO.transform.SetParent(this.transform, false);
-
-        timelineAudioSource = audioGO.AddComponent<AudioSource>();
-        if (cutsceneMixerGroup != null)
-            timelineAudioSource.outputAudioMixerGroup = cutsceneMixerGroup;
+        if (timelineAudioSource == null)
+        {
+            Debug.LogWarning("TimelineAudioSource not assigned in the inspector!");
+        }
 
         foreach (var output in director.playableAsset.outputs)
         {
