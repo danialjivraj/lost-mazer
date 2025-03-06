@@ -142,15 +142,14 @@ public class PauseMenu : MonoBehaviour
 
     private IEnumerator RetryAfterSound()
     {
-        yield return new WaitForSeconds(buttonSound.clip.length);
-
+        yield return new WaitForSecondsRealtime(buttonSound.clip.length);
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Retry()
     {
         buttonSound.Play();
-        Time.timeScale = 1f;
         StartCoroutine(RetryAfterSound());
     }
 
