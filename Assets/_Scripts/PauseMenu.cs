@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PauseMenu : MonoBehaviour
     private bool isDragging = false;
     private Vector3 dragOffset;
     public AudioSource buttonSound;
+    public Button saveAndGoBackButton;
 
     void Start()
     {
@@ -75,10 +77,15 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
 
         if (crosshair != null) crosshair.SetActive(false);
+        if (player != null) player.enabled = false;
 
-        if (player != null)
+        if (TriggerCinematic.isCutsceneActive)
         {
-            player.enabled = false;
+            saveAndGoBackButton.interactable = false;
+        }
+        else
+        {
+            saveAndGoBackButton.interactable = true;
         }
     }
 
