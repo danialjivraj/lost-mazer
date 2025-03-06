@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.Playables;
+using System.Collections;
 
 public class TriggerCinematic : MonoBehaviour
 {
     public GameObject fadeFX;
     public PlayableDirector timelineDirector;
+
+    public float timelineStartDelay = 0.25f;
+
     private bool hasPlayed = false;
 
     void Start()
@@ -14,7 +18,7 @@ public class TriggerCinematic : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !hasPlayed)
+        if (!hasPlayed && other.CompareTag("Player"))
         {
             hasPlayed = true;
 
@@ -23,14 +27,19 @@ public class TriggerCinematic : MonoBehaviour
 
             PlayerController pc = other.GetComponent<PlayerController>();
             if (pc != null)
-            {
                 pc.enabled = false;
-            }
 
-            timelineDirector.Play();
-
-            timelineDirector.stopped += OnTimelineStopped;
+            StartCoroutine(StartTimelineAfterDelay());
         }
+    }
+
+    private IEnumerator StartTimelineAfterDelay()
+    {
+        yield return new WaitForSeconds(timelineStartDelay);
+
+        timelineDirector.Play();
+
+        timelineDirector.stopped += OnTimelineStopped;
     }
 
     private void OnTimelineStopped(PlayableDirector director)
