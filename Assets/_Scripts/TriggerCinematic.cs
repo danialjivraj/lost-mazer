@@ -1,19 +1,35 @@
 using UnityEngine;
 using UnityEngine.Playables;
 using System.Collections;
+using System.Collections.Generic;
 
 public class TriggerCinematic : MonoBehaviour
 {
     public GameObject fadeFX;
     public PlayableDirector timelineDirector;
-
     public float timelineStartDelay = 0.25f;
 
+    public bool disableOtherSounds = true;
+
     private bool hasPlayed = false;
+    private bool isTimelinePlaying = false;
+    private bool isSkipping = false;
+
+    private List<AudioSource> ambientAudioSources = new List<AudioSource>();
 
     void Start()
     {
-        if (fadeFX != null) fadeFX.SetActive(false);
+        if (fadeFX != null)
+            fadeFX.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (isTimelinePlaying && !isSkipping && Input.GetKeyDown(KeyCode.Tab))
+        {
+            isSkipping = true;
+            StartCoroutine(SkipCutscene());
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,22 +53,89 @@ public class TriggerCinematic : MonoBehaviour
     {
         yield return new WaitForSeconds(timelineStartDelay);
 
-        timelineDirector.Play();
+        if (disableOtherSounds)
+        {
+            AudioSource[] allSources = GameObject.FindObjectsOfType<AudioSource>();
+            ambientAudioSources.Clear();
+            foreach (AudioSource src in allSources)
+            {
+                if (!src.transform.IsChildOf(timelineDirector.transform))
+                {
+                    ambientAudioSources.Add(src);
+                    src.mute = true;
+                }
+            }
+        }
 
+        timelineDirector.Play();
+        isTimelinePlaying = true;
         timelineDirector.stopped += OnTimelineStopped;
+    }
+
+    private IEnumerator SkipCutscene()
+    {
+        if (fadeFX != null)
+        {
+            fadeFX.SetActive(false);
+            fadeFX.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(timelineStartDelay);
+
+        timelineDirector.time = timelineDirector.duration;
+        timelineDirector.Evaluate();
+        timelineDirector.Stop();
+
+        OnTimelineStopped(timelineDirector);
+        isTimelinePlaying = false;
     }
 
     private void OnTimelineStopped(PlayableDirector director)
     {
+        timelineDirector.stopped -= OnTimelineStopped;
+
+        if (!isSkipping)
+        {
+            StartCoroutine(ExitWithFade());
+        }
+        else
+        {
+            ReenablePlayer();
+            isSkipping = false;
+        }
+    }
+
+    private IEnumerator ExitWithFade()
+    {
+        if (fadeFX != null)
+        {
+            fadeFX.SetActive(false);
+            fadeFX.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(timelineStartDelay);
+
+        ReenablePlayer();
+    }
+
+    private void ReenablePlayer()
+    {
+        if (disableOtherSounds)
+        {
+            foreach (AudioSource src in ambientAudioSources)
+            {
+                if (src != null)
+                    src.mute = false;
+            }
+            ambientAudioSources.Clear();
+        }
+
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             var pc = player.GetComponent<PlayerController>();
             if (pc != null)
-            {
                 pc.enabled = true;
-            }
         }
-        timelineDirector.stopped -= OnTimelineStopped;
     }
 }
