@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 [RequireComponent(typeof(PlayableDirector))]
 public class TimelineAudioBinding : MonoBehaviour
 {
-    public AudioSource  ;
+    public AudioSource timelineAudioSource;
 
     private PlayableDirector director;
 
