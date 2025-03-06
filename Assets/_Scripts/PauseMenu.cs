@@ -79,7 +79,7 @@ public class PauseMenu : MonoBehaviour
         if (crosshair != null) crosshair.SetActive(false);
         if (player != null) player.enabled = false;
 
-        if (TriggerCinematic.isCutsceneActive)
+        if (TriggerCutscene.isCutsceneActive)
         {
             saveAndGoBackButton.interactable = false;
         }
@@ -114,7 +114,7 @@ public class PauseMenu : MonoBehaviour
         }
         else
         {
-            if (!TriggerCinematic.isCutsceneActive)
+            if (!TriggerCutscene.isCutsceneActive)
             {
                 LockCursor();
                 if (player != null) 

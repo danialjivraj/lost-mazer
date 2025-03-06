@@ -4,7 +4,7 @@ using UnityEngine.Playables;
 using System.Collections;
 using System.Collections.Generic;
 
-public class TriggerCinematic : MonoBehaviour
+public class TriggerCutscene : MonoBehaviour
 {
     public static bool isCutsceneActive = false;  // this flag is for the pause menu so that the player cannot move after unpausing
 
