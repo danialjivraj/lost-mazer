@@ -53,7 +53,7 @@ public class TriggerCutscene : MonoBehaviour
 
     void Update()
     {
-        if (isTimelinePlaying && !isSkipping && Input.GetKeyDown(KeyCode.Tab))
+        if (isCutsceneActive && isTimelinePlaying && !isSkipping && Input.GetKeyDown(KeyCode.Tab))
         {
             isSkipping = true;
             StartCoroutine(SkipCutscene());
