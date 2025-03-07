@@ -104,12 +104,11 @@ public class PauseMenu : MonoBehaviour
 
         isPaused = false;
 
-        ReadNotes noteScript = FindObjectOfType<ReadNotes>();
-        if (noteScript != null && noteScript.noteUI.activeSelf)
+        if (ReadNotes.IsReadingNote)
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            if (player != null) 
+            if (player != null)
                 player.enabled = false;
         }
         else
@@ -117,7 +116,7 @@ public class PauseMenu : MonoBehaviour
             if (!TriggerCutscene.isCutsceneActive)
             {
                 LockCursor();
-                if (player != null) 
+                if (player != null)
                     player.enabled = true;
             }
             else
@@ -194,7 +193,10 @@ public class PauseMenu : MonoBehaviour
 
         PlayerController playerController = FindObjectOfType<PlayerController>();
         PlayerHealth playerHealthScript = FindObjectOfType<PlayerHealth>();
-        ReadNotes readNotes = FindObjectOfType<ReadNotes>();
+        
+        ReadNotes[] allNotes = FindObjectsOfType<ReadNotes>();
+        bool noteFound = false;
+
         FinalDoor finalDoor = FindObjectOfType<FinalDoor>();
         RagdollController[] allRagdolls = FindObjectsOfType<RagdollController>();
         NavKeypad.Keypad keypad = FindObjectOfType<NavKeypad.Keypad>();
@@ -224,14 +226,22 @@ public class PauseMenu : MonoBehaviour
             }
 
             // reading note
-            if (ReadNotes.IsReadingNote)
+            foreach (ReadNotes note in allNotes)
             {
-                data.currentNoteId = readNotes.noteId;
-                data.isReadableViewActive = readNotes.GetIsReadableViewActive();
+                if (note.noteUI.activeSelf) // the note is currently open
+                {
+                    data.activeNoteId = note.noteId;
+                    data.isReadingNoteActive = true;
+                    data.isReadableViewActive = note.GetIsReadableViewActive();
+                    noteFound = true;
+                    break; // only one note can be active at a time
+                }
             }
-            else
+
+            if (!noteFound)
             {
-                data.currentNoteId = string.Empty;
+                data.activeNoteId = "";
+                data.isReadingNoteActive = false;
                 data.isReadableViewActive = false;
             }
 

@@ -106,8 +106,8 @@ public class GameStateData
     public int score;
     public bool playerHasKey;
 
-    public string currentNoteId;
-    public bool isReadingNote;
+    public string activeNoteId;
+    public bool isReadingNoteActive;
     public bool isReadableViewActive;
 
     public bool finalDoorIsUnlocked;
