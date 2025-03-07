@@ -53,7 +53,7 @@ public class TriggerCutscene : MonoBehaviour
 
     void Update()
     {
-        if (isCutsceneActive && isTimelinePlaying && !isSkipping && Input.GetKeyDown(KeyCode.Tab))
+        if (isCutsceneActive && isTimelinePlaying && !isSkipping && Time.timeScale > 0 && Input.GetKeyDown(KeyCode.Tab))
         {
             isSkipping = true;
             StartCoroutine(SkipCutscene());
@@ -77,7 +77,6 @@ public class TriggerCutscene : MonoBehaviour
             }
             data.cutsceneStates.RemoveAll(cs => cs.cutsceneId == cutsceneId);
             data.cutsceneStates.Add(new CutsceneState { cutsceneId = cutsceneId, hasPlayed = true });
-            SaveLoadManager.SaveGame(data);
 
             if (fadeFX != null)
                 fadeFX.SetActive(true);

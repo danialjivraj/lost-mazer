@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     private float standingHeight = 2.5f;
     private float crouchHeight = 1.5f;
     private float currentHeight;
-    private float crouchTransitionSpeed = 5f;
 
     // peeking
     private bool isPeekingLeft = false;

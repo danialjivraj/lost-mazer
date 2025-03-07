@@ -18,6 +18,17 @@ public class PlayerIdManager : MonoBehaviour
         }
     }
 
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void EnsureInstance()
+    {
+        if (instance == null)
+        {
+            GameObject go = new GameObject("PlayerIdManager");
+            instance = go.AddComponent<PlayerIdManager>();
+            DontDestroyOnLoad(go);
+        }
+    }
+
     public string GetPlayerId()
     {
         if (PlayerPrefs.HasKey("PlayerId"))
