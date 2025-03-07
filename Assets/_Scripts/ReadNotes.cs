@@ -22,6 +22,7 @@ public class ReadNotes : MonoBehaviour
 
     private bool isReadableViewActive = false;
     public static bool IsReadingNote { get; private set; } = false;
+    public List<SubtitleData> subtitles;
 
     void Awake()
     {
@@ -150,6 +151,12 @@ public class ReadNotes : MonoBehaviour
 
         isReadableViewActive = false;
         IsReadingNote = false;
+
+        SubtitleManager.Instance.ResetSubtitles();
+        foreach (SubtitleData subtitle in subtitles)
+        {
+            SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+        }
     }
 
     public bool GetIsReadableViewActive()

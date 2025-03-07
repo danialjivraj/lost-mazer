@@ -16,6 +16,7 @@ public class UseChest : MonoBehaviour
     private bool inReach;
     private bool isChestOpen = false;
     public PickUpNotification pickUpNotification;
+    public List<SubtitleData> subtitles;
 
     void Awake()
     {
@@ -43,7 +44,6 @@ public class UseChest : MonoBehaviour
             Debug.LogWarning("Chest open sound AudioSource is not assigned.");
         }
 
-        // Load chest state
         LoadChestState();
     }
 
@@ -55,7 +55,6 @@ public class UseChest : MonoBehaviour
             ChestState chestState = data.chestStates.Find(c => c.chestId == chestId);
             if (chestState != null && chestState.isOpen)
             {
-                // Open the chest without playing the sound and pass in the item states.
                 OpenChest(false, chestState.itemPickedUpStates);
             }
         }
@@ -109,22 +108,18 @@ public class UseChest : MonoBehaviour
         if (handUIHandler != null)
             handUIHandler.HideHandUI();
 
-        // Loop over each item and decide whether to activate it.
         for (int i = 0; i < objectsToActivate.Length; i++)
         {
-            // If we have saved states and the corresponding state is true, then the item was picked up.
             bool pickedUp = itemPickedUpStates != null 
                             && itemPickedUpStates.Count > i 
                             && itemPickedUpStates[i];
             if (pickedUp)
             {
-                // Optionally, destroy the object if it still exists.
                 if (objectsToActivate[i] != null)
                     Destroy(objectsToActivate[i]);
             }
             else
             {
-                // Activate the object if it wasn’t picked up.
                 if (objectsToActivate[i] != null)
                     objectsToActivate[i].SetActive(true);
             }
@@ -140,6 +135,12 @@ public class UseChest : MonoBehaviour
 
         if (pickUpNotification != null)
             pickUpNotification.ShowNotification();
+
+        SubtitleManager.Instance.ResetSubtitles();
+        foreach (SubtitleData subtitle in subtitles)
+        {
+            SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+        }
     }
 
 

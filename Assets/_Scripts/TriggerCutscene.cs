@@ -93,6 +93,8 @@ public class TriggerCutscene : MonoBehaviour
     {
         yield return new WaitForSeconds(timelineStartDelay);
 
+        SubtitleManager.Instance.ResetSubtitles();
+
         if (disableOtherSounds)
         {
             AudioSource[] allSources = GameObject.FindObjectsOfType<AudioSource>();
