@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class TriggerCutscene : MonoBehaviour
 {
     public string cutsceneId;
-    public static bool isCutsceneActive = false;  // this flag is for the pause menu so that the player cannot move after unpausing
+    public static bool isCutsceneActive = false;
 
     public GameObject fadeFX;
     public PlayableDirector timelineDirector;
