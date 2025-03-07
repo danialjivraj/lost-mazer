@@ -7,7 +7,7 @@ using UnityEngine.Events;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
-    // novement and physics
+    // movement and physics
     public float walkSpeed = 3f;
     public float runSpeed = 5f;
     public float crouchSpeed = 1.5f;
@@ -72,6 +72,17 @@ public class PlayerController : MonoBehaviour
     public float crouchingHearingRange = 5f;
     public UnityEvent<Vector3, float> OnFootstep;
 
+    // jump and landing
+    public AudioSource jumpAudioSource;
+    public AudioSource landingAudioSource;
+    private bool wasGrounded = true;
+    private bool hasJumped = false;
+    public float landingHearingVolume = 1f;
+    public float landingHearingRange = 12f;
+    public float landingGizmoDuration = 1f;
+    private float lastLandingTime = -Mathf.Infinity;
+
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -97,6 +108,8 @@ public class PlayerController : MonoBehaviour
             breathingSlowSource.loop = false;
             breathingSlowSource.volume = 0f;
         }
+
+        wasGrounded = characterController.isGrounded;
 
         if (SaveLoadManager.SaveExists())
         {
@@ -130,6 +143,7 @@ public class PlayerController : MonoBehaviour
         HandleZoom();
         HandleFootsteps();
         HandleBreathingSounds();
+        HandleLandingSound();
     }
 
     private void HandleMovement()
@@ -149,6 +163,11 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = isCrouching ? crouchJumpPower : jumpPower;
+            if (jumpAudioSource != null)
+            {
+                jumpAudioSource.Play();
+            }
+            hasJumped = true;
         }
         else
         {
@@ -255,7 +274,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleBreathingSounds()
     {
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) && !isCrouching;
+        bool movementInput = Mathf.Abs(Input.GetAxis("Vertical")) > 0.1f || Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f;
+        bool isRunning = Input.GetKey(KeyCode.LeftShift) && !isCrouching && movementInput;
 
         if (isRunning && !wasRunning)
         {
@@ -282,6 +302,24 @@ public class PlayerController : MonoBehaviour
             }
         }
         wasRunning = isRunning;
+    }
+
+    private void HandleLandingSound()
+    {
+        if (hasJumped && characterController.isGrounded && !wasGrounded)
+        {
+            if (landingAudioSource != null)
+            {
+                landingAudioSource.Play();
+            }
+            if (OnFootstep != null)
+            {
+                OnFootstep.Invoke(transform.position, landingHearingVolume);
+            }
+            lastLandingTime = Time.time;
+            hasJumped = false;
+        }
+        wasGrounded = characterController.isGrounded;
     }
 
     IEnumerator PlayFootstepSounds()
@@ -357,6 +395,12 @@ public class PlayerController : MonoBehaviour
             }
 
             Gizmos.DrawWireSphere(transform.position, hearingRange);
+        }
+        
+        if (Application.isPlaying && Time.time - lastLandingTime < landingGizmoDuration)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, landingHearingRange);
         }
     }
 
