@@ -107,6 +107,8 @@ public class ReadNotes : MonoBehaviour
 
     void OpenNote()
     {
+        SubtitleManager.Instance.ResetSubtitles();
+
         if (noteUI != null) noteUI.SetActive(true);
         if (pickUpSound != null) pickUpSound.Play();
         if (hud != null) hud.SetActive(false);
