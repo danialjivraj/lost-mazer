@@ -81,8 +81,9 @@
 ### **Note:**  
 Although the scripts were initially taken from the following links, most of them have been massively modified (excluding subtitle scripts). They will still be credited as they served as a starting point.
 
-- **PlayerController, EnemyController, UseChest, Door (FinalDoor.cs), Sway, Lantern Pick Up (Now PickUpItems.cs):**  
-  [Google Drive - Scripts](https://drive.google.com/drive/folders/1LRi0tOeAhxLp62AU6AbM06ChW34JkaDy)
+- **Gameplay Scripts** 
+  - **PlayerController, EnemyController, UseChest, Door (FinalDoor.cs), Sway, Lantern Pick Up (Now PickUpItems.cs):**  
+    [Google Drive - Scripts](https://drive.google.com/drive/folders/1LRi0tOeAhxLp62AU6AbM06ChW34JkaDy)
 
 - **Subtitle Scripts:**  
   - **SubtitleClip, SubtitleTrack, SubtitleTrackMixer, SubtitleBehaviour:**  
