@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     public float attackCooldown = 1.5f;
     public int attackDamage = 1;
     private float nextAttackTime = 0f;
+    private int detectionLayerMask;
     private Transform player;
     private LanternController playerLantern;
 
@@ -47,6 +48,9 @@ public class EnemyController : MonoBehaviour
     private EnemyState currentState = EnemyState.Idle;
     private float chaseEndTime = 0f;
 
+    // for logging state changes
+    private EnemyState previousState = EnemyState.Idle;
+
     // locker interaction
     private LockerInteraction[] lockerInteractions;
 
@@ -60,6 +64,8 @@ public class EnemyController : MonoBehaviour
 
         chaseTrackTargetVolume = chaseTrack.volume;
         agent.stoppingDistance = 1.5f;
+        
+        detectionLayerMask = Physics.DefaultRaycastLayers;
 
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
@@ -86,7 +92,7 @@ public class EnemyController : MonoBehaviour
             currentSightDistance *= lanternSightMultiplier;
         }
 
-        if (LockerInteraction.IsAnyLockerHiding())
+        if (LockerInteraction.IsPlayerHidingInAnyLocker())
         {
             if (currentState == EnemyState.Chase || currentState == EnemyState.Attack || isInvestigating)
             {
@@ -115,11 +121,17 @@ public class EnemyController : MonoBehaviour
             case EnemyState.Attack:
                 break;
         }
+
+        if (currentState != previousState)
+        {
+            Debug.Log("Enemy State: " + currentState.ToString());
+            previousState = currentState;
+        }
     }
 
     private void OnPlayerFootstep(Vector3 position, float volume)
     {
-        if (LockerInteraction.IsAnyLockerHiding())
+        if (LockerInteraction.IsPlayerHidingInAnyLocker())
             return;
 
         if (currentState == EnemyState.Idle || currentState == EnemyState.Walk)
@@ -139,6 +151,7 @@ public class EnemyController : MonoBehaviour
     private void HandleIdleState(float currentSightDistance)
     {
         idleTimer += Time.deltaTime;
+        animator.SetBool("IsIdle", true);
         animator.SetBool("IsWalking", false);
         animator.SetBool("IsChasing", false);
         animator.SetBool("IsAttacking", false);
@@ -154,6 +167,7 @@ public class EnemyController : MonoBehaviour
     private void HandleWalkState(float currentSightDistance)
     {
         idleTimer = 0f;
+        animator.SetBool("IsIdle", false);
         animator.SetBool("IsWalking", true);
         animator.SetBool("IsChasing", false);
         animator.SetBool("IsAttacking", false);
@@ -184,18 +198,44 @@ public class EnemyController : MonoBehaviour
         idleTimer = 0f;
         agent.speed = chaseSpeed;
         agent.SetDestination(player.position);
+        animator.SetBool("IsIdle", false);
         animator.SetBool("IsWalking", false);
         animator.SetBool("IsChasing", true);
         animator.SetBool("IsAttacking", false);
         PlaySound(chasingSound);
 
-        if (Vector3.Distance(transform.position, player.position) <= attackRange && Time.time >= nextAttackTime)
+        int chaseArmUpLayer = animator.GetLayerIndex("chasing with arm up");
+        if (chaseArmUpLayer == -1)
+        {
+            Debug.LogError("chasing with arm up layer not found in the Animator!");
+            return;
+        }
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (distanceToPlayer <= 10f)
+        {
+            float targetWeight = 0.6f + Mathf.PingPong(Time.time, 0.4f);
+            float currentWeight = animator.GetLayerWeight(chaseArmUpLayer);
+            float newWeight = Mathf.MoveTowards(currentWeight, targetWeight, Time.deltaTime);
+            animator.SetLayerWeight(chaseArmUpLayer, newWeight);
+            //Debug.Log("Smoothing chasing with arm up Layer Weight to (in range): " + newWeight);
+        }
+        else
+        {
+            float currentWeight = animator.GetLayerWeight(chaseArmUpLayer);
+            float newWeight = Mathf.Lerp(currentWeight, 0f, Time.deltaTime * 5f);
+            animator.SetLayerWeight(chaseArmUpLayer, newWeight);
+            //Debug.Log("Smoothing chasing with arm up Layer Weight to (out of range): " + newWeight);
+        }
+
+        if (distanceToPlayer <= attackRange && Time.time >= nextAttackTime)
         {
             currentState = EnemyState.Attack;
             StartCoroutine(AttackPlayer());
         }
 
-        if (Vector3.Distance(transform.position, player.position) > currentSightDistance)
+        if (distanceToPlayer > currentSightDistance)
         {
             if (chaseEndTime == 0f)
             {
@@ -219,8 +259,14 @@ public class EnemyController : MonoBehaviour
         currentState = EnemyState.Attack;
         transform.LookAt(player.position);
         animator.SetBool("IsAttacking", true);
+        animator.SetBool("IsChasing", false);
+        
+        // disables the run arm up layer during the attack
+        int runArmUpLayer = animator.GetLayerIndex("Enemy_ChaseArmUp");
+        float originalRunArmUpWeight = animator.GetLayerWeight(runArmUpLayer);
+        animator.SetLayerWeight(runArmUpLayer, 0f);
+        
         nextAttackTime = Time.time + attackCooldown;
-
         PlaySound(attackSound);
 
         yield return new WaitForSeconds(0.3f);
@@ -243,6 +289,10 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         animator.SetBool("IsAttacking", false);
+        
+        // restores the run arm up layer weight after attack is complete
+        animator.SetLayerWeight(runArmUpLayer, originalRunArmUpWeight);
+        
         currentState = EnemyState.Chase;
         agent.isStopped = false;
         agent.ResetPath();
@@ -251,12 +301,12 @@ public class EnemyController : MonoBehaviour
 
     private void CheckForPlayerDetection(float currentSightDistance)
     {
-        if (LockerInteraction.IsAnyLockerHiding())
+        if (LockerInteraction.IsPlayerHidingInAnyLocker())
             return;
 
         RaycastHit hit;
         Vector3 playerDirection = player.position - transform.position;
-        if (Physics.Raycast(transform.position, playerDirection.normalized, out hit, currentSightDistance))
+        if (Physics.Raycast(transform.position, playerDirection.normalized, out hit, currentSightDistance, detectionLayerMask, QueryTriggerInteraction.Ignore))
         {
             if (hit.collider.CompareTag("Player"))
             {
@@ -345,6 +395,7 @@ public class EnemyController : MonoBehaviour
         state.chaseEndTime = chaseEndTime;
         state.nextAttackTime = nextAttackTime;
 
+        state.animIsIdle = animator.GetBool("IsIdle");
         state.animIsWalking = animator.GetBool("IsWalking");
         state.animIsChasing = animator.GetBool("IsChasing");
         state.animIsAttacking = animator.GetBool("IsAttacking");
@@ -353,7 +404,7 @@ public class EnemyController : MonoBehaviour
         state.currentAnimNormalizedTime = animInfo.normalizedTime;
         state.currentAnimStateName = animInfo.IsName("Enemy_Idle") ? "Enemy_Idle" :
                                     animInfo.IsName("Enemy_Walk") ? "Enemy_Walk" :
-                                    animInfo.IsName("Enemy_Run") ? "Enemy_Run" :
+                                    animInfo.IsName("Enemy_Chase") ? "Enemy_Chase" :
                                     animInfo.IsName("Enemy_Attack") ? "Enemy_Attack" : "Unknown";
 
         return state;
@@ -384,6 +435,7 @@ public class EnemyController : MonoBehaviour
         chaseEndTime = state.chaseEndTime;
         nextAttackTime = state.nextAttackTime;
 
+        animator.SetBool("IsIdle", state.animIsIdle);
         animator.SetBool("IsWalking", state.animIsWalking);
         animator.SetBool("IsChasing", state.animIsChasing);
         animator.SetBool("IsAttacking", state.animIsAttacking);

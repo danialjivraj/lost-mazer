@@ -141,7 +141,7 @@ public class LockerInteraction : MonoBehaviour
         return lockerTrigger != null && lockerTrigger.isPlayerInside && !isLockerOpen;
     }
 
-    public static bool IsAnyLockerHiding()
+    public static bool IsPlayerHidingInAnyLocker()
     {
         foreach (var locker in allLockers)
         {

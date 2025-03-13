@@ -50,6 +50,7 @@ public class EnemyStateData {
     public float chaseEndTime;
     public float nextAttackTime;
 
+    public bool animIsIdle;
     public bool animIsWalking;
     public bool animIsChasing;
     public bool animIsAttacking;

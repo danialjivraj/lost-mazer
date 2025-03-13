@@ -71,19 +71,19 @@ public class LanternController : MonoBehaviour
     {
         // toggles lantern if player presses X and has the lantern, is not animating, not reading a note, and not hiding
         if (Input.GetKeyDown(KeyCode.X) && hasLantern && !isAnimating && 
-            !ReadNotes.IsReadingNote && !LockerInteraction.IsAnyLockerHiding())
+            !ReadNotes.IsReadingNote && !LockerInteraction.IsPlayerHidingInAnyLocker())
         {
             ToggleLantern();
         }
 
         // if the player is hiding and the lantern is active, turn it off
-        if (LockerInteraction.IsAnyLockerHiding() && isLanternActive)
+        if (LockerInteraction.IsPlayerHidingInAnyLocker() && isLanternActive)
         {
             ToggleLantern();
         }
 
         // shows warning if player presses X while hiding AND has the lantern
-        if (Input.GetKeyDown(KeyCode.X) && LockerInteraction.IsAnyLockerHiding() && hasLantern)
+        if (Input.GetKeyDown(KeyCode.X) && LockerInteraction.IsPlayerHidingInAnyLocker() && hasLantern)
         {
             ShowWarning();
         }

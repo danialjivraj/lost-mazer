@@ -162,12 +162,13 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown("Jump") && canMove && characterController.isGrounded)
         {
             moveDirection.y = isCrouching ? crouchJumpPower : jumpPower;
-            if (jumpAudioSource != null)
+            if (!isCrouching && jumpAudioSource != null)
             {
                 jumpAudioSource.Play();
             }
             hasJumped = true;
         }
+
         else
         {
             moveDirection.y = movementDirectionY;
@@ -307,15 +308,18 @@ public class PlayerController : MonoBehaviour
     {
         if (hasJumped && characterController.isGrounded && !wasGrounded)
         {
-            if (landingAudioSource != null)
+            if (!isCrouching)
             {
-                landingAudioSource.Play();
+                if (landingAudioSource != null)
+                {
+                    landingAudioSource.Play();
+                }
+                if (OnFootstep != null)
+                {
+                    OnFootstep.Invoke(transform.position, landingHearingVolume);
+                }
+                lastLandingTime = Time.time;
             }
-            if (OnFootstep != null)
-            {
-                OnFootstep.Invoke(transform.position, landingHearingVolume);
-            }
-            lastLandingTime = Time.time;
             hasJumped = false;
         }
         wasGrounded = characterController.isGrounded;
@@ -396,7 +400,7 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, hearingRange);
         }
         
-        if (Application.isPlaying && Time.time - lastLandingTime < landingGizmoDuration)
+        if (Application.isPlaying && Time.time - lastLandingTime < landingGizmoDuration && !isCrouching)
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(transform.position, landingHearingRange);
