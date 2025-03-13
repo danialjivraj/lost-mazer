@@ -58,6 +58,7 @@ public class EnemyController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerLantern = player.GetComponentInChildren<LanternController>();
         lockerInteractions = FindObjectsOfType<LockerInteraction>();
@@ -420,15 +421,11 @@ public class EnemyController : MonoBehaviour
         {
             transform.position = state.position;
         }
-
         transform.rotation = state.rotation;
-
         agent.speed = state.agentSpeed;
         agent.SetDestination(state.destination);
-
         currentWaypointIndex = state.currentWaypointIndex;
         currentState = (EnemyState)state.currentState;
-
         idleTimer = state.idleTimer;
         lastHeardPosition = state.lastHeardPosition;
         isInvestigating = state.isInvestigating;
@@ -439,17 +436,16 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("IsWalking", state.animIsWalking);
         animator.SetBool("IsChasing", state.animIsChasing);
         animator.SetBool("IsAttacking", state.animIsAttacking);
-
         animator.Play(state.currentAnimStateName, 0, state.currentAnimNormalizedTime);
 
-        if (state.currentAnimStateName == "Enemy_Attack")
+        if (currentState == EnemyState.Attack)
         {
-            currentState = EnemyState.Chase;
             animator.SetBool("IsAttacking", false);
+            currentState = EnemyState.Chase;
             agent.isStopped = false;
             agent.ResetPath();
+            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
             agent.SetDestination(player.position);
-            nextAttackTime = Time.time;
         }
     }
 
