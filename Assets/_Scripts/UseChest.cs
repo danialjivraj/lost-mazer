@@ -55,7 +55,7 @@ public class UseChest : MonoBehaviour
             ChestState chestState = data.chestStates.Find(c => c.chestId == chestId);
             if (chestState != null && chestState.isOpen)
             {
-                OpenChest(false, chestState.itemPickedUpStates);
+                OpenChest(playSound: false, itemPickedUpStates: chestState.itemPickedUpStates, playSubtitles: false);
             }
         }
     }
@@ -91,7 +91,7 @@ public class UseChest : MonoBehaviour
         }
     }
 
-    void OpenChest(bool playSound = true, List<bool> itemPickedUpStates = null)
+    void OpenChest(bool playSound = true, List<bool> itemPickedUpStates = null, bool playSubtitles = true)
     {
         if (playSound)
         {
@@ -136,10 +136,13 @@ public class UseChest : MonoBehaviour
         if (pickUpNotification != null)
             pickUpNotification.ShowNotification();
 
-        SubtitleManager.Instance.ResetSubtitles();
-        foreach (SubtitleData subtitle in subtitles)
+        if (playSubtitles && subtitles != null && subtitles.Count > 0)
         {
-            SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+            SubtitleManager.Instance.ResetSubtitles();
+            foreach (SubtitleData subtitle in subtitles)
+            {
+                SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+            }
         }
     }
 
