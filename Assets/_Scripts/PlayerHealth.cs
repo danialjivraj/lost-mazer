@@ -53,6 +53,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (TriggerCutscene.isCutsceneActive)
+        {
+            return;
+        }
+
         currentHealth -= damage;
         Debug.Log("health: " + currentHealth);
         

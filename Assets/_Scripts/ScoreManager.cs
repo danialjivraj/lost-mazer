@@ -71,7 +71,7 @@ public class ScoreManager : MonoBehaviour
 
         // saves the new score first
         await SaveCurrentScore(score, currentLevel);
-        Debug.Log("New score inserted. Now we trim to top 10 if needed...");
+        Debug.Log("New score inserted.");
 
         // re-query's the DB for top 11
         await LoadHighScoresForLevel(currentLevel);
