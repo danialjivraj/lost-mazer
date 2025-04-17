@@ -25,6 +25,8 @@ public class EnemyController : MonoBehaviour
     private Transform player;
     private LanternController playerLantern;
 
+    public float elevationThreshold = 0.5f;
+
     // hearing and investigation
     public float hearingRange = 20f;
     public float runningSoundMultiplier = 2f;
@@ -47,7 +49,6 @@ public class EnemyController : MonoBehaviour
     private enum EnemyState { Idle, Walk, Chase, Attack }
     private EnemyState currentState = EnemyState.Idle;
     private float chaseEndTime = 0f;
-
     // for logging state changes
     private EnemyState previousState = EnemyState.Idle;
 
@@ -65,7 +66,7 @@ public class EnemyController : MonoBehaviour
 
         chaseTrackTargetVolume = chaseTrack.volume;
         agent.stoppingDistance = 1.5f;
-        
+
         detectionLayerMask = Physics.DefaultRaycastLayers;
 
         PlayerController playerController = player.GetComponent<PlayerController>();
@@ -89,9 +90,7 @@ public class EnemyController : MonoBehaviour
     {
         float currentSightDistance = sightDistance;
         if (playerLantern != null && playerLantern.IsLanternActive())
-        {
             currentSightDistance *= lanternSightMultiplier;
-        }
 
         if (LockerInteraction.IsPlayerHidingInAnyLocker())
         {
@@ -125,7 +124,7 @@ public class EnemyController : MonoBehaviour
 
         if (currentState != previousState)
         {
-            Debug.Log("Enemy State: " + currentState.ToString());
+            Debug.Log("Enemy State: " + currentState);
             previousState = currentState;
         }
     }
@@ -144,7 +143,7 @@ public class EnemyController : MonoBehaviour
                 lastHeardPosition = position;
                 isInvestigating = true;
                 currentState = EnemyState.Walk;
-                agent.SetDestination(lastHeardPosition);
+                agent.SetDestination(position);
             }
         }
     }
@@ -152,45 +151,33 @@ public class EnemyController : MonoBehaviour
     private void HandleIdleState(float currentSightDistance)
     {
         idleTimer += Time.deltaTime;
-        animator.SetBool("IsIdle", true);
-        animator.SetBool("IsWalking", false);
-        animator.SetBool("IsChasing", false);
-        animator.SetBool("IsAttacking", false);
+        SetAnimatorFlags(idle: true);
         PlaySound(idleSound);
 
-        if (idleTimer >= idleTime)
-        {
-            NextWaypoint();
-        }
+        if (idleTimer >= idleTime) NextWaypoint();
         CheckForPlayerDetection(currentSightDistance);
     }
 
     private void HandleWalkState(float currentSightDistance)
     {
         idleTimer = 0f;
-        animator.SetBool("IsIdle", false);
-        animator.SetBool("IsWalking", true);
-        animator.SetBool("IsChasing", false);
-        animator.SetBool("IsAttacking", false);
+        SetAnimatorFlags(walking: true);
         PlaySound(walkingSound);
 
         if (isInvestigating)
         {
             agent.SetDestination(lastHeardPosition);
-
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
                 isInvestigating = false;
                 currentState = EnemyState.Idle;
             }
         }
-        else
+        else if (agent.remainingDistance <= agent.stoppingDistance)
         {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                currentState = EnemyState.Idle;
-            }
+            currentState = EnemyState.Idle;
         }
+
         CheckForPlayerDetection(currentSightDistance);
     }
 
@@ -199,38 +186,41 @@ public class EnemyController : MonoBehaviour
         idleTimer = 0f;
         agent.speed = chaseSpeed;
         agent.SetDestination(player.position);
-        animator.SetBool("IsIdle", false);
-        animator.SetBool("IsWalking", false);
-        animator.SetBool("IsChasing", true);
-        animator.SetBool("IsAttacking", false);
+        SetAnimatorFlags(chasing: true);
         PlaySound(chasingSound);
 
-        int chaseArmUpLayer = animator.GetLayerIndex("chasing with arm up");
-        if (chaseArmUpLayer == -1)
+        int chaseLayer = animator.GetLayerIndex("chasing with arm up");
+        if (chaseLayer == -1)
         {
-            Debug.LogError("chasing with arm up layer not found in the Animator!");
+            Debug.LogError("Missing animator layer.");
             return;
         }
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
+        // flat XZ distance
+        Vector3 enemyFlat = new Vector3(transform.position.x, player.position.y, transform.position.z);
+        Vector3 playerFlat = new Vector3(player.position.x, player.position.y, player.position.z);
+        float horizontalDistance = Vector3.Distance(enemyFlat, playerFlat);
+
         if (distanceToPlayer <= 10f)
         {
             float targetWeight = 0.6f + Mathf.PingPong(Time.time, 0.4f);
-            float currentWeight = animator.GetLayerWeight(chaseArmUpLayer);
+            float currentWeight = animator.GetLayerWeight(chaseLayer);
             float newWeight = Mathf.MoveTowards(currentWeight, targetWeight, Time.deltaTime);
-            animator.SetLayerWeight(chaseArmUpLayer, newWeight);
-            //Debug.Log("Smoothing chasing with arm up Layer Weight to (in range): " + newWeight);
+            animator.SetLayerWeight(chaseLayer, newWeight);
         }
         else
         {
-            float currentWeight = animator.GetLayerWeight(chaseArmUpLayer);
+            float currentWeight = animator.GetLayerWeight(chaseLayer);
             float newWeight = Mathf.Lerp(currentWeight, 0f, Time.deltaTime * 5f);
-            animator.SetLayerWeight(chaseArmUpLayer, newWeight);
-            //Debug.Log("Smoothing chasing with arm up Layer Weight to (out of range): " + newWeight);
+            animator.SetLayerWeight(chaseLayer, newWeight);
         }
 
-        if (distanceToPlayer <= attackRange && Time.time >= nextAttackTime)
+        float verticalDifference = Mathf.Abs(player.position.y - transform.position.y);
+        float distanceToUse = (verticalDifference > elevationThreshold) ? horizontalDistance : distanceToPlayer;
+
+        if (distanceToUse <= attackRange && Time.time >= nextAttackTime)
         {
             currentState = EnemyState.Attack;
             StartCoroutine(AttackPlayer());
@@ -239,9 +229,7 @@ public class EnemyController : MonoBehaviour
         if (distanceToPlayer > currentSightDistance)
         {
             if (chaseEndTime == 0f)
-            {
                 chaseEndTime = Time.time + chaseDelay;
-            }
             else if (Time.time >= chaseEndTime)
             {
                 currentState = EnemyState.Walk;
@@ -261,12 +249,11 @@ public class EnemyController : MonoBehaviour
         transform.LookAt(player.position);
         animator.SetBool("IsAttacking", true);
         animator.SetBool("IsChasing", false);
-        
-        // disables the run arm up layer during the attack
+
         int runArmUpLayer = animator.GetLayerIndex("Enemy_ChaseArmUp");
         float originalRunArmUpWeight = animator.GetLayerWeight(runArmUpLayer);
         animator.SetLayerWeight(runArmUpLayer, 0f);
-        
+
         nextAttackTime = Time.time + attackCooldown;
         PlaySound(attackSound);
 
@@ -275,13 +262,18 @@ public class EnemyController : MonoBehaviour
         Vector3 attackDirection = (player.position - transform.position).normalized;
         agent.SetDestination(transform.position + attackDirection * 0.5f);
 
-        if (Vector3.Distance(transform.position, player.position) <= attackRange + 0.5f)
+        float fullDistance = Vector3.Distance(transform.position, player.position);
+        Vector3 diff = player.position - transform.position;
+        diff.y = 0f;
+        float flatDistance = diff.magnitude;
+        float verticalDifference = Mathf.Abs(player.position.y - transform.position.y);
+        float distanceToUse = (verticalDifference > elevationThreshold) ? flatDistance : fullDistance;
+
+        if (distanceToUse <= attackRange + 0.5f)
         {
             PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
             if (playerHealth != null)
-            {
                 playerHealth.TakeDamage(attackDamage);
-            }
         }
 
         yield return new WaitForSeconds(0.4f);
@@ -290,10 +282,8 @@ public class EnemyController : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         animator.SetBool("IsAttacking", false);
-        
-        // restores the run arm up layer weight after attack is complete
         animator.SetLayerWeight(runArmUpLayer, originalRunArmUpWeight);
-        
+
         currentState = EnemyState.Chase;
         agent.isStopped = false;
         agent.ResetPath();
@@ -307,7 +297,8 @@ public class EnemyController : MonoBehaviour
 
         RaycastHit hit;
         Vector3 playerDirection = player.position - transform.position;
-        if (Physics.Raycast(transform.position, playerDirection.normalized, out hit, currentSightDistance, detectionLayerMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(transform.position, playerDirection.normalized,
+                            out hit, currentSightDistance, detectionLayerMask, QueryTriggerInteraction.Ignore))
         {
             if (hit.collider.CompareTag("Player"))
             {
@@ -328,9 +319,7 @@ public class EnemyController : MonoBehaviour
             return;
 
         if (!soundSource.isPlaying)
-        {
             soundSource.Play();
-        }
     }
 
     private void ManageChaseTrack()
@@ -346,20 +335,17 @@ public class EnemyController : MonoBehaviour
                 chaseTrack.Play();
             }
             if (chaseTrack.volume < chaseTrackTargetVolume)
-            {
-                chaseTrack.volume = Mathf.Min(chaseTrackTargetVolume, chaseTrack.volume + chaseTrackFadeSpeed * Time.deltaTime);
-            }
+                chaseTrack.volume = Mathf.Min(chaseTrackTargetVolume,
+                                              chaseTrack.volume + chaseTrackFadeSpeed * Time.deltaTime);
         }
-        else
+        else if (chaseTrack.isPlaying)
         {
-            if (chaseTrack.isPlaying)
+            chaseTrack.volume = Mathf.Max(0f,
+                                          chaseTrack.volume - chaseTrackFadeSpeed * Time.deltaTime);
+            if (chaseTrack.volume <= 0f)
             {
-                chaseTrack.volume = Mathf.Max(0f, chaseTrack.volume - chaseTrackFadeSpeed * Time.deltaTime);
-                if (chaseTrack.volume <= 0f)
-                {
-                    chaseTrack.Stop();
-                    chaseTrack.volume = chaseTrackTargetVolume;
-                }
+                chaseTrack.Stop();
+                chaseTrack.volume = chaseTrackTargetVolume;
             }
         }
     }
@@ -378,24 +364,28 @@ public class EnemyController : MonoBehaviour
         animator.enabled = true;
     }
 
+    private void SetAnimatorFlags(bool idle = false, bool walking = false, bool chasing = false)
+    {
+        animator.SetBool("IsIdle", idle);
+        animator.SetBool("IsWalking", walking);
+        animator.SetBool("IsChasing", chasing);
+        animator.SetBool("IsAttacking", false);
+    }
+
     public EnemyStateData GetEnemyState()
     {
         EnemyStateData state = new EnemyStateData();
         state.position = transform.position;
         state.rotation = transform.rotation;
-
         state.destination = agent.destination;
         state.agentSpeed = agent.speed;
-
         state.currentWaypointIndex = currentWaypointIndex;
         state.currentState = (int)currentState;
-
         state.idleTimer = idleTimer;
         state.lastHeardPosition = lastHeardPosition;
         state.isInvestigating = isInvestigating;
         state.chaseEndTime = chaseEndTime;
         state.nextAttackTime = nextAttackTime;
-
         state.animIsIdle = animator.GetBool("IsIdle");
         state.animIsWalking = animator.GetBool("IsWalking");
         state.animIsChasing = animator.GetBool("IsChasing");
@@ -403,10 +393,11 @@ public class EnemyController : MonoBehaviour
 
         AnimatorStateInfo animInfo = animator.GetCurrentAnimatorStateInfo(0);
         state.currentAnimNormalizedTime = animInfo.normalizedTime;
-        state.currentAnimStateName = animInfo.IsName("Enemy_Idle") ? "Enemy_Idle" :
-                                    animInfo.IsName("Enemy_Walk") ? "Enemy_Walk" :
-                                    animInfo.IsName("Enemy_Chase") ? "Enemy_Chase" :
-                                    animInfo.IsName("Enemy_Attack") ? "Enemy_Attack" : "Unknown";
+        state.currentAnimStateName = animInfo.IsName("Enemy_Idle")   ? "Enemy_Idle"
+                                  : animInfo.IsName("Enemy_Walk")   ? "Enemy_Walk"
+                                  : animInfo.IsName("Enemy_Chase")  ? "Enemy_Chase"
+                                  : animInfo.IsName("Enemy_Attack") ? "Enemy_Attack"
+                                  : "Unknown";
 
         return state;
     }
@@ -414,13 +405,10 @@ public class EnemyController : MonoBehaviour
     public void LoadEnemyState(EnemyStateData state)
     {
         if (agent != null)
-        {
             agent.Warp(state.position);
-        }
         else
-        {
             transform.position = state.position;
-        }
+
         transform.rotation = state.rotation;
         agent.speed = state.agentSpeed;
         agent.SetDestination(state.destination);
@@ -444,7 +432,6 @@ public class EnemyController : MonoBehaviour
             currentState = EnemyState.Chase;
             agent.isStopped = false;
             agent.ResetPath();
-            Transform player = GameObject.FindGameObjectWithTag("Player").transform;
             agent.SetDestination(player.position);
         }
     }
@@ -453,9 +440,8 @@ public class EnemyController : MonoBehaviour
     {
         float currentSightDistance = sightDistance;
         if (playerLantern != null && playerLantern.IsLanternActive())
-        {
             currentSightDistance *= lanternSightMultiplier;
-        }
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, currentSightDistance);
         Gizmos.color = Color.blue;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Linq;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -393,6 +394,12 @@ public class PauseMenu : MonoBehaviour
                 data.cutsceneStates.RemoveAll(c => c.cutsceneId == cs.cutsceneId);
                 data.cutsceneStates.Add(new CutsceneState { cutsceneId = cs.cutsceneId, hasPlayed = cs.hasPlayed });
             }
+
+            // ensuring the right level is saved
+            string sceneName = SceneManager.GetActiveScene().name;
+            int levelNum = int.Parse( new string(sceneName.Where(char.IsDigit).ToArray()) );
+            PlayerPrefs.SetInt("CurrentLevel", levelNum);
+            PlayerPrefs.Save();
 
             SaveLoadManager.SaveGame(data);
             Debug.Log("Game state saved. Returning to main menu.");

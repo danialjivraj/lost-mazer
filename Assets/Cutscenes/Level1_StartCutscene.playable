@@ -35,7 +35,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fde896d73129204bb3f6ead6171bfee, type: 3}
   m_Name: SubtitleClip
   m_EditorClassIdentifier: 
-  subtitleText: Where... where am I?
+  subtitleText: 'Ben: Where... where am I?'
 --- !u!114 &-6179180765394811569
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fde896d73129204bb3f6ead6171bfee, type: 3}
   m_Name: SubtitleClip(Clone)(Clone)(Clone)(Clone)
   m_EditorClassIdentifier: 
-  subtitleText: What's that...? A chest? I should probably open it...
+  subtitleText: 'Ben: What''s that...? A chest? I should probably open it...'
 --- !u!114 &-258054205978394826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fde896d73129204bb3f6ead6171bfee, type: 3}
   m_Name: SubtitleClip(Clone)(Clone)
   m_EditorClassIdentifier: 
-  subtitleText: What is this place..?
+  subtitleText: 'Ben: What is this place..?'
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
