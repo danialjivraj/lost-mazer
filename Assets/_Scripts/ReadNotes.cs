@@ -48,7 +48,6 @@ public class ReadNotes : MonoBehaviour
         GameStateData loadedData = SaveLoadManager.LoadGame();
         if (loadedData != null && loadedData.isReadingNoteActive && loadedData.activeNoteId == this.noteId)
         {
-            // Restore the note reading state
             OpenNote();
             if (loadedData.isReadableViewActive)
             {
@@ -63,6 +62,9 @@ public class ReadNotes : MonoBehaviour
         if (playerController != null)
         {
             playerController.enabled = false;
+
+            playerController.StopAllMovementAudio();
+
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -117,7 +119,6 @@ public class ReadNotes : MonoBehaviour
 
         if (playerController != null)
         {
-            playerController.StopFootsteps();
             StartCoroutine(DisablePlayerControllerNextFrame()); // this prevents the player from getting into the default position when reloading on an active note
         }
         

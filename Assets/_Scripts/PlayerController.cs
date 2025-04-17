@@ -367,6 +367,19 @@ public class PlayerController : MonoBehaviour
         isFootstepCoroutineRunning = false;
     }
 
+    public void StopAllMovementAudio()
+    {
+        StopFootsteps();
+
+        wasRunning = false;
+
+        if (breathingFastSource != null && breathingFastSource.isPlaying)
+            breathingFastSource.Stop();
+
+        if (breathingSlowSource != null && breathingSlowSource.isPlaying)
+            breathingSlowSource.Stop();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Wood"))
