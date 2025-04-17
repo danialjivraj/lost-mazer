@@ -35,6 +35,7 @@
 
 - **Pumpkin Icon:** [Pumpkin Icon (Flaticon)](https://www.flaticon.com/free-icon/pumpkin_685849?term=pumpkin+head&page=1&position=18&origin=search&related_id=685849) by [Good Ware](https://www.flaticon.com/authors/good-ware)
 - **Locker Icon:** [Locker Icon (Flaticon)](https://www.flaticon.com/free-icon/storage_3967533?term=locker&page=1&position=43&origin=search&related_id=3967533) by [Flat Icons](https://www.flaticon.com/authors/flat-icons)
+- **Chest Icon:** [Chest Icon (Flaticon)](https://www.flaticon.com/free-icon/treasure_1355958?term=chest&page=1&position=27&origin=tag&related_id=1355958) by [Flat Icons](https://www.flaticon.com/authors/smashicons)
 - **Borders Image:**
   - [Border Image 1 (Vecteezy)](https://www.vecteezy.com/png/51045274-halloween-circle-border-transparent) by [graxo](https://www.vecteezy.com/members/graxo)
   - [Border Image 2 (Vecteezy)](https://www.vecteezy.com/png/51045270-halloween-border-copy-space-area) by [graxo](https://www.vecteezy.com/members/graxo)
@@ -64,6 +65,12 @@
 - **Trigger Sound:** [Halloween Impact 05 (Pixabay)](https://pixabay.com/sound-effects/halloween-impact-05-93808/) by [Charlie_Raven](https://pixabay.com/users/charlie_raven-26171802/)
 - **Sliding Wall Sound:** [Sliding Wall (Pixabay)](https://pixabay.com/sound-effects/push-stone-statue-1-188171/) by [floraphonic](https://pixabay.com/users/floraphonic-38928062/)
 - **Note Parchment Paper Image:** [Parchment Paper (Vecteezy)](https://www.vecteezy.com/png/52215028-old-antique-paper-parchment) by [illacosmic](https://www.vecteezy.com/members/106392952000268293547)
+
+### Decorations
+
+- [Picture Frames (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/furniture/picture-frames-301169) by [Tatiana Gladkaya](https://assetstore.unity.com/publishers/26384)
+- [Alchemist House (Unity Asset Store)](https://assetstore.unity.com/packages/3d/environments/alchemist-house-112442) by [BK](https://assetstore.unity.com/publishers/17659)
+- [Poly Halloween (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/poly-halloween-236625) by [polyperfect](https://assetstore.unity.com/publishers/19123)
 
 ### Cutscenes
 
@@ -106,6 +113,10 @@
 - **Great Vibes:** [Great Vibes (Google Fonts)](https://fonts.google.com/specimen/Great+Vibes)
 - **Graphic Psychopathy:** [Graphic Psychopathy (DaFont)](https://www.dafont.com/graphic-psychopathy.font)
 - **Super Rugged:** [Super Rugged (DaFont)](https://www.dafont.com/super-rugged.font)
+
+## AI-Generated images
+- **Frankestein:** by [DALL-E](https://openai.com/index/dall-e-2/)
+- **Witch:** by [DALL-E](https://openai.com/index/dall-e-2/)
 
 ## Self-made Assets
 
