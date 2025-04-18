@@ -131,6 +131,10 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Player state restored from saved game.");
             }
         }
+        else
+        {
+            rotationY = transform.rotation.eulerAngles.y;
+        }
     }
 
     void Update()
