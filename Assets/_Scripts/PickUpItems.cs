@@ -18,6 +18,9 @@ public class PickUpItems : MonoBehaviour
     private bool playGlobalSound = true;
     public PickUpNotification pickUpNotification;
 
+    public bool playSubtitles = true;
+    public List<SubtitleData> subtitles;
+
     private bool inReach;
 
     void Awake()
@@ -181,8 +184,15 @@ public class PickUpItems : MonoBehaviour
         }
 
         if (pickUpNotification != null)
-        {
             pickUpNotification.ShowNotification();
+
+        if (playSubtitles && subtitles != null && subtitles.Count > 0)
+        {
+            SubtitleManager.Instance.ResetSubtitles();
+            foreach (SubtitleData subtitle in subtitles)
+            {
+                SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+            }
         }
     }
 
@@ -192,6 +202,7 @@ public class PickUpItems : MonoBehaviour
         Destroy(gameObject);
     }
 }
+
 // static manager for tracking pickup items
 public static class PickupItemManager
 {

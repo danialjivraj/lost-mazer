@@ -88,6 +88,18 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
+        if (TriggerCutscene.freezeEnemiesActive)
+        {
+            agent.isStopped = true;
+            animator.enabled = false;
+            return;
+        }
+        else
+        {
+            if (agent.isStopped) agent.isStopped = false;
+            if (!animator.enabled) animator.enabled = true;
+        }
+
         float currentSightDistance = sightDistance;
         if (playerLantern != null && playerLantern.IsLanternActive())
             currentSightDistance *= lanternSightMultiplier;

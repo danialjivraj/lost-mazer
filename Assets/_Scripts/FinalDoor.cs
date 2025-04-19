@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FinalDoor : MonoBehaviour
@@ -8,6 +10,9 @@ public class FinalDoor : MonoBehaviour
     public PickUpNotification doorNotification;
     public AudioSource lockedAudioSource;
     public AudioSource openingAudioSource;
+
+    [SerializeField] private List<SubtitleData> lockSubtitles;
+    [SerializeField] private List<SubtitleData> unlockSubtitles;
 
     private bool inReach;
     private bool isLocked = true;
@@ -22,13 +27,10 @@ public class FinalDoor : MonoBehaviour
             {
                 isLocked = false;
                 doorAnimator.SetBool("IsLocked", false);
-
                 doorAnimator.Play("FinalDoor_Unlocked", 0, data.finalDoorAnimationTime);
             }
         }
-
-        if (doorNotification != null)
-            doorNotification.ResetNotification();
+        doorNotification?.ResetNotification();
     }
 
     void Update()
@@ -43,16 +45,12 @@ public class FinalDoor : MonoBehaviour
                 if (invKey != null && invKey.activeInHierarchy)
                 {
                     UnlockDoor();
-                    if (doorNotification != null)
-                        doorNotification.ResetNotification();
+                    doorNotification?.ResetNotification();
                 }
                 else
                 {
                     PlayLockedAnimation();
-                    if (doorNotification != null)
-                    {
-                        doorNotification.ShowNotification();
-                    }
+                    doorNotification?.ShowNotification();
                 }
             }
         }
@@ -73,12 +71,9 @@ public class FinalDoor : MonoBehaviour
         if (other.CompareTag("Reach"))
         {
             inReach = false;
-            if (handUIHandler != null)
-                handUIHandler.HideHandUI();
+            handUIHandler?.HideHandUI();
         }
-
-        if (doorNotification != null)
-            doorNotification.ResetNotification();
+        doorNotification?.ResetNotification();
     }
 
     private void UnlockDoor()
@@ -86,16 +81,16 @@ public class FinalDoor : MonoBehaviour
         isLocked = false;
         doorAnimator.SetBool("IsLocked", false);
         doorAnimator.SetTrigger("Unlocked");
-
-        if (openingAudioSource != null)
-        {
-            openingAudioSource.Play();
-        }
-
-        if (handUIHandler != null)
-            handUIHandler.HideHandUI();
-
+        openingAudioSource?.Play();
+        handUIHandler?.HideHandUI();
         Debug.Log("Door is unlocked");
+
+        if (unlockSubtitles != null && unlockSubtitles.Count > 0)
+        {
+            SubtitleManager.Instance.ResetSubtitles();
+            foreach (var sub in unlockSubtitles)
+                SubtitleManager.Instance.EnqueueSubtitle(sub);
+        }
     }
 
     private void PlayLockedAnimation()
@@ -103,30 +98,27 @@ public class FinalDoor : MonoBehaviour
         if (!isLockedAnimationPlaying)
         {
             doorAnimator.SetTrigger("Locked");
-
-            if (lockedAudioSource != null)
-            {
-                lockedAudioSource.Play();
-            }
-
+            lockedAudioSource?.Play();
             isLockedAnimationPlaying = true;
-
             StartCoroutine(ResetLockedAnimationFlag());
         }
-
         Debug.Log("Door is locked");
+
+        if (lockSubtitles != null && lockSubtitles.Count > 0)
+        {
+            SubtitleManager.Instance.ResetSubtitles();
+            foreach (var sub in lockSubtitles)
+                SubtitleManager.Instance.EnqueueSubtitle(sub);
+        }
     }
 
-    private System.Collections.IEnumerator ResetLockedAnimationFlag()
+    private IEnumerator ResetLockedAnimationFlag()
     {
-        yield return new WaitForSeconds(doorAnimator.GetCurrentAnimatorStateInfo(0).length);
-
+        yield return new WaitForSeconds(
+            doorAnimator.GetCurrentAnimatorStateInfo(0).length
+        );
         isLockedAnimationPlaying = false;
     }
 
-    public bool IsLocked()
-    {
-        return isLocked;
-    }
-
+    public bool IsLocked() => isLocked;
 }

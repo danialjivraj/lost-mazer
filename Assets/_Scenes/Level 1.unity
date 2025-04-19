@@ -4903,6 +4903,8 @@ MonoBehaviour:
   pickupSound: {fileID: 90339400}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &90339400
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7163,6 +7165,8 @@ MonoBehaviour:
   pickupSound: {fileID: 175646587}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &175646587
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7589,6 +7593,8 @@ MonoBehaviour:
   pickupSound: {fileID: 181369223}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &181369223
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11399,6 +11405,8 @@ MonoBehaviour:
   pickupSound: {fileID: 241130012}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &241130012
 AudioSource:
   m_ObjectHideFlags: 0
@@ -12106,6 +12114,8 @@ MonoBehaviour:
   pickupSound: {fileID: 253362107}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!65 &253362106
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13523,6 +13533,8 @@ MonoBehaviour:
   pickupSound: {fileID: 312398363}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &312398363
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14202,6 +14214,8 @@ MonoBehaviour:
   pickupSound: {fileID: 333166341}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &333166341
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14976,6 +14990,8 @@ MonoBehaviour:
   pickupSound: {fileID: 345664275}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &345664275
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15621,6 +15637,8 @@ MonoBehaviour:
   pickupSound: {fileID: 353884994}
   soundVolume: 0.3
   pickUpNotification: {fileID: 353884993}
+  playSubtitles: 1
+  subtitles: []
 --- !u!65 &353884989
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16038,6 +16056,8 @@ MonoBehaviour:
   pickupSound: {fileID: 356048655}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &356048655
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16627,6 +16647,8 @@ MonoBehaviour:
   pickupSound: {fileID: 376234820}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &376234820
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18321,6 +18343,8 @@ MonoBehaviour:
   pickupSound: {fileID: 417073588}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &417073588
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19474,6 +19498,8 @@ MonoBehaviour:
   pickupSound: {fileID: 454902128}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &454902128
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21691,6 +21717,8 @@ MonoBehaviour:
   pickupSound: {fileID: 521895735}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &521895735
 AudioSource:
   m_ObjectHideFlags: 0
@@ -22250,6 +22278,8 @@ MonoBehaviour:
   timelineStartDelay: 0.25
   disableOtherSounds: 1
   menuSFX: {fileID: 4518631017742662309, guid: 88e2fefb72628804dbdea07043978ba4, type: 2}
+  echoesAudioSource: {fileID: 0}
+  freezeEnemiesDuringThisCutscene: 0
   hasPlayed: 0
 --- !u!65 &532198243
 BoxCollider:
@@ -24499,6 +24529,8 @@ MonoBehaviour:
   pickupSound: {fileID: 589221261}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &589221261
 AudioSource:
   m_ObjectHideFlags: 0
@@ -25276,6 +25308,8 @@ MonoBehaviour:
   pickupSound: {fileID: 609353571}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &609353571
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27828,6 +27862,8 @@ MonoBehaviour:
   pickupSound: {fileID: 668741445}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!65 &668741444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28072,6 +28108,8 @@ MonoBehaviour:
   pickupSound: {fileID: 674573154}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &674573154
 AudioSource:
   m_ObjectHideFlags: 0
@@ -29264,6 +29302,8 @@ MonoBehaviour:
   pickupSound: {fileID: 687119502}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &687119502
 AudioSource:
   m_ObjectHideFlags: 0
@@ -31185,6 +31225,8 @@ MonoBehaviour:
   pickupSound: {fileID: 738392847}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &738392847
 AudioSource:
   m_ObjectHideFlags: 0
@@ -31516,6 +31558,8 @@ MonoBehaviour:
   pickupSound: {fileID: 746667434}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &746667434
 AudioSource:
   m_ObjectHideFlags: 0
@@ -34154,6 +34198,8 @@ MonoBehaviour:
   pickupSound: {fileID: 811520969}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &811520969
 AudioSource:
   m_ObjectHideFlags: 0
@@ -35356,6 +35402,8 @@ MonoBehaviour:
   pickupSound: {fileID: 831888519}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!65 &831888518
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36909,6 +36957,8 @@ MonoBehaviour:
   pickupSound: {fileID: 859134218}
   soundVolume: 1
   pickUpNotification: {fileID: 859134217}
+  playSubtitles: 1
+  subtitles: []
 --- !u!65 &859134216
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -38894,6 +38944,8 @@ MonoBehaviour:
   pickupSound: {fileID: 910764924}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &910764924
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39222,6 +39274,8 @@ MonoBehaviour:
   pickupSound: {fileID: 913646538}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &913646538
 AudioSource:
   m_ObjectHideFlags: 0
@@ -39861,6 +39915,8 @@ MonoBehaviour:
   pickupSound: {fileID: 918323992}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &918323992
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43353,6 +43409,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1005840587}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1005840587
 AudioSource:
   m_ObjectHideFlags: 0
@@ -44839,6 +44897,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1041350257}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1041350257
 AudioSource:
   m_ObjectHideFlags: 0
@@ -45329,19 +45389,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6803169544883306252, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.34278512
+      value: 0.3427851
       objectReference: {fileID: 0}
     - target: {fileID: -6803169544883306252, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.5718294
+      value: 0.5718293
       objectReference: {fileID: 0}
     - target: {fileID: -6803169544883306252, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.3718852
+      value: -0.37188518
       objectReference: {fileID: 0}
     - target: {fileID: -6803169544883306252, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.6459188
+      value: 0.6459187
       objectReference: {fileID: 0}
     - target: {fileID: -6803169544883306252, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -46069,7 +46129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 366175167995203695, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.05304662
+      value: 0.053046625
       objectReference: {fileID: 0}
     - target: {fileID: 366175167995203695, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalRotation.y
@@ -46077,7 +46137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 366175167995203695, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0053509334
+      value: 0.005350934
       objectReference: {fileID: 0}
     - target: {fileID: 366175167995203695, guid: e46fce934644b3d44a4d0121fd0adf1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -48952,6 +49012,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1104735616}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1104735616
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50156,7 +50218,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: 'Ben: What''s that...? A chest? I should probably open it...'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -50166,7 +50228,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 0}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -51930,6 +51992,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1213005804}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!65 &1213005803
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -57039,6 +57103,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1366136619}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!114 &1366136618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57288,6 +57354,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1373446379}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1373446379
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59097,6 +59165,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1417037282}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1417037282
 AudioSource:
   m_ObjectHideFlags: 0
@@ -59915,6 +59985,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1427142131}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1427142131
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61118,6 +61190,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1452219455}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1452219455
 AudioSource:
   m_ObjectHideFlags: 0
@@ -61977,6 +62051,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1465794524}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!114 &1465794523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62688,6 +62764,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1474871370}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1474871370
 AudioSource:
   m_ObjectHideFlags: 0
@@ -63764,6 +63842,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1478641905}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1478641905
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66119,6 +66199,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1543092282}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1543092282
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66394,6 +66476,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1544215704}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!114 &1544215703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68381,7 +68465,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: It appears to be locked...
+  m_Text: It's locked!
 --- !u!222 &1575183315
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -70091,7 +70175,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1616928125}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: df5f91d5973257a498939fb814ffe5b0, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -70137,6 +70221,50 @@ PlayableDirector:
     value: {fileID: 418037650}
   - key: {fileID: 8774999820776934883, guid: df5f91d5973257a498939fb814ffe5b0, type: 2}
     value: {fileID: 925688208}
+  - key: {fileID: -2178285298230780080, guid: df5f91d5973257a498939fb814ffe5b0, type: 2}
+    value: {fileID: 1477248160}
+  - key: {fileID: -4432783014298674547, guid: df5f91d5973257a498939fb814ffe5b0, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -603859413284417583, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1477248160}
+  - key: {fileID: 8774999820776934883, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 925688208}
+  - key: {fileID: -775352332046898976, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 814370245}
+  - key: {fileID: -2367439072483353749, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1027302402}
+  - key: {fileID: 8047582525679004125, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1151357337}
+  - key: {fileID: 7548965397718673634, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 418037650}
+  - key: {fileID: -4558850804387111833, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 397284403}
+  - key: {fileID: -1693775633751741744, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 174415785}
+  - key: {fileID: 3765101434446157074, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 174415785}
+  - key: {fileID: -2825881902891511662, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1625913944}
+  - key: {fileID: 3974149782014575032, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1625913946}
+  - key: {fileID: -1295021389989676469, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1457741823}
+  - key: {fileID: -4055978035171528925, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1457741825}
+  - key: {fileID: -1850917792636038839, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1519904869}
+  - key: {fileID: -3929939995344460008, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1519904869}
+  - key: {fileID: -9090609400824729750, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1519904869}
+  - key: {fileID: 8858210510401747567, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1519904869}
+  - key: {fileID: 213722367882160579, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1519904869}
+  - key: {fileID: -1786036629092740435, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1519904869}
+  - key: {fileID: 1883942946488582546, guid: 7602dcbf48af5a946bd63c6d840fb0d9, type: 2}
+    value: {fileID: 1519904869}
   m_ExposedReferences:
     m_References:
     - 82427126c349c8748a7efe314bff16b2: {fileID: 505651413}
@@ -72200,6 +72328,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1654003678}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1654003678
 AudioSource:
   m_ObjectHideFlags: 0
@@ -75326,6 +75456,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1737521044}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1737521044
 AudioSource:
   m_ObjectHideFlags: 0
@@ -75755,6 +75887,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1749018591}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!114 &1749018590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77436,6 +77570,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1789859551}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1789859551
 AudioSource:
   m_ObjectHideFlags: 0
@@ -78769,6 +78905,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1822557192}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1822557192
 AudioSource:
   m_ObjectHideFlags: 0
@@ -79494,6 +79632,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1839337480}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1839337480
 AudioSource:
   m_ObjectHideFlags: 0
@@ -79620,7 +79760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1842266630
 RectTransform:
   m_ObjectHideFlags: 0
@@ -82138,6 +82278,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1905486173}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1905486173
 AudioSource:
   m_ObjectHideFlags: 0
@@ -83126,6 +83268,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1943817803}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1943817803
 AudioSource:
   m_ObjectHideFlags: 0
@@ -84378,6 +84522,8 @@ MonoBehaviour:
   pickupSound: {fileID: 1967746264}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &1967746264
 AudioSource:
   m_ObjectHideFlags: 0
@@ -85511,6 +85657,8 @@ MonoBehaviour:
   timelineStartDelay: 0
   disableOtherSounds: 1
   menuSFX: {fileID: 4518631017742662309, guid: 88e2fefb72628804dbdea07043978ba4, type: 2}
+  echoesAudioSource: {fileID: 1099052792}
+  freezeEnemiesDuringThisCutscene: 1
   hasPlayed: 0
 --- !u!65 &1996718568
 BoxCollider:
@@ -87728,6 +87876,8 @@ MonoBehaviour:
   pickupSound: {fileID: 2059471317}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &2059471317
 AudioSource:
   m_ObjectHideFlags: 0
@@ -88961,6 +89111,8 @@ MonoBehaviour:
   pickupSound: {fileID: 2089416887}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!82 &2089416887
 AudioSource:
   m_ObjectHideFlags: 0
@@ -91959,6 +92111,8 @@ MonoBehaviour:
   pickupSound: {fileID: 499103165206207598}
   soundVolume: 1
   pickUpNotification: {fileID: 0}
+  playSubtitles: 1
+  subtitles: []
 --- !u!65 &499103165206207597
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -93454,6 +93608,14 @@ MonoBehaviour:
   doorNotification: {fileID: 1568398453218826769}
   lockedAudioSource: {fileID: 1568398453218826770}
   openingAudioSource: {fileID: 1568398453218826771}
+  lockSubtitles:
+  - spawnDelay: 1
+    text: "Ben: The door is locked\u2026 I wonder if there\u2019s a key around here?"
+    displayTime: 3
+  unlockSubtitles:
+  - spawnDelay: 1
+    text: 'Ben: Oh!? The door unlocked!'
+    displayTime: 3
 --- !u!114 &1568398453218826769
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,6 +15,9 @@ public class TriggerCutscene : MonoBehaviour
     public bool disableOtherSounds = true;
 
     public AudioMixerGroup menuSFX;
+    public AudioSource echoesAudioSource;
+    public bool freezeEnemiesDuringThisCutscene = false;
+    public static bool freezeEnemiesActive = false;
 
     public bool hasPlayed = false;
     private bool isTimelinePlaying = false;
@@ -24,9 +27,7 @@ public class TriggerCutscene : MonoBehaviour
     void Awake()
     {
         if (string.IsNullOrEmpty(cutsceneId))
-        {
             cutsceneId = gameObject.name + "_" + transform.position.x + "_" + transform.position.y + "_" + transform.position.z;
-        }
 
         if (SaveLoadManager.SaveExists())
         {
@@ -112,7 +113,10 @@ public class TriggerCutscene : MonoBehaviour
             }
         }
 
+        if (freezeEnemiesDuringThisCutscene)
+            freezeEnemiesActive = true;
         timelineDirector.Play();
+
         isTimelinePlaying = true;
         isCutsceneActive = true;
         timelineDirector.stopped += OnTimelineStopped;
@@ -138,6 +142,9 @@ public class TriggerCutscene : MonoBehaviour
 
     private void OnTimelineStopped(PlayableDirector director)
     {
+        if (freezeEnemiesDuringThisCutscene)
+            freezeEnemiesActive = false;
+
         timelineDirector.stopped -= OnTimelineStopped;
         isCutsceneActive = false;
 
@@ -175,6 +182,12 @@ public class TriggerCutscene : MonoBehaviour
                     src.mute = false;
             }
             ambientAudioSources.Clear();
+        }
+
+        if (echoesAudioSource != null)
+        {
+            echoesAudioSource.Stop();
+            echoesAudioSource.Play();
         }
 
         var player = GameObject.FindGameObjectWithTag("Player");
