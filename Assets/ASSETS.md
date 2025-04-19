@@ -87,6 +87,10 @@
 - [Old Subway Brick PBR (FreePBR)](https://freepbr.com/product/old-subway-brick-pbr/)
 - [Yughues Free Metal Materials (Unity Asset Store)](https://assetstore.unity.com/packages/2d/textures-materials/metals/yughues-free-metal-materials-12949?srsltid=AfmBOor6qOGcIKXY1QjpE-GKdd9xq6bDt-mzoWRGOABxSEkmaz1kdT-s) by [Nobiax / Yughues](https://assetstore.unity.com/publishers/4986)
 
+### AI-Generated
+- **Frankestein:** by [DALL-E](https://openai.com/index/dall-e-2/)
+- **Witch:** by [DALL-E](https://openai.com/index/dall-e-2/)
+
 ## Models
 
 - **Arm:** [Arm Model (Google Drive)](https://drive.google.com/drive/folders/1yRuGXHGHesCBgSzls0kkWXy2yfHHCPqb) by [user1production](https://www.youtube.com/@user1productions883)
@@ -113,10 +117,6 @@
 - **Great Vibes:** [Great Vibes (Google Fonts)](https://fonts.google.com/specimen/Great+Vibes)
 - **Graphic Psychopathy:** [Graphic Psychopathy (DaFont)](https://www.dafont.com/graphic-psychopathy.font)
 - **Super Rugged:** [Super Rugged (DaFont)](https://www.dafont.com/super-rugged.font)
-
-## AI-Generated images
-- **Frankestein:** by [DALL-E](https://openai.com/index/dall-e-2/)
-- **Witch:** by [DALL-E](https://openai.com/index/dall-e-2/)
 
 ## Self-made Assets
 

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Audio;
+using System.Collections.Generic;
 
 namespace NavKeypad
 {
@@ -46,6 +47,10 @@ namespace NavKeypad
         private bool accessWasGranted = false;
         public AudioMixerGroup generalSFX;
 
+        public List<SubtitleData> successSubtitles;
+        public List<SubtitleData> failureSubtitles;
+
+
         private void Awake()
         {
             ClearInput();
@@ -56,6 +61,7 @@ namespace NavKeypad
         {
             // random password
             keypadCombo = PasswordManager.CurrentPassword;
+            Debug.Log($"[KEYPAD] Password for this keypad is: {keypadCombo}");
 
             if (SaveLoadManager.SaveExists())
             {
@@ -133,6 +139,15 @@ namespace NavKeypad
             onAccessDenied?.Invoke();
             panelMesh.material.SetVector("_EmissionColor", screenDeniedColor * screenIntensity);
             audioSource.PlayOneShot(accessDeniedSfx);
+
+            if (failureSubtitles != null && failureSubtitles.Count > 0)
+            {
+                SubtitleManager.Instance.ResetSubtitles();
+                foreach (SubtitleData subtitle in failureSubtitles)
+                {
+                    SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+                }
+            }
         }
 
         private void ClearInput()
@@ -149,6 +164,15 @@ namespace NavKeypad
             onAccessGranted?.Invoke();
             panelMesh.material.SetVector("_EmissionColor", screenGrantedColor * screenIntensity);
             audioSource.PlayOneShot(accessGrantedSfx);
+
+            if (successSubtitles != null && successSubtitles.Count > 0)
+            {
+                SubtitleManager.Instance.ResetSubtitles();
+                foreach (SubtitleData subtitle in successSubtitles)
+                {
+                    SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+                }
+            }
         }
 
         public string GetCurrentInput() 
