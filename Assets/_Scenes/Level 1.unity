@@ -6184,6 +6184,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 853412874}
+  - {fileID: 427763642}
   - {fileID: 2061350919}
   m_Father: {fileID: 1067709586}
   m_RootOrder: 1
@@ -9112,6 +9113,7 @@ MonoBehaviour:
   - spawnDelay: 0
     text: 'Ben: Jerry...? Are... are you talking now!?'
     displayTime: 3
+  isPasswordNote: 0
 --- !u!82 &227380563
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9455,6 +9457,7 @@ MonoBehaviour:
   - spawnDelay: 0
     text: "Ben: Ugh\u2026"
     displayTime: 3
+  isPasswordNote: 0
 --- !u!82 &228081418
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10913,6 +10916,92 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4413849639691412, guid: 37f241200e99b2e41a0f3e92f811ff19, type: 3}
   m_PrefabInstance: {fileID: 231509579}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &231708135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 231708136}
+  - component: {fileID: 231708138}
+  - component: {fileID: 231708137}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &231708136
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231708135}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 536235090}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.5, y: 127}
+  m_SizeDelta: {x: 549.5, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &231708137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231708135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
+    m_FontSize: 37
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 64
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: 'I found a key in a chest full of candy. I thought it was real. I thought
+    I was free.
+
+    The door led me back to the same hallway. Only this time, it
+    smelled like copper. Like something rotting. There were handprints on the wall.
+
+    This
+    place plays games. I think it enjoys watching us lose.'
+--- !u!222 &231708138
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231708135}
+  m_CullTransparentMesh: 1
 --- !u!1 &231833719
 GameObject:
   m_ObjectHideFlags: 0
@@ -15297,6 +15386,7 @@ MonoBehaviour:
   - spawnDelay: 0
     text: 'Ben: Ahh! I don''t need this right now, Jerry...'
     displayTime: 3
+  isPasswordNote: 0
 --- !u!82 &352285164
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16372,6 +16462,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1554652295}
+  - {fileID: 911076907}
   - {fileID: 1784417139}
   m_Father: {fileID: 1364929711}
   m_RootOrder: 1
@@ -17730,6 +17821,92 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 403353706}
   m_Mesh: {fileID: -2058745199679424598, guid: 30c5330f9525e8245b948c17ce9bad44, type: 3}
+--- !u!1 &403639892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 403639893}
+  - component: {fileID: 403639895}
+  - component: {fileID: 403639894}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &403639893
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403639892}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1716882002}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.5, y: 127}
+  m_SizeDelta: {x: 549.5, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &403639894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403639892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 64
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "I found it! The door at the end of the maze.\nIt's stained with blood,
+    handprints all over it. Some fresh. Some faded. Some small... Thomas\u2019s size.
+    One had a smear of green paint. He always marked his things with green.\nThe
+    key I found worked. The lock gave way with a loud click, and everything went
+    silent. Not a peaceful silence...\nI think Thomas made it through! I think I\u2019m
+    following him now.\nIf you're reading this, you're close. The maze isn't done
+    with us yet. But there's a way out. Just keep going.\nAnd don\u2019t let the
+    silence fool you. He\u2019s still out there. Waiting."
+--- !u!222 &403639895
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403639892}
+  m_CullTransparentMesh: 1
 --- !u!1001 &404256085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18616,6 +18793,89 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4529379828017846, guid: f1c87fe58dd49eb429a17003aee52129, type: 3}
   m_PrefabInstance: {fileID: 418958734}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &427763641
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 427763642}
+  - component: {fileID: 427763644}
+  - component: {fileID: 427763643}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &427763642
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427763641}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 150672278}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.5, y: 127}
+  m_SizeDelta: {x: 549.5, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &427763643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427763641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
+    m_FontSize: 37
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 64
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "Jerry\u2019s light dimmed for the first time today. I dropped him when
+    I fell running from the Red Man. I couldn\u2019t see. I just crawled.\nWhen I
+    picked him up, the glow returned, but weaker. I think this place feeds on fear.
+    On silence. On regret.\nIf Jerry goes out\u2026 I don\u2019t think I\u2019ll
+    find my way back."
+--- !u!222 &427763644
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 427763641}
+  m_CullTransparentMesh: 1
 --- !u!1 &431758920
 GameObject:
   m_ObjectHideFlags: 0
@@ -18631,7 +18891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &431758921
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18982,7 +19242,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: "13th of October, 1981\n\nJerry\u2019s light dimmed for the first time
-    today. I dropped him when I fell running from the red man. I couldn\u2019t see.
+    today. I dropped him when I fell running from the Red Man. I couldn\u2019t see.
     I just crawled.\nWhen I picked him up, the glow returned, but weaker. I think
     this place feeds on fear. On silence. On regret.\nIf Jerry goes out\u2026 I don\u2019t
     think I\u2019ll find my way back.\n\nEleanor Blackwood\n\u20145 of 6"
@@ -22500,6 +22760,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1083804449}
+  - {fileID: 231708136}
   - {fileID: 1557871511}
   m_Father: {fileID: 835283957}
   m_RootOrder: 1
@@ -29441,6 +29702,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1978588297}
+  - {fileID: 1818059818}
   - {fileID: 1798110615}
   m_Father: {fileID: 814923435}
   m_RootOrder: 1
@@ -29947,7 +30209,7 @@ GameObject:
   - component: {fileID: 703585304}
   - component: {fileID: 703585303}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Date
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29994,10 +30256,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
-    m_FontSize: 37
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 64
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -30005,11 +30267,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "10th of October, 1981\n\nIt wasn\u2019t just a maze. I see that now.\nThere
-    are markings, symbols, and old carvings beneath the brick. Faces wearing masks.
-    Offerings... pumpkins, bones, candy. All rotting.\nMaybe this was some kind of
-    ritual. A pact. Something sacred tied to Halloween. And we stumbled into it like
-    fools."
+  m_Text: 10th of October, 1981
 --- !u!222 &703585304
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -31950,6 +32208,7 @@ MonoBehaviour:
   - spawnDelay: 0
     text: 'Ben: If she ran... I need to be ready to do the same.'
     displayTime: 3
+  isPasswordNote: 0
 --- !u!82 &753744146
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36497,7 +36756,7 @@ GameObject:
   - component: {fileID: 853412876}
   - component: {fileID: 853412875}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Date
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36544,7 +36803,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
-    m_FontSize: 37
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -36555,11 +36814,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "13th of October, 1981\n\nJerry\u2019s light dimmed for the first time
-    today. I dropped him when I fell running from the red man. I couldn\u2019t see.
-    I just crawled.\nWhen I picked him up, the glow returned, but weaker. I think
-    this place feeds on fear. On silence. On regret.\nIf Jerry goes out\u2026 I don\u2019t
-    think I\u2019ll find my way back."
+  m_Text: 13th of October, 1981
 --- !u!222 &853412876
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -36802,7 +37057,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -78.7}
-  m_SizeDelta: {x: 493.12, y: 457.6}
+  m_SizeDelta: {x: 493.12, y: 479.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &856811621
 MonoBehaviour:
@@ -39055,6 +39310,91 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.48, y: -0.05, z: 1.31}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &911076906
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 911076907}
+  - component: {fileID: 911076909}
+  - component: {fileID: 911076908}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &911076907
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911076906}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 365897775}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.5, y: 127}
+  m_SizeDelta: {x: 549.5, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &911076908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911076906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
+    m_FontSize: 33
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 64
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "There\u2019s something here. I don\u2019t know if it\u2019s a person or\u2026
+    something else.\r\nI saw him standing in the hallway, completely still. Wearing
+    red. Holding a kitchen knife like it was part of him.\r\nHe didn\u2019t move.
+    He didn\u2019t speak. Just watched me.\r\nI\u2019ve started calling him the Red
+    Man. \r\nI turned and ran, and the maze twisted behind me. I know I didn\u2019t
+    come from that direction...\r\nThere are lockers\u2026 but why did he not open
+    the one I was on? Does he like the thrill?\r\n"
+--- !u!222 &911076909
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911076906}
+  m_CullTransparentMesh: 1
 --- !u!1 &912122146
 GameObject:
   m_ObjectHideFlags: 0
@@ -44553,7 +44893,7 @@ GameObject:
   - component: {fileID: 1034031733}
   - component: {fileID: 1034031732}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44571,7 +44911,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1716882002}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -48022,7 +48362,7 @@ GameObject:
   - component: {fileID: 1083804451}
   - component: {fileID: 1083804450}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Date
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48069,7 +48409,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
-    m_FontSize: 37
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -48080,17 +48420,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '6th of October, 1981
-
-
-    I found a key in a chest full of candy. I thought
-    it was real. I thought I was free.
-
-    The door led me back to the same hallway.
-    Only this time, it smelled like copper. Like something rotting. There were handprints
-    on the wall.
-
-    This place plays games. I think it enjoys watching us lose.'
+  m_Text: 6th of October, 1981
 --- !u!222 &1083804451
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -54880,7 +55210,7 @@ GameObject:
   - component: {fileID: 1291653386}
   - component: {fileID: 1291653385}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54898,7 +55228,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1741594973}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -60128,6 +60458,7 @@ MonoBehaviour:
   pickUpSound: {fileID: 1428153604}
   closeSound: {fileID: 1428153603}
   subtitles: []
+  isPasswordNote: 0
 --- !u!65 &1428153600
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -60703,6 +61034,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2433125124260682739, guid: 477741b58e5320d4f8c8f2410f39cc4b, type: 3}
   m_PrefabInstance: {fileID: 1435497398}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1438571194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1438571195}
+  - component: {fileID: 1438571197}
+  - component: {fileID: 1438571196}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1438571195
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438571194}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1741594973}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.5, y: 127}
+  m_SizeDelta: {x: 549.5, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1438571196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438571194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
+    m_FontSize: 37
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 64
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "It wasn\u2019t just a maze. I see that now.\nThere are markings, symbols,
+    and old carvings beneath the brick. Faces wearing masks. Offerings... pumpkins,
+    bones, candy. All rotting.\nMaybe this was some kind of ritual. A pact. Something
+    sacred tied to Halloween. And we stumbled into it like fools."
+--- !u!222 &1438571197
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438571194}
+  m_CullTransparentMesh: 1
 --- !u!1 &1440627127
 GameObject:
   m_ObjectHideFlags: 0
@@ -67258,7 +67671,7 @@ GameObject:
   - component: {fileID: 1554652297}
   - component: {fileID: 1554652296}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Date
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67305,7 +67718,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
-    m_FontSize: 34
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -67316,13 +67729,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "3rd of October, 1981\n\nThere\u2019s something here. I don\u2019t know
-    if it\u2019s a person or\u2026 something else.\r\nI saw him standing in the hallway,
-    completely still. Wearing red. Holding a kitchen knife like it was part of him.\r\nHe
-    didn\u2019t move. He didn\u2019t speak. Just watched me.\r\nI turned and ran,
-    and the maze twisted behind me. I know I didn\u2019t come from that direction...\r\nThere
-    are lockers\u2026 but why did he not open the one I was on? Does he like the
-    thrill?\r"
+  m_Text: 3rd of October, 1981
 --- !u!222 &1554652297
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -67449,7 +67856,7 @@ GameObject:
   - component: {fileID: 1557871513}
   - component: {fileID: 1557871512}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67467,7 +67874,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 536235090}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -69802,6 +70209,7 @@ MonoBehaviour:
   - spawnDelay: 0
     text: 'Ben: How did I end up here? I have to find out!'
     displayTime: 3
+  isPasswordNote: 0
 --- !u!82 &1606890873
 AudioSource:
   m_ObjectHideFlags: 0
@@ -72525,7 +72933,7 @@ GameObject:
   - component: {fileID: 1657770691}
   - component: {fileID: 1657770690}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Date
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72572,7 +72980,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
-    m_FontSize: 30
+    m_FontSize: 38
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -72583,14 +72991,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "15th of October, 1981\n\nI found it! The door at the end of the maze.\nIt's
-    stained with blood, handprints all over it. Some fresh. Some faded. Some small...
-    Thomas\u2019s size. One had a smear of green paint. He always marked his things
-    with green.\nThe key I found worked. The lock gave way with a loud click, and
-    everything went silent. Not a peaceful silence...\nI think Thomas made it through!
-    I think I\u2019m following him now.\nIf you're reading this, you're close. The
-    maze isn't done with us yet. But there's a way out. Just keep going.\nAnd don\u2019t
-    let the silence fool you. He\u2019s still out there. Waiting."
+  m_Text: 15th of October, 1981
 --- !u!222 &1657770691
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -74930,6 +75331,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1657770689}
+  - {fileID: 403639893}
   - {fileID: 1034031731}
   m_Father: {fileID: 668735248}
   m_RootOrder: 1
@@ -75669,6 +76071,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 703585302}
+  - {fileID: 1438571195}
   - {fileID: 1291653384}
   m_Father: {fileID: 790036672}
   m_RootOrder: 1
@@ -77165,7 +77568,7 @@ GameObject:
   - component: {fileID: 1784417141}
   - component: {fileID: 1784417140}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77183,7 +77586,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 365897775}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -77862,7 +78265,7 @@ GameObject:
   - component: {fileID: 1798110617}
   - component: {fileID: 1798110616}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77880,7 +78283,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 687161608}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -78445,6 +78848,89 @@ Transform:
   m_Father: {fileID: 286467820}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &1818059817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1818059818}
+  - component: {fileID: 1818059820}
+  - component: {fileID: 1818059819}
+  m_Layer: 5
+  m_Name: Content
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1818059818
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818059817}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 687161608}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.5, y: 127}
+  m_SizeDelta: {x: 549.5, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1818059819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818059817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 66678189b6525be48882c04e899cadbb, type: 3}
+    m_FontSize: 38
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 64
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
+    m_LineSpacing: 1
+  m_Text: "Thomas found the maze by accident. He told me he was out in the woods
+    near Ashpine Hill when he saw jack-o-lanterns glowing in the mist. Followed them.
+    That was two weeks ago.\nI waited. I prayed. But now I\u2019m here. I brought
+    Jerry with me, the old pumpkin lantern he carved when we were kids. Still works,
+    still warm.\nI\u2019ll find him. I have to."
+--- !u!222 &1818059820
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818059817}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1818075013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79853,7 +80339,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.6, y: 159.1}
+  m_AnchoredPosition: {x: -0.6, y: 172}
   m_SizeDelta: {x: 472.55, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848451005
@@ -79892,10 +80378,11 @@ MonoBehaviour:
   m_Text: "3rd of October, 1981\n\nThere\u2019s something here. I don\u2019t know
     if it\u2019s a person or\u2026 something else.\r\nI saw him standing in the hallway,
     completely still. Wearing red. Holding a kitchen knife like it was part of him.\r\nHe
-    didn\u2019t move. He didn\u2019t speak. Just watched me.\r\nI turned and ran,
-    and the maze twisted behind me. I know I didn\u2019t come from that direction...\r\nThere
-    are lockers\u2026 but why did he not open the one I was on? Does he like the
-    thrill?\r\n\nEleanor Blackwood\n\u20142 of 6"
+    didn\u2019t move. He didn\u2019t speak. Just watched me.\r\nI\u2019ve started
+    calling him the Red Man. \r\nI turned and ran, and the maze twisted behind me.
+    I know I didn\u2019t come from that direction...\r\nThere are lockers\u2026 but
+    why did he not open the one I was on? Does he like the thrill?\r\n\nEleanor Blackwood\n\u20142
+    of 6"
 --- !u!222 &1848451006
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -83722,6 +84209,7 @@ MonoBehaviour:
   - spawnDelay: 0
     text: 'Ben: ...Right?'
     displayTime: 3
+  isPasswordNote: 0
 --- !u!82 &1960557748
 AudioSource:
   m_ObjectHideFlags: 0
@@ -84865,7 +85353,7 @@ GameObject:
   - component: {fileID: 1978588299}
   - component: {fileID: 1978588298}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Date
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84923,11 +85411,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "1st of October, 1981\n\nThomas found the maze by accident. He told me
-    he was out in the woods near Ashpine Hill when he saw jack-o-lanterns glowing
-    in the mist. Followed them. That was two weeks ago.\nI waited. I prayed. But
-    now I\u2019m here. I brought Jerry with me, the old pumpkin lantern he carved
-    when we were kids. Still works, still warm.\nI\u2019ll find him. I have to."
+  m_Text: 1st of October, 1981
 --- !u!222 &1978588299
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -88146,7 +88630,7 @@ GameObject:
   - component: {fileID: 2061350921}
   - component: {fileID: 2061350920}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88164,7 +88648,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 150672278}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -90152,6 +90636,7 @@ MonoBehaviour:
   - spawnDelay: 0
     text: "Ben: I\u2019m not dying in this place."
     displayTime: 3
+  isPasswordNote: 0
 --- !u!82 &2109436747
 AudioSource:
   m_ObjectHideFlags: 0

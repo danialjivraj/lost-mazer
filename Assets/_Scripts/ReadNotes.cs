@@ -23,6 +23,7 @@ public class ReadNotes : MonoBehaviour
     private bool isReadableViewActive = false;
     public static bool IsReadingNote { get; private set; } = false;
     public List<SubtitleData> subtitles;
+    [SerializeField] private bool isPasswordNote = false;
 
     void Awake()
     {
@@ -156,11 +157,26 @@ public class ReadNotes : MonoBehaviour
         IsReadingNote = false;
 
         SubtitleManager.Instance.ResetSubtitles();
-        foreach (SubtitleData subtitle in subtitles)
+
+        if (isPasswordNote)
         {
-            SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+            int pw = PasswordManager.CurrentPassword;
+            string password = pw.ToString("D4");  
+            SubtitleData benLine = new SubtitleData {
+                spawnDelay = 0.25f,
+                text = $"Ben: {password}? Better not forget this number...",
+                displayTime = 3f,
+            };
+            SubtitleManager.Instance.EnqueueSubtitle(benLine);
         }
+
+        foreach (SubtitleData subtitle in subtitles)
+            SubtitleManager.Instance.EnqueueSubtitle(subtitle);
+
+        isReadableViewActive = false;
+        IsReadingNote = false;
     }
+
 
     public bool GetIsReadableViewActive()
     {
