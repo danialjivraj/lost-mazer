@@ -55,7 +55,7 @@ public class UseChest : MonoBehaviour
             ChestState chestState = data.chestStates.Find(c => c.chestId == chestId);
             if (chestState != null && chestState.isOpen)
             {
-                OpenChest(playSound: false, itemPickedUpStates: chestState.itemPickedUpStates, playSubtitles: false);
+                OpenChest(playSound: false, itemPickedUpStates: chestState.itemPickedUpStates, playSubtitles: false, showNotification: false);
             }
         }
     }
@@ -91,7 +91,7 @@ public class UseChest : MonoBehaviour
         }
     }
 
-    void OpenChest(bool playSound = true, List<bool> itemPickedUpStates = null, bool playSubtitles = true)
+    void OpenChest(bool playSound = true, List<bool> itemPickedUpStates = null, bool playSubtitles = true, bool showNotification = true)
     {
         if (playSound)
         {
@@ -133,7 +133,7 @@ public class UseChest : MonoBehaviour
 
         isChestOpen = true;
 
-        if (pickUpNotification != null)
+        if (showNotification && pickUpNotification != null)
             pickUpNotification.ShowNotification();
 
         if (playSubtitles && subtitles != null && subtitles.Count > 0)
@@ -144,20 +144,6 @@ public class UseChest : MonoBehaviour
                 SubtitleManager.Instance.EnqueueSubtitle(subtitle);
             }
         }
-    }
-
-
-    void SaveChestState()
-    {
-        GameStateData data = SaveLoadManager.LoadGame() ?? new GameStateData();
-        ChestState chestState = data.chestStates.Find(c => c.chestId == chestId);
-        if (chestState == null)
-        {
-            chestState = new ChestState { chestId = chestId };
-            data.chestStates.Add(chestState);
-        }
-        chestState.isOpen = isChestOpen;
-        SaveLoadManager.SaveGame(data);
     }
 
     public bool GetChestState()
