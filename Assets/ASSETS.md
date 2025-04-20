@@ -4,7 +4,9 @@
 
 ### MainMenu
 
-- **Keyboard Keys Image:** [Keyboard Keys (Flaticon)](https://www.flaticon.com/packs/keyboard-keys-9?utm_source=chatgpt.com)
+- **Keyboard Keys Image:** 
+  - [Keyboard Keys (Flaticon)](https://www.flaticon.com/packs/keyboard-keys-9?utm_source=chatgpt.com)
+  - [Spacebar Key (Uxwing)](https://uxwing.com/space-button-icon/)
 - **Button Click Sound:** [Button Click](https://pixabay.com/sound-effects/menu-select-button-182476/) by [VoiceBosch](https://pixabay.com/sound-effects/menu-select-button-182476/)
 
 ### Gameplay
