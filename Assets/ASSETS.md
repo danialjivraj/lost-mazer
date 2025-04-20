@@ -13,7 +13,6 @@
 
 - **HandUI Image:** [HandUI (Google Drive)](https://drive.google.com/drive/folders/1Yekgbp8GlIO0o3Lc6LIHLwZBg0GguEVe) by [user1production](https://www.youtube.com/@user1productions883)
 - **Blood Overlay Image:**
-  - [Blood Overlay](https://pngtree.com/freepng/blood-border-red_7523282.html) by [XMMche](https://pngtree.com/xmmche_28953590?type=1)
   - [Blood Overlay (DeviantArt)](https://www.deviantart.com/7he1ndigo/art/Blood-Vignette-704205045) by [7he1ndigo](https://www.deviantart.com/7he1ndigo/gallery)
 - **Footsteps Sound:** [Footsteps (Pixabay)](https://pixabay.com/sound-effects/walking-on-a-wooden-floor-14743/) by [ralph.whitehead](https://pixabay.com/users/freesound_community-46691455/)
 - **Jump Sound:**

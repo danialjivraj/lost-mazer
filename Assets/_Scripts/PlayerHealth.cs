@@ -14,13 +14,15 @@ public class PlayerHealth : MonoBehaviour
     
     public AudioClip[] gruntClips;
     private AudioSource audioSource;
-
     public AudioMixerGroup playerSFXGroup;
 
+    public AudioSource heartbeatSource;
     public GameObject bloodOverlayCanvas;
     public float bloodFadeInTime = 0.5f;
     public float bloodDisplayDuration = 2f;
     public float bloodFadeOutTime = 0.5f;
+
+    private Coroutine bloodCoroutine;
 
     private void Start()
     {
@@ -33,47 +35,41 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        
+
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
-        {
             audioSource = gameObject.AddComponent<AudioSource>();
-        }
-        
+
         if (playerSFXGroup != null)
-        {
             audioSource.outputAudioMixerGroup = playerSFXGroup;
-        }
-        
-        if(bloodOverlayCanvas != null)
-        {
+
+        if (bloodOverlayCanvas != null)
             bloodOverlayCanvas.SetActive(false);
-        }
     }
 
     public void TakeDamage(int damage)
     {
         if (TriggerCutscene.isCutsceneActive)
-        {
             return;
-        }
 
         currentHealth -= damage;
         Debug.Log("health: " + currentHealth);
-        
+
         PlayGruntSound();
-        
-        if(bloodOverlayCanvas != null)
+        PlayHeartbeat();
+
+        if (bloodOverlayCanvas != null)
         {
-            StartCoroutine(ShowBloodOverlay());
+            if (bloodCoroutine != null)
+                StopCoroutine(bloodCoroutine);
+
+            bloodCoroutine = StartCoroutine(ShowBloodOverlay());
         }
-        
+
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
-    
+
     private void PlayGruntSound()
     {
         if (gruntClips != null && gruntClips.Length > 0)
@@ -83,22 +79,31 @@ public class PlayerHealth : MonoBehaviour
             audioSource.PlayOneShot(clipToPlay);
         }
     }
-    
+
+    private void PlayHeartbeat()
+    {
+        if (heartbeatSource == null)
+            return;
+
+        if (heartbeatSource.isPlaying)
+            heartbeatSource.Stop();
+
+        heartbeatSource.Play();
+    }
+
     private IEnumerator ShowBloodOverlay()
     {
         bloodOverlayCanvas.SetActive(true);
 
         CanvasGroup canvasGroup = bloodOverlayCanvas.GetComponent<CanvasGroup>();
         if (canvasGroup == null)
-        {
             canvasGroup = bloodOverlayCanvas.AddComponent<CanvasGroup>();
-        }
-        
+
         canvasGroup.alpha = 0f;
 
         // fades in
         float timer = 0f;
-        while(timer < bloodFadeInTime)
+        while (timer < bloodFadeInTime)
         {
             timer += Time.deltaTime;
             canvasGroup.alpha = Mathf.Lerp(0f, 1f, timer / bloodFadeInTime);
@@ -111,7 +116,7 @@ public class PlayerHealth : MonoBehaviour
 
         // fades out
         timer = 0f;
-        while(timer < bloodFadeOutTime)
+        while (timer < bloodFadeOutTime)
         {
             timer += Time.deltaTime;
             canvasGroup.alpha = Mathf.Lerp(1f, 0f, timer / bloodFadeOutTime);
@@ -120,6 +125,7 @@ public class PlayerHealth : MonoBehaviour
         canvasGroup.alpha = 0f;
 
         bloodOverlayCanvas.SetActive(false);
+        bloodCoroutine = null;
     }
 
     private void Die()

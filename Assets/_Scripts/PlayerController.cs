@@ -289,7 +289,7 @@ public class PlayerController : MonoBehaviour
             }
             if (breathingFastSource != null && !breathingFastSource.isPlaying)
             {
-                breathingFastSource.volume = 1f;
+                breathingFastSource.volume = 0.5f;
                 breathingFastSource.Play();
             }
         }
@@ -301,7 +301,7 @@ public class PlayerController : MonoBehaviour
             }
             if (breathingSlowSource != null && !breathingSlowSource.isPlaying)
             {
-                breathingSlowSource.volume = 1f;
+                breathingSlowSource.volume = 0.5f;
                 breathingSlowSource.Play();
             }
         }
