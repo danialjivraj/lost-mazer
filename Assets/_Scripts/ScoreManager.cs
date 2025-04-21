@@ -46,16 +46,13 @@ public class ScoreManager : MonoBehaviour
     private IEnumerator UploadTop10Routine(int level)
     {
         List<RemoteHighScoreManager.HighScoreRow> rows = null;
-
-        // fetch existing
         yield return StartCoroutine(
-          RemoteHighScoreManager.Instance.GetHighScores(
-            playerId, level,
-            list => rows = list
-          )
+            RemoteHighScoreManager.Instance.GetHighScores(
+                playerId, level,
+                list => rows = list
+            )
         );
 
-        // sort
         rows.Sort((a,b) => b.score.CompareTo(a.score));
 
         bool qualifies = rows.Count < 10 || score > rows[rows.Count - 1].score;
@@ -65,45 +62,38 @@ public class ScoreManager : MonoBehaviour
             yield break;
         }
 
-        Debug.Log($"Score {score} qualifies for top‑10 on level {level}. Uploading…");
+        Debug.Log($"Score {score} qualifies for top‑10 on level {level}.");
 
-        // post new
+        if (rows.Count >= 10)
+        {
+            string toDelete = rows[rows.Count - 1].objectId;
+            bool delOk = false;
+            yield return StartCoroutine(
+                RemoteHighScoreManager.Instance.DeleteHighScore(
+                    toDelete, ok => delOk = ok
+                )
+            );
+            if (delOk)
+                Debug.Log($"Deleted old low‐score row {toDelete}.");
+            else
+                Debug.LogError($"Failed to delete old low‐score row {toDelete}.");
+        }
+
         var newRow = new RemoteHighScoreManager.HighScoreRow {
-          playerId = playerId,
-          level = level,
-          score = score
+            playerId = playerId,
+            level = level,
+            score = score
         };
 
         bool postOk = false;
         yield return StartCoroutine(
-          RemoteHighScoreManager.Instance.PostHighScore(
-            newRow, ok => postOk = ok
-          )
+            RemoteHighScoreManager.Instance.PostHighScore(
+                newRow, ok => postOk = ok
+            )
         );
-        if (!postOk)
-        {
+        if (postOk)
+            Debug.Log("Posted new high score successfully.");
+        else
             Debug.LogError("Failed to POST new high score.");
-            yield break;
-        }
-
-        // re‑fetch, delete 11th if it exists
-        yield return StartCoroutine(
-          RemoteHighScoreManager.Instance.GetHighScores(
-            playerId, level,
-            list => rows = list
-          )
-        );
-        rows.Sort((a,b) => b.score.CompareTo(a.score));
-        if (rows.Count > 10)
-        {
-            string deleteId = rows[10].objectId;
-            bool delOk = false;
-            yield return StartCoroutine(
-              RemoteHighScoreManager.Instance.DeleteHighScore(
-                deleteId, ok => delOk = ok
-              )
-            );
-            if (delOk) Debug.Log("Trimmed bottom‑score row off of the cloud.");
-        }
     }
 }
