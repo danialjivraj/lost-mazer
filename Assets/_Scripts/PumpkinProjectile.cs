@@ -16,17 +16,19 @@ public class PumpkinProjectile : MonoBehaviourPun
     void OnCollisionEnter(Collision col)
     {
         if (!photonView.IsMine || hasHit) return;
-        if (MultiplayerScoreManager.Instance != null &&
-            MultiplayerScoreManager.Instance.IsRoundOver)
-            return;
+        if (MultiplayerScoreManager.Instance.IsRoundOver) return;
 
         hasHit = true;
-        var targetPv = col.collider.GetComponent<PhotonView>();
+
+        var targetPv = col.collider.GetComponent<PhotonView>()
+                    ?? col.collider.GetComponentInParent<PhotonView>();
+
         if (targetPv != null &&
             targetPv.OwnerActorNr != photonView.OwnerActorNr)
         {
             targetPv.RPC("TakeDamage", targetPv.Owner, damage);
         }
+
         PhotonNetwork.Destroy(gameObject);
     }
 }

@@ -16,6 +16,10 @@ public class MultiPlayerController : MonoBehaviourPun
     public float spinTorque = 5f;
     public float throwCooldown = 1f;
 
+    public Material eyeMaterial;      
+    Transform eyeTransform;     
+    Renderer eyeRenderer;
+
     CharacterController cc;
     Vector3 moveDir = Vector3.zero;
     float rotX, rotY;
@@ -25,18 +29,37 @@ public class MultiPlayerController : MonoBehaviourPun
     void Awake()
     {
         cc = GetComponent<CharacterController>();
-        if (!photonView.IsMine && playerCam) Destroy(playerCam.gameObject);
+
+        eyeTransform = transform.Find("Eye");
+        if (eyeTransform != null)
+            eyeRenderer  = eyeTransform.GetComponent<Renderer>();
+
+        if (!photonView.IsMine && playerCam) 
+            Destroy(playerCam.gameObject);
+
+        if (photonView.IsMine && eyeTransform != null)
+            eyeTransform.gameObject.SetActive(false);
     }
 
     void Start()
     {
         object raw;
-        photonView.InstantiationData?.Length.ToString();
         photonView.Owner.CustomProperties.TryGetValue("Team", out raw);
         int team = raw != null ? (int)raw : 0;
         Color c = team == 0 ? Color.blue : Color.red;
+
         foreach (var r in GetComponentsInChildren<Renderer>())
+        {
+            if (r == eyeRenderer) 
+                continue;
             r.material.color = c;
+        }
+
+        if (eyeRenderer != null)
+        {
+            eyeRenderer.material = eyeMaterial;
+        }
+
         if (photonView.IsMine)
         {
             Cursor.lockState = CursorLockMode.Locked;
