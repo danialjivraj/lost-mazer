@@ -7,13 +7,17 @@ using UnityEngine.SceneManagement;
 public class MultiplayerPauseMenu : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject pauseCanvas;
+    [SerializeField] private GameObject audioSettingsMenu;
+    [SerializeField] private GameObject buttonsContainer;
+
     [SerializeField] private AudioSource buttonSound;
 
-    private bool isPaused = false;
+    bool isPaused = false;
 
     void Start()
     {
         pauseCanvas.SetActive(false);
+        audioSettingsMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -21,7 +25,19 @@ public class MultiplayerPauseMenu : MonoBehaviourPunCallbacks
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            TogglePause();
+        {
+            if (isPaused)
+            {
+                if (audioSettingsMenu.activeSelf)
+                    CloseAudioSettings();
+                else
+                    TogglePause();
+            }
+            else
+            {
+                TogglePause();
+            }
+        }
     }
 
     private void TogglePause()
@@ -29,12 +45,17 @@ public class MultiplayerPauseMenu : MonoBehaviourPunCallbacks
         isPaused = !isPaused;
         pauseCanvas.SetActive(isPaused);
 
+        // audio panel is closed on every pause toggle
+        audioSettingsMenu.SetActive(false);
+        buttonsContainer.SetActive(true);
+
+        // notify the local player controller
         foreach (var ctrl in FindObjectsOfType<MultiPlayerController>())
             if (ctrl.photonView.IsMine)
                 ctrl.IsPaused = isPaused;
 
-        Cursor.lockState = isPaused
-            ? CursorLockMode.None
+        Cursor.lockState = isPaused 
+            ? CursorLockMode.None 
             : CursorLockMode.Locked;
         Cursor.visible = isPaused;
 
@@ -43,10 +64,7 @@ public class MultiplayerPauseMenu : MonoBehaviourPunCallbacks
 
     public void ContinueGame()
     {
-        if (buttonSound)
-        {
-            buttonSound.Play();
-        }
+        if (buttonSound) buttonSound.Play();
         TogglePause();
     }
 
@@ -72,5 +90,19 @@ public class MultiplayerPauseMenu : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void OpenAudioSettings()
+    {
+        if (buttonSound) buttonSound.Play();
+        buttonsContainer.SetActive(false);
+        audioSettingsMenu.SetActive(true);
+    }
+
+    public void CloseAudioSettings()
+    {
+        if (buttonSound) buttonSound.Play();
+        audioSettingsMenu.SetActive(false);
+        buttonsContainer.SetActive(true);
     }
 }

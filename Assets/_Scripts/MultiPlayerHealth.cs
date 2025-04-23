@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class MultiPlayerHealth : MonoBehaviourPun
 {
@@ -9,10 +10,23 @@ public class MultiPlayerHealth : MonoBehaviourPun
     public RawImage[] hearts;
     int currentHealth;
 
+    public AudioClip[] gruntClips;
+    private AudioSource audioSource;
+    public AudioMixerGroup playerSFXGroup;
+
     void Awake()
     {
         currentHealth = maxHealth;
-        if (photonView.IsMine) UpdateHealthUI();
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        if (playerSFXGroup != null)
+            audioSource.outputAudioMixerGroup = playerSFXGroup;
+
+        if (photonView.IsMine)
+            UpdateHealthUI();
     }
 
     [PunRPC]
@@ -25,6 +39,9 @@ public class MultiPlayerHealth : MonoBehaviourPun
         if (!photonView.IsMine) return;
 
         currentHealth = Mathf.Max(currentHealth - amount, 0);
+
+        PlayGruntSound();
+
         UpdateHealthUI();
 
         if (currentHealth <= 0)
@@ -54,5 +71,17 @@ public class MultiPlayerHealth : MonoBehaviourPun
     {
         currentHealth = maxHealth;
         if (photonView.IsMine) UpdateHealthUI();
+    }
+
+    private void PlayGruntSound()
+    {
+        if (!photonView.IsMine) 
+            return;
+
+        if (gruntClips != null && gruntClips.Length > 0 && audioSource != null)
+        {
+            int idx = Random.Range(0, gruntClips.Length);
+            audioSource.PlayOneShot(gruntClips[idx]);
+        }
     }
 }

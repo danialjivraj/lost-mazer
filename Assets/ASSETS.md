@@ -80,6 +80,11 @@
 - **Coughing Sound:** [Coughing (Pixabay)](https://pixabay.com/sound-effects/cough-voice-12330/) by [santg](https://pixabay.com/users/santg-22443510/)
 - **Horror Suspense Soundtrack:** [Horror Suspense (YouTube)](https://www.youtube.com/watch?v=g4twzqvxHrk)
 
+### Multiplayer
+- **Snowball Throw Hit:** [Snowball Throw Hit_4 (Pixabay)](https://pixabay.com/sound-effects/snowball-throw-hit-4-278172/) by [DJARTMUSIC](https://pixabay.com/users/djartmusic-46653586/)
+- **Cartoon Throw:** [Cartoon Throw (Echosfx)](https://www.echosfx.com/free-sound-effects/cartoon-throw-sound-effect) by [Ed Thomas](https://www.echosfx.com/free-sound-effects?author=59f744335ce3509c632a0cee)
+- **Halloween Music:** [Halloween Music (Pixabay)](https://pixabay.com/music/scary-childrens-tunes-halloween-music-258272/) by [SigmaMusicArt](https://pixabay.com/users/sigmamusicart-36860929/)
+
 ### Textures Used
 
 - [Dark Wood Stain PBR (FreePBR)](https://freepbr.com/product/dark-wood-stain-pbr/)

@@ -15,29 +15,61 @@ public class GameAudioSettings : MonoBehaviour
 
     private void Start()
     {
-        masterVolumeSlider.value = PlayerPrefs.GetFloat("GameMasterVolume", 1f);
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("GameMusicVolume", 1f);
-        cutsceneVolumeSlider.value = PlayerPrefs.GetFloat("GameCutsceneVolume", 1f);
-        playerSFXVolumeSlider.value = PlayerPrefs.GetFloat("GamePlayerSFXVolume", 1f);
-        enemySFXVolumeSlider.value = PlayerPrefs.GetFloat("GameEnemySFXVolume", 1f);
-        pickupSFXVolumeSlider.value = PlayerPrefs.GetFloat("GamePickUpSFXVolume", 1f);
-        generalSFXVolumeSlider.value = PlayerPrefs.GetFloat("GameGeneralSFXVolume", 1f);
+        if (masterVolumeSlider != null)
+        {
+            float m = PlayerPrefs.GetFloat("GameMasterVolume", 1f);
+            masterVolumeSlider.value = m;
+            SetMasterVolume(m);
+            masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
+        }
 
-        SetMasterVolume(masterVolumeSlider.value);
-        SetMusicVolume(musicVolumeSlider.value);
-        SetCutsceneVolume(cutsceneVolumeSlider.value);
-        SetPlayerSFXVolume(playerSFXVolumeSlider.value);
-        SetEnemySFXVolume(enemySFXVolumeSlider.value);
-        SetPickUpSFXVolume(pickupSFXVolumeSlider.value);
-        SetGeneralSFXVolume(generalSFXVolumeSlider.value);
+        if (musicVolumeSlider != null)
+        {
+            float m = PlayerPrefs.GetFloat("GameMusicVolume", 1f);
+            musicVolumeSlider.value = m;
+            SetMusicVolume(m);
+            musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
+        }
 
-        masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
-        musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
-        cutsceneVolumeSlider.onValueChanged.AddListener(SetCutsceneVolume);
-        playerSFXVolumeSlider.onValueChanged.AddListener(SetPlayerSFXVolume);
-        enemySFXVolumeSlider.onValueChanged.AddListener(SetEnemySFXVolume);
-        pickupSFXVolumeSlider.onValueChanged.AddListener(SetPickUpSFXVolume);
-        generalSFXVolumeSlider.onValueChanged.AddListener(SetGeneralSFXVolume);
+        if (cutsceneVolumeSlider != null)
+        {
+            float c = PlayerPrefs.GetFloat("GameCutsceneVolume", 1f);
+            cutsceneVolumeSlider.value = c;
+            SetCutsceneVolume(c);
+            cutsceneVolumeSlider.onValueChanged.AddListener(SetCutsceneVolume);
+        }
+
+        if (playerSFXVolumeSlider != null)
+        {
+            float p = PlayerPrefs.GetFloat("GamePlayerSFXVolume", 1f);
+            playerSFXVolumeSlider.value = p;
+            SetPlayerSFXVolume(p);
+            playerSFXVolumeSlider.onValueChanged.AddListener(SetPlayerSFXVolume);
+        }
+
+        if (enemySFXVolumeSlider != null)
+        {
+            float e = PlayerPrefs.GetFloat("GameEnemySFXVolume", 1f);
+            enemySFXVolumeSlider.value = e;
+            SetEnemySFXVolume(e);
+            enemySFXVolumeSlider.onValueChanged.AddListener(SetEnemySFXVolume);
+        }
+
+        if (pickupSFXVolumeSlider != null)
+        {
+            float pu = PlayerPrefs.GetFloat("GamePickUpSFXVolume", 1f);
+            pickupSFXVolumeSlider.value = pu;
+            SetPickUpSFXVolume(pu);
+            pickupSFXVolumeSlider.onValueChanged.AddListener(SetPickUpSFXVolume);
+        }
+
+        if (generalSFXVolumeSlider != null)
+        {
+            float g = PlayerPrefs.GetFloat("GameGeneralSFXVolume", 1f);
+            generalSFXVolumeSlider.value = g;
+            SetGeneralSFXVolume(g);
+            generalSFXVolumeSlider.onValueChanged.AddListener(SetGeneralSFXVolume);
+        }
     }
 
     public void SetMasterVolume(float volume)
