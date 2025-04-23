@@ -1862,8 +1862,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: LOST MAZER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8b3bcd1833a406f478e125db01fc0b6d, type: 2}
-  m_sharedMaterial: {fileID: 5608202080528317625, guid: 8b3bcd1833a406f478e125db01fc0b6d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1f833f327e2776e45ae9a443f43e427f, type: 2}
+  m_sharedMaterial: {fileID: 5608202080528317625, guid: 1f833f327e2776e45ae9a443f43e427f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
