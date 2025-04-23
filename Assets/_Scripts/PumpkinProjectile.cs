@@ -6,7 +6,7 @@ public class PumpkinProjectile : MonoBehaviourPun
     public int damage = 1;
     public float lifeTime = 5f;
 
-    private bool hasHit = false;
+    bool hasHit = false;
 
     void Start()
     {
@@ -16,22 +16,17 @@ public class PumpkinProjectile : MonoBehaviourPun
     void OnCollisionEnter(Collision col)
     {
         if (!photonView.IsMine || hasHit) return;
+        if (MultiplayerScoreManager.Instance != null &&
+            MultiplayerScoreManager.Instance.IsRoundOver)
+            return;
+
         hasHit = true;
-
         var targetPv = col.collider.GetComponent<PhotonView>();
-        if (targetPv != null)
+        if (targetPv != null &&
+            targetPv.OwnerActorNr != photonView.OwnerActorNr)
         {
-            // does not damage own player
-            if (targetPv.OwnerActorNr != photonView.OwnerActorNr)
-            {
-                targetPv.RPC(
-                    "TakeDamage",
-                    targetPv.Owner, 
-                    damage
-                );
-            }
+            targetPv.RPC("TakeDamage", targetPv.Owner, damage);
         }
-
         PhotonNetwork.Destroy(gameObject);
     }
 }

@@ -8,9 +8,7 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks
 
     public void Connect()
     {
-        if (buttonSound != null) 
-            buttonSound.Play();
-
+        if (buttonSound) buttonSound.Play();
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -20,7 +18,7 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
-    public override void OnJoinRandomFailed(short returnCode, string message)
+    public override void OnJoinRandomFailed(short code, string msg)
     {
         PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 2 });
     }
