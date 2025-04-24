@@ -9,6 +9,6 @@ public class DeleteSaveOnLoad : MonoBehaviour
         yield return new WaitForEndOfFrame();
         
         SaveLoadManager.DeleteSave();
-        Debug.Log("Save file deleted after level loaded.");
+        Debug.Log("Save file deleted after level loaded");
     }
 }

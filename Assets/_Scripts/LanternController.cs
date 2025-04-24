@@ -21,19 +21,19 @@ public class LanternController : MonoBehaviour
             arm = GameObject.Find("Lantern Arm");
             if (arm == null)
             {
-                Debug.LogError("Lantern Arm NOT found in Awake!");
+                Debug.LogError("Lantern Arm NOT found in Awake");
             }
         }
 
         if (animator == null)
         {
-            Debug.LogError("Animator NOT found in Awake!");
+            Debug.LogError("Animator NOT found in Awake");
         }
 
         lockerInteractions = FindObjectsOfType<LockerInteraction>();
         if (lockerInteractions.Length == 0)
         {
-            Debug.LogError("🚨 No LockerInteraction scripts found!");
+            Debug.LogError("No LockerInteraction scripts found");
         }
     }
 
@@ -49,14 +49,12 @@ public class LanternController : MonoBehaviour
         if (lanternWarning != null)
             lanternWarning.ResetNotification();
 
-        // Attempt to load the lantern state from saved data.
         GameStateData data = SaveLoadManager.LoadGame();
         if (data != null && data.lanternState != null)
         {
             hasLantern = data.lanternState.hasLantern;
             isLanternActive = data.lanternState.isLanternActive;
             
-            // If the player has the lantern, update the visuals accordingly.
             if (hasLantern)
             {
                 if (arm != null)

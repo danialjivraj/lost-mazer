@@ -58,11 +58,11 @@ public class ScoreManager : MonoBehaviour
         bool qualifies = rows.Count < 10 || score > rows[rows.Count - 1].score;
         if (!qualifies)
         {
-            Debug.Log("Did not beat top‑10; skipping upload.");
+            Debug.Log("Did not beat top‑10, skipping it");
             yield break;
         }
 
-        Debug.Log($"Score {score} qualifies for top‑10 on level {level}.");
+        Debug.Log($"Score {score} qualifies for top‑10 on level {level}");
 
         if (rows.Count >= 10)
         {
@@ -74,9 +74,9 @@ public class ScoreManager : MonoBehaviour
                 )
             );
             if (delOk)
-                Debug.Log($"Deleted old low‐score row {toDelete}.");
+                Debug.Log($"Deleted old low‐score row {toDelete}");
             else
-                Debug.LogError($"Failed to delete old low‐score row {toDelete}.");
+                Debug.LogError($"Failed to delete old low‐score row {toDelete}");
         }
 
         var newRow = new RemoteHighScoreManager.HighScoreRow {
@@ -92,8 +92,8 @@ public class ScoreManager : MonoBehaviour
             )
         );
         if (postOk)
-            Debug.Log("Posted new high score successfully.");
+            Debug.Log("Posted new high score successfully");
         else
-            Debug.LogError("Failed to POST new high score.");
+            Debug.LogError("Failed to POST new high score");
     }
 }

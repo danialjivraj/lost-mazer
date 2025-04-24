@@ -37,10 +37,10 @@ public class MainMenuLogic : MonoBehaviour
         scoreCanvas = GameObject.Find("ScoreCanvas");
         levelCanvas = GameObject.Find("LevelCanvas");
 
-        if (!mainMenuCanvas) Debug.LogError("MainMenuCanvas not found!");
-        if (!settingsCanvas) Debug.LogError("OptionsCanvas not found!");
-        if (!scoreCanvas) Debug.LogError("ScoreCanvas not found!");
-        if (!levelCanvas) Debug.LogError("LevelCanvas not found!");
+        if (!mainMenuCanvas) Debug.LogError("MainMenuCanvas not found");
+        if (!settingsCanvas) Debug.LogError("OptionsCanvas not found");
+        if (!scoreCanvas) Debug.LogError("ScoreCanvas not found");
+        if (!levelCanvas) Debug.LogError("LevelCanvas not found");
 
         mainMenuCanvas.GetComponent<Canvas>().enabled = true;
         settingsCanvas.GetComponent<Canvas>().enabled = false;
@@ -71,7 +71,7 @@ public class MainMenuLogic : MonoBehaviour
 
         if (string.IsNullOrEmpty(sceneName))
         {
-            Debug.LogError("Scene name is empty!");
+            Debug.LogError("Scene name is empty");
             return;
         }
 
@@ -92,7 +92,7 @@ public class MainMenuLogic : MonoBehaviour
             int lvl = PlayerPrefs.GetInt("CurrentLevel", 1);
             SceneManager.LoadScene($"Level {lvl}");
         }
-        else Debug.LogError("No saved game data found!");
+        else Debug.LogError("No saved game data found");
     }
 
     public void ContinueGameNo()
@@ -118,7 +118,7 @@ public class MainMenuLogic : MonoBehaviour
                 continueGameText.text =
                     $"YOU HAVE A SAVED GAME FOR LEVEL {savedLevel}.\nDO YOU WISH TO CONTINUE?";
 
-            Debug.Log("Saved game found. ContinueGameCanvas will be used.");
+            Debug.Log("Saved game found");
             continueGameCanvas.SetActive(true);
         }
         else

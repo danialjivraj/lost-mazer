@@ -41,7 +41,7 @@ public class UseChest : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Chest open sound AudioSource is not assigned.");
+            Debug.LogWarning("Chest open sound AudioSource is not assigned");
         }
 
         LoadChestState();
@@ -101,7 +101,7 @@ public class UseChest : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Chest open sound AudioSource is not assigned or is already playing.");
+                Debug.LogWarning("Chest open sound AudioSource is not assigned or is already playing");
             }
         }
         

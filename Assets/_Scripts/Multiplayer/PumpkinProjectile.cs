@@ -28,13 +28,13 @@ public class PumpkinProjectile : MonoBehaviourPun
 
         hasHit = true;
 
-        // send damage RPC
+        // sends damage RPC
         var targetPv = col.collider.GetComponent<PhotonView>()
                      ?? col.collider.GetComponentInParent<PhotonView>();
         if (targetPv != null && targetPv.OwnerActorNr != photonView.OwnerActorNr)
             targetPv.RPC("TakeDamage", targetPv.Owner, damage);
 
-        // hide visuals & stop physics
+        // hides visuals & stop physics
         foreach (var r in GetComponentsInChildren<Renderer>()) r.enabled = false;
         foreach (var c in GetComponentsInChildren<Collider>())  c.enabled = false;
         if (TryGetComponent<Rigidbody>(out var rb)) rb.isKinematic = true;
@@ -43,7 +43,7 @@ public class PumpkinProjectile : MonoBehaviourPun
         Vector3 hitPoint = col.GetContact(0).point;
         photonView.RPC(nameof(RPC_PlayHitSound), RpcTarget.All, hitPoint);
 
-        // destroy after the hit clip finishes
+        // destroys after the hit clip finishes
         float delay = (hitSource != null && hitSource.clip != null)
                     ? hitSource.clip.length
                     : 0f;

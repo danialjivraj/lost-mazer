@@ -405,11 +405,11 @@ public class PauseMenu : MonoBehaviour
             PlayerPrefs.Save();
 
             SaveLoadManager.SaveGame(data);
-            Debug.Log("Game state saved. Returning to main menu.");
+            Debug.Log("Game state saved, returning to main menu");
         }
         else
         {
-            Debug.LogError("PlayerController or PlayerHealth not found!");
+            Debug.LogError("PlayerController or PlayerHealth not found");
         }
 
         Time.timeScale = 1f;

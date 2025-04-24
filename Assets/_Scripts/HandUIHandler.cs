@@ -17,7 +17,6 @@ public class HandUIHandler : MonoBehaviour
 
     public void ShowHandUI()
     {
-        //Debug.Log($"ShowHandUI called by {name}. Stack trace:\n{StackTraceUtility.ExtractStackTrace()}");
         if (handUI != null && !IsGamePaused())
         {
             handUI.SetActive(true);

@@ -51,7 +51,7 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
         var parent = GameObject.Find("spawnpoints");
         if (parent == null)
         {
-            Debug.LogError("MultiplayerManager: no 'spawnpoints' object found!");
+            Debug.LogError("MultiplayerManager: no 'spawnpoints' object found");
             return;
         }
         spawnPoints = parent

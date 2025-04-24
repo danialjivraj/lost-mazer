@@ -204,7 +204,7 @@ public class EnemyController : MonoBehaviour
         int chaseLayer = animator.GetLayerIndex("chasing with arm up");
         if (chaseLayer == -1)
         {
-            Debug.LogError("Missing animator layer.");
+            Debug.LogError("Missing animator layer");
             return;
         }
 
@@ -315,7 +315,7 @@ public class EnemyController : MonoBehaviour
             if (hit.collider.CompareTag("Player"))
             {
                 currentState = EnemyState.Chase;
-                Debug.Log("Player detected!");
+                Debug.Log("Player detected");
             }
         }
     }

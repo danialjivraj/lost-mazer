@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
                 isZoomed = data.isZoomed;
                 currentHeight = data.currentHeight;
 
-                Debug.Log("Player state restored from saved game.");
+                Debug.Log("Player state restored from saved game");
             }
         }
         else

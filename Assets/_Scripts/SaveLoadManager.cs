@@ -8,7 +8,7 @@ public static class SaveLoadManager
 {
     private static string saveFilePath = Application.persistentDataPath + "/savegame.json";
     
-    private static bool useEncryption = false; // for encryption, just set this to true
+    private static bool useEncryption = false; // did encryption because it looks cool, setting it to true encrypts the savegame.json
     
     private static string encryptionKey = "1234567890123456";
 
@@ -50,7 +50,7 @@ public static class SaveLoadManager
         if (File.Exists(saveFilePath))
         {
             File.Delete(saveFilePath);
-            Debug.Log("Save file deleted.");
+            Debug.Log("Save file deleted");
         }
     }
 

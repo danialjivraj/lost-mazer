@@ -65,7 +65,7 @@ public class PickUpItems : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Pickup sound AudioSource is not assigned.");
+            Debug.LogWarning("Pickup sound AudioSource is not assigned");
         }
     }
 
@@ -126,7 +126,7 @@ public class PickUpItems : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Pickup sound AudioSource is not assigned or is already playing.");
+            Debug.LogWarning("Pickup sound AudioSource is not assigned or is already playing");
         }
 
         if (handUIHandler != null)
@@ -169,7 +169,7 @@ public class PickUpItems : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("RespawnManager instance not found!");
+                Debug.LogWarning("RespawnManager instance not found");
             }
         }
         else if (destroyAfterPickup)

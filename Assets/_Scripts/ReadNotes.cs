@@ -38,7 +38,7 @@ public class ReadNotes : MonoBehaviour
         if (player != null)
             playerController = player.GetComponent<PlayerController>();
         else
-            Debug.LogError("Player GameObject is not assigned in ReadNotes!");
+            Debug.LogError("Player GameObject is not assigned in ReadNotes");
 
         if (noteUI != null) noteUI.SetActive(false);
         if (hud != null) hud.SetActive(true);

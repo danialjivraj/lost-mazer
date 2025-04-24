@@ -14,7 +14,7 @@ public class BlackScreenMenu : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No last level stored!");
+            Debug.LogError("No last level stored, you might need to start the game from the Main Menu scene");
         }
     }
 
@@ -37,7 +37,7 @@ public class BlackScreenMenu : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Next scene name not set on BlackScreenMenu!");
+            Debug.LogError("Next scene name not set on BlackScreenMenu");
         }
     }
 }

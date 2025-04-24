@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class LockerInteraction : MonoBehaviour
 {
-    // Static list of all active LockerInteraction instances.
     public static List<LockerInteraction> allLockers = new List<LockerInteraction>();
 
     public string lockerId;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+// this script is being used by Timer object but it's not active because it is no longer needed. i'll keep it here just in case I build a future level who might make use of it
 public class Timer : MonoBehaviour
 {
     public Text timerText;
