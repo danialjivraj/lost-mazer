@@ -1408,6 +1408,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodStairs (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.15124975
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.98849565
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 162.601
+      objectReference: {fileID: 0}
     - target: {fileID: 4992123654811550, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -4973,6 +4985,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodStairs (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.4066659
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.913577
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 132.009
+      objectReference: {fileID: 0}
     - target: {fileID: 4992123654811550, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -7585,6 +7609,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodStairs (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.40423623
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.9146547
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 132.313
+      objectReference: {fileID: 0}
     - target: {fileID: 4992123654811550, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -7650,6 +7686,18 @@ PrefabInstance:
     - target: {fileID: 1062605917797214, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_Name
       value: WoodStairs (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.4077914
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.9130752
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 131.868
       objectReference: {fileID: 0}
     - target: {fileID: 4992123654811550, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_RootOrder
@@ -9820,6 +9868,18 @@ PrefabInstance:
     - target: {fileID: 1062605917797214, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_Name
       value: WoodStairs (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.15676972
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.98763525
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 161.961
       objectReference: {fileID: 0}
     - target: {fileID: 4992123654811550, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_RootOrder
@@ -12389,6 +12449,18 @@ PrefabInstance:
     - target: {fileID: 1062605917797214, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_Name
       value: WoodStairs
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.2931001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.9560818
+      objectReference: {fileID: 0}
+    - target: {fileID: 4635900903727972, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 145.913
       objectReference: {fileID: 0}
     - target: {fileID: 4992123654811550, guid: e659ac473f42b244dbbecd69649dcabe, type: 3}
       propertyPath: m_RootOrder
