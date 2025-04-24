@@ -112,18 +112,20 @@ public class PlayerController : MonoBehaviour
 
         if (SaveLoadManager.SaveExists())
         {
-            GameStateData data = SaveLoadManager.LoadGame();
+            var data = SaveLoadManager.LoadGame();
             if (data != null)
             {
+                characterController.enabled = false;
+
                 transform.position = data.playerPosition;
                 transform.rotation = data.playerRotation;
 
+                characterController.enabled = true;
+
                 rotationY = data.rotationY;
                 rotationX = data.rotationX;
-
                 playerCam.transform.localRotation = data.cameraRotation;
                 playerCam.fieldOfView = data.cameraFOV;
-
                 isCrouching = data.isCrouching;
                 isZoomed = data.isZoomed;
                 currentHeight = data.currentHeight;
