@@ -67,12 +67,6 @@
 - **Sliding Wall Sound:** [Sliding Wall (Pixabay)](https://pixabay.com/sound-effects/push-stone-statue-1-188171/) by [floraphonic](https://pixabay.com/users/floraphonic-38928062/)
 - **Note Parchment Paper Image:** [Parchment Paper (Vecteezy)](https://www.vecteezy.com/png/52215028-old-antique-paper-parchment) by [illacosmic](https://www.vecteezy.com/members/106392952000268293547)
 
-### Decorations
-
-- [Picture Frames (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/furniture/picture-frames-301169) by [Tatiana Gladkaya](https://assetstore.unity.com/publishers/26384)
-- [Alchemist House (Unity Asset Store)](https://assetstore.unity.com/packages/3d/environments/alchemist-house-112442) by [BK](https://assetstore.unity.com/publishers/17659)
-- [Poly Halloween (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/poly-halloween-236625) by [polyperfect](https://assetstore.unity.com/publishers/19123)
-
 ### Cutscenes
 
 - **Blood Splatter Image:** [Blood Splatter (Free Icons PNG)](https://www.freeiconspng.com/img/44474) by Ahkâm
@@ -96,6 +90,7 @@
 ### AI-Generated
 - **Frankestein:** by [DALL-E](https://openai.com/index/dall-e-2/)
 - **Witch:** by [DALL-E](https://openai.com/index/dall-e-2/)
+- **Frog:** by [DALL-E](https://openai.com/index/dall-e-2/)
 
 ## Models
 
@@ -109,6 +104,9 @@
 - **Keypad:** [Keypad (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/electronics/keypad-free-262151) by [Navarone](https://assetstore.unity.com/publishers/73410)
 - **Rust Key:** [Rust Key (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/rust-key-167590) by [Aleksn09](https://assetstore.unity.com/publishers/39424)
 - **Bloody Door:** [Bloody Door (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/interior/tim-s-horror-assets-the-bloody-door-70847) by [Tim H.](https://assetstore.unity.com/publishers/16233)
+- **General Decoration:** [Alchemist House (Unity Asset Store)](https://assetstore.unity.com/packages/3d/environments/alchemist-house-112442) by [BK](https://assetstore.unity.com/publishers/17659)
+- **Halloween Decoration:** [Poly Halloween (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/poly-halloween-236625) by [polyperfect](https://assetstore.unity.com/publishers/19123)
+- **Picture:** [Picture Frames (Unity Asset Store)](https://assetstore.unity.com/packages/3d/props/furniture/picture-frames-301169) by [Tatiana Gladkaya](https://assetstore.unity.com/publishers/26384)
 
 ## Scripts
 
