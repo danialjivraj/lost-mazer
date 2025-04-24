@@ -25,6 +25,7 @@ public class PauseMenu : MonoBehaviour
         audioSettingsMenu.SetActive(false);
         if (crosshair != null) crosshair.SetActive(true);
         LockCursor();
+        buttonSound.ignoreListenerPause = true;
     }
 
     void Update()
@@ -135,6 +136,7 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        AudioListener.pause = true;
         buttonSound.Play();
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
@@ -190,6 +192,7 @@ public class PauseMenu : MonoBehaviour
 
     public void SaveAndGoBackToMainMenu()
     {
+        AudioListener.pause = true;
         buttonSound.Play();
 
         PlayerController playerController = FindObjectOfType<PlayerController>();

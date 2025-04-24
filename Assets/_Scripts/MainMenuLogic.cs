@@ -30,6 +30,8 @@ public class MainMenuLogic : MonoBehaviour
 
     void Start()
     {
+        AudioListener.pause = false;
+
         mainMenuCanvas = GameObject.Find("MainMenuCanvas");
         settingsCanvas = GameObject.Find("OptionsCanvas");
         scoreCanvas = GameObject.Find("ScoreCanvas");
