@@ -6943,7 +6943,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 8372015957640795540, guid: 8e416a8cbb388014f9e35495c938e1bb, type: 2}
   m_audioClip: {fileID: 8300000, guid: 07c190ca2f554854abdda43b55ee3c2d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -8923,22 +8923,22 @@ Transform:
   - {fileID: 433008947}
   - {fileID: 1958364164}
   - {fileID: 1600055863}
-  - {fileID: 1743501789}
   - {fileID: 1387297490}
   - {fileID: 1616730239}
   - {fileID: 521234968}
-  - {fileID: 1119272758}
+  - {fileID: 1743501789}
   - {fileID: 221514065}
-  - {fileID: 2013315551}
   - {fileID: 853225686}
+  - {fileID: 2013315551}
   - {fileID: 232261301}
+  - {fileID: 1119272758}
   - {fileID: 57500376}
   - {fileID: 1819381894}
-  - {fileID: 1256368162}
   - {fileID: 12166030}
   - {fileID: 2027895423}
   - {fileID: 2026636391}
   - {fileID: 1741558366}
+  - {fileID: 1256368162}
   - {fileID: 368606583}
   - {fileID: 430892470}
   - {fileID: 498978928}
