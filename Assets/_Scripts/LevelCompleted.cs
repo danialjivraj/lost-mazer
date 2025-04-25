@@ -4,15 +4,17 @@ using UnityEngine.SceneManagement;
 
 public class LevelCompleted : MonoBehaviour
 {
-    public GameObject fadeToBlack;
+    public int currentLevel = 1;
     public string nextSceneName;
     public int levelToUnlock = 2;
+    public GameObject fadeToBlack;
 
     private bool isTransitioning = false;
 
     void Start()
     {
-        if (fadeToBlack != null) fadeToBlack.SetActive(false);
+        if (fadeToBlack != null)
+            fadeToBlack.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
@@ -29,10 +31,13 @@ public class LevelCompleted : MonoBehaviour
         if (fadeToBlack != null)
             fadeToBlack.SetActive(true);
 
+        PlayerPrefs.SetInt("CurrentLevel", currentLevel);
+        PlayerPrefs.Save();
+
         ScoreManager.instance.SaveScore();
 
-        int currentLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
-        if (levelToUnlock > currentLevel)
+        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        if (levelToUnlock > unlockedLevel)
         {
             Debug.Log("Unlocked level: " + levelToUnlock);
             PlayerPrefs.SetInt("UnlockedLevel", levelToUnlock);
@@ -42,7 +47,7 @@ public class LevelCompleted : MonoBehaviour
         StartCoroutine(LoadNextScene());
     }
 
-    IEnumerator LoadNextScene()
+    private IEnumerator LoadNextScene()
     {
         yield return new WaitForSeconds(0.6f);
         SceneManager.LoadScene(nextSceneName);
