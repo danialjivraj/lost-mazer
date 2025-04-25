@@ -3047,6 +3047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextSceneName: 
+  buttonSound: {fileID: 0}
 --- !u!114 &575618580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6514,7 +6515,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 8885161299732341978, guid: 88e2fefb72628804dbdea07043978ba4, type: 2}
-  m_audioClip: {fileID: 8300000, guid: b13fbd32061dad74a975d95b759485c8, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5b2a0e38b7f01ef4981d044193936beb, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.41
   m_Pitch: 1
