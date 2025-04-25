@@ -17,25 +17,29 @@ public class LevelCompleted : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !isTransitioning)
+        if (other.CompareTag("Player"))
+            StartLevelCompletion();
+    }
+
+    public void StartLevelCompletion()
+    {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        if (fadeToBlack != null)
+            fadeToBlack.SetActive(true);
+
+        ScoreManager.instance.SaveScore();
+
+        int currentLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        if (levelToUnlock > currentLevel)
         {
-            isTransitioning = true;
-
-            if (fadeToBlack != null)
-                fadeToBlack.SetActive(true);
-
-            ScoreManager.instance.SaveScore();
-
-            int currentLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
-            if (levelToUnlock > currentLevel)
-            {
-                Debug.Log("Unlocked level: " + levelToUnlock);
-                PlayerPrefs.SetInt("UnlockedLevel", levelToUnlock);
-                PlayerPrefs.Save();
-            }
-
-            StartCoroutine(LoadNextScene());
+            Debug.Log("Unlocked level: " + levelToUnlock);
+            PlayerPrefs.SetInt("UnlockedLevel", levelToUnlock);
+            PlayerPrefs.Save();
         }
+
+        StartCoroutine(LoadNextScene());
     }
 
     IEnumerator LoadNextScene()

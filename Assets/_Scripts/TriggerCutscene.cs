@@ -23,6 +23,8 @@ public class TriggerCutscene : MonoBehaviour
     private bool isTimelinePlaying = false;
     private bool isSkipping = false;
     private List<AudioSource> ambientAudioSources = new List<AudioSource>();
+    public bool isEndCutscene = false;
+    public LevelCompleted levelCompletedScript;
 
     void Awake()
     {
@@ -54,10 +56,19 @@ public class TriggerCutscene : MonoBehaviour
 
     void Update()
     {
-        if (isCutsceneActive && isTimelinePlaying && !isSkipping && Time.timeScale > 0 && Input.GetKeyDown(KeyCode.Tab))
+        if (isCutsceneActive && isTimelinePlaying && Time.timeScale > 0 && Input.GetKeyDown(KeyCode.Tab))
         {
-            isSkipping = true;
-            StartCoroutine(SkipCutscene());
+            if (isEndCutscene && levelCompletedScript != null)
+            {
+                timelineDirector.stopped -= OnTimelineStopped;
+                timelineDirector.Stop();
+                levelCompletedScript.StartLevelCompletion();
+            }
+            else if (!isSkipping)
+            {
+                isSkipping = true;
+                StartCoroutine(SkipCutscene());
+            }
         }
     }
 

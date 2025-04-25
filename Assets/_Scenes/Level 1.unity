@@ -22847,6 +22847,8 @@ MonoBehaviour:
   echoesAudioSource: {fileID: 0}
   freezeEnemiesDuringThisCutscene: 0
   hasPlayed: 0
+  isEndCutscene: 1
+  levelCompletedScript: {fileID: 1724678365}
 --- !u!65 &532198243
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -87623,6 +87625,8 @@ MonoBehaviour:
   echoesAudioSource: {fileID: 1099052792}
   freezeEnemiesDuringThisCutscene: 1
   hasPlayed: 0
+  isEndCutscene: 0
+  levelCompletedScript: {fileID: 0}
 --- !u!65 &1996718568
 BoxCollider:
   m_ObjectHideFlags: 0
