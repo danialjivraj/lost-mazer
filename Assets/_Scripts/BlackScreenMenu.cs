@@ -4,9 +4,12 @@ using UnityEngine.SceneManagement;
 public class BlackScreenMenu : MonoBehaviour
 {
     public string nextSceneName;
+    public AudioSource buttonSound;
 
     public void Retry()
     {
+        PlayClick();
+
         string lastLevel = LevelManager.GetLastLevel();
         if (!string.IsNullOrEmpty(lastLevel))
         {
@@ -20,17 +23,20 @@ public class BlackScreenMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        PlayClick();
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 
     public void QuitGame()
     {
+        PlayClick();
         Application.Quit();
     }
 
     public void GoToNextScene()
     {
+        PlayClick();
         if (!string.IsNullOrEmpty(nextSceneName))
         {
             SceneManager.LoadScene(nextSceneName);
@@ -39,5 +45,10 @@ public class BlackScreenMenu : MonoBehaviour
         {
             Debug.LogError("Next scene name not set on BlackScreenMenu");
         }
+    }
+
+    private void PlayClick()
+    {
+        if (buttonSound != null) buttonSound.Play();
     }
 }

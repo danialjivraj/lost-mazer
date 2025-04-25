@@ -87,10 +87,10 @@
 - [Old Subway Brick PBR (FreePBR)](https://freepbr.com/product/old-subway-brick-pbr/)
 - [Yughues Free Metal Materials (Unity Asset Store)](https://assetstore.unity.com/packages/2d/textures-materials/metals/yughues-free-metal-materials-12949?srsltid=AfmBOor6qOGcIKXY1QjpE-GKdd9xq6bDt-mzoWRGOABxSEkmaz1kdT-s) by [Nobiax / Yughues](https://assetstore.unity.com/publishers/4986)
 
-### AI-Generated
-- **Frankestein:** by [DALL-E](https://openai.com/index/dall-e-2/)
-- **Witch:** by [DALL-E](https://openai.com/index/dall-e-2/)
-- **Frog:** by [DALL-E](https://openai.com/index/dall-e-2/)
+### AI-Generated Images
+- **Frankestein Portrait:** by [DALL-E](https://openai.com/index/dall-e-2/)
+- **Witch Portrait:** by [DALL-E](https://openai.com/index/dall-e-2/)
+- **Frog Portrait:** by [DALL-E](https://openai.com/index/dall-e-2/)
 
 ## Models
 

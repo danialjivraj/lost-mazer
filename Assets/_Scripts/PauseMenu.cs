@@ -71,7 +71,8 @@ public class PauseMenu : MonoBehaviour
         AudioSource[] allAudioSources = FindObjectsOfType<AudioSource>();
         foreach (AudioSource audio in allAudioSources)
         {
-            audio.Pause();
+           if (audio != buttonSound)
+               audio.Pause();
         }
 
         isPaused = true;
