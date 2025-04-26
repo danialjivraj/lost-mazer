@@ -13,9 +13,6 @@ public class PauseMenu : MonoBehaviour
     public GameObject crosshair;
     public bool isPaused;
     public MonoBehaviour player;
-
-    private bool isDragging = false;
-    private Vector3 dragOffset;
     public AudioSource buttonSound;
     public Button saveAndGoBackButton;
 
@@ -46,18 +43,6 @@ public class PauseMenu : MonoBehaviour
             else
             {
                 PauseGame();
-            }
-        }
-
-        if (isDragging && crosshair != null)
-        {
-            Vector3 mousePosition = Input.mousePosition + dragOffset;
-            crosshair.transform.position = mousePosition;
-
-            if (Vector3.Distance(crosshair.transform.position, new Vector3(Screen.width / 2, Screen.height / 2, 0)) > 100f)
-            {
-                crosshair.SetActive(false);
-                isDragging = false;
             }
         }
     }
@@ -129,7 +114,7 @@ public class PauseMenu : MonoBehaviour
             }
         }
 
-        if (crosshair != null && !isDragging)
+        if (crosshair != null)
         {
             crosshair.SetActive(true);
         }
@@ -160,19 +145,6 @@ public class PauseMenu : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-    }
-
-    public void OnCrosshairDragStart()
-    {
-        if (!isPaused) return;
-
-        isDragging = true;
-        dragOffset = crosshair.transform.position - Input.mousePosition;
-    }
-
-    public void OnCrosshairDragEnd()
-    {
-        isDragging = false;
     }
 
     public void OpenAudioSettings()
