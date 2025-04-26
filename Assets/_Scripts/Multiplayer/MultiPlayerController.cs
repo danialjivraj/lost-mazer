@@ -15,6 +15,8 @@ public class MultiPlayerController : MonoBehaviourPun
     public float throwForce = 12f;
     public float spinTorque = 5f;
     public float throwCooldown = 1f;
+    
+    [SerializeField] private GameObject crosshair;
 
     public Material eyeMaterial;      
     Transform eyeTransform;     
@@ -71,12 +73,22 @@ public class MultiPlayerController : MonoBehaviourPun
     void Update()
     {
         if (!photonView.IsMine) return;
-        if (MultiplayerScoreManager.Instance.IsRoundOver) return;
+
+        bool roundOver = MultiplayerScoreManager.Instance != null 
+                        && MultiplayerScoreManager.Instance.IsRoundOver;
+
+        if (crosshair != null)
+            crosshair.SetActive(!IsPaused && !roundOver);
+
+        if (roundOver) return;
+
         HandleMovement();
+
         if (!IsPaused)
         {
             HandleLook();
-            if (Time.time >= lastThrowTime + throwCooldown && Input.GetButtonDown("Fire1"))
+            if (Time.time >= lastThrowTime + throwCooldown && 
+                Input.GetButtonDown("Fire1"))
             {
                 ThrowPumpkin();
                 lastThrowTime = Time.time;

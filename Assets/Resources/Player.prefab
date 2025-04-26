@@ -1099,6 +1099,7 @@ MonoBehaviour:
   throwForce: 12
   spinTorque: 5
   throwCooldown: 1
+  crosshair: {fileID: 730894926036907758}
   eyeMaterial: {fileID: 2100000, guid: 4796141ce2d3b174aa7aacdd2b20ee9d, type: 2}
   IsPaused: 0
 --- !u!114 &5154029711836980990
