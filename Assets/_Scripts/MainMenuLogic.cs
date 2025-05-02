@@ -13,6 +13,7 @@ public class MainMenuLogic : MonoBehaviour
 
     public GameObject controlsCanvas;
     public GameObject audioCanvas;
+    public GameObject brightnessCanvas;
 
     public Button[] levelButtons;
     public TMP_Text scoreTextLeft;
@@ -24,6 +25,9 @@ public class MainMenuLogic : MonoBehaviour
     private GameObject settingsCanvas;
     private GameObject scoreCanvas;
     private GameObject levelCanvas;
+
+    public GameObject backgroundImage;
+    public GameObject backgroundPreview;
 
     private string playerId;
     private int selectedLevel = 1;
@@ -48,6 +52,7 @@ public class MainMenuLogic : MonoBehaviour
         levelCanvas.SetActive(false);
         controlsCanvas.SetActive(false);
         audioCanvas.SetActive(false);
+        brightnessCanvas.SetActive(false);
         continueGameCanvas.SetActive(false);
 
         playerId = PlayerIdManager.instance.GetPlayerId();
@@ -127,6 +132,12 @@ public class MainMenuLogic : MonoBehaviour
         }
     }
 
+    void ShowPreviewBackground(bool showPreview)
+    {
+        if (backgroundImage  != null) backgroundImage .SetActive(!showPreview);
+        if (backgroundPreview != null) backgroundPreview.SetActive(showPreview);
+    }
+
     public void ScoreButton()
     {
         PlayClick();
@@ -141,6 +152,8 @@ public class MainMenuLogic : MonoBehaviour
         settingsCanvas.GetComponent<Canvas>().enabled = true;
         controlsCanvas.SetActive(true);
         audioCanvas.SetActive(false);
+        brightnessCanvas.SetActive(false);
+        ShowPreviewBackground(false);
     }
 
     public void ControlsButton()
@@ -148,6 +161,8 @@ public class MainMenuLogic : MonoBehaviour
         PlayClick();
         controlsCanvas.SetActive(true);
         audioCanvas.SetActive(false);
+        brightnessCanvas.SetActive(false);
+        ShowPreviewBackground(false);
     }
 
     public void AudioButton()
@@ -155,6 +170,17 @@ public class MainMenuLogic : MonoBehaviour
         PlayClick();
         controlsCanvas.SetActive(false);
         audioCanvas.SetActive(true);
+        brightnessCanvas.SetActive(false);
+        ShowPreviewBackground(false);
+    }
+
+    public void BrightnessButton()
+    {
+        PlayClick();
+        controlsCanvas.SetActive(false);
+        audioCanvas.SetActive(false);
+        brightnessCanvas.SetActive(true);
+        ShowPreviewBackground(true);
     }
 
     public void ReturnToMainMenuButton()
@@ -165,6 +191,7 @@ public class MainMenuLogic : MonoBehaviour
         scoreCanvas.SetActive(false);
         levelCanvas.SetActive(false);
         continueGameCanvas.SetActive(false);
+        ShowPreviewBackground(false);
     }
 
     public void ExitGameButton()
