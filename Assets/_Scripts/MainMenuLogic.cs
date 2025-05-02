@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 public class MainMenuLogic : MonoBehaviour
 {
@@ -28,6 +29,8 @@ public class MainMenuLogic : MonoBehaviour
 
     public GameObject backgroundImage;
     public GameObject backgroundPreview;
+    public Button controlsTabButton;
+    public Button scoreLevel1TabButton;
 
     private string playerId;
     private int selectedLevel = 1;
@@ -143,6 +146,13 @@ public class MainMenuLogic : MonoBehaviour
         PlayClick();
         mainMenuCanvas.GetComponent<Canvas>().enabled = false;
         scoreCanvas.SetActive(true);
+
+        selectedLevel = 1;
+
+        RefreshScoreDisplay();
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(scoreLevel1TabButton.gameObject);
     }
 
     public void SettingsButton()
@@ -154,6 +164,8 @@ public class MainMenuLogic : MonoBehaviour
         audioCanvas.SetActive(false);
         brightnessCanvas.SetActive(false);
         ShowPreviewBackground(false);
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(controlsTabButton.gameObject);
     }
 
     public void ControlsButton()
