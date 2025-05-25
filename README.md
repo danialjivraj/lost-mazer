@@ -95,9 +95,9 @@ git clone https://github.com/danialjivraj/lost-mazer
 
 ### Multiplayer Setup
 
-To enable multiplayer, you'll need a [Photon](https://www.photonengine.com/) account and obtain an App ID:
+To enable multiplayer, you'll need a [Photon](https://www.photonengine.com/) account first and obtain an App ID:
 
-1. Go to [Photon Dashboard](https://dashboard.photonengine.com/). You need to log in or create an account first.
+1. Go to [Photon Dashboard](https://dashboard.photonengine.com/).
 
 2. Click `Create a New App`.
    - Application Type: `Multiplayer Game`
