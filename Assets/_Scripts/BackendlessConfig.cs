@@ -2,7 +2,7 @@ using UnityEngine.Networking;
 
 public static class BackendlessConfig
 {
-    public const string BASE_URL = "";
+    public const string BASE_URL = "https://";
     public const string APP_ID = "";
     public const string REST_API_KEY = "";
 
