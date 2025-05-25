@@ -98,7 +98,11 @@ To enable multiplayer, you'll need a Photon account and obtain an App ID:
 1. In order to see the highscores, you will need to have an account in [Backendless](https://backendless.com/).
 2. After creating and logging in, go to `Database` found on the sidebar.
 3. Add a new table by pressing the `+` icon, name the table `HighScores` and press `Create`.
-4. In the code, go to `Assets/_Scripts/BackendlessConfig.cs`, where you will see the following:
+4. With the table now created, go to `Schema` and `Table Editor`. Press `New` and create the following:
+   - Name: `playerId`, Type: `STRING`
+   - Name: `level`, Type: `INT`, Default Value: `1`
+   - Name: `score`, Type: `INT`, Default Value: `0`
+5. In the code, go to `Assets/_Scripts/BackendlessConfig.cs`, where you will see the following:
 ```
     public const string BASE_URL = "";
     public const string APP_ID = "";
