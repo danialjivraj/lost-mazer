@@ -2,7 +2,7 @@
 
 <img src="https://github.com/user-attachments/assets/32fc64a0-9a34-43f6-a22b-c7c75e1e9b2d"
      alt="Lost Mazer preview"
-     width="400"
+     width="300"
      align="right" />
 
 **Lost Mazer** is a halloween-themed 3D horror game built in Unity where players must navigate a haunted maze, uncover a chilling mystery, and escape from a terrifying stalker.
