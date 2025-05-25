@@ -1,8 +1,13 @@
 # lost-mazer
 
-**Lost Mazer** is a 3D horror game built in Unity where players must navigate a haunted maze, uncover a chilling mystery, and escape from a terrifying stalker.
+<img src="https://github.com/user-attachments/assets/32fc64a0-9a34-43f6-a22b-c7c75e1e9b2d"
+     alt="Lost Mazer preview"
+     width="400"
+     align="right" />
 
-## Story and Objective
+**Lost Mazer** is a halloween-themed 3D horror game built in Unity where players must navigate a haunted maze, uncover a chilling mystery, and escape from a terrifying stalker.
+
+### Story and Objective
 
 Step into the shadows as Ben, who wakes up trapped inside a haunted maze with no memory of how or why he got there. As he searches for a way out with his fellow *Jerry the Lantern*, notes scattered throughout the maze provide cryptic insights into the sinister nature of the place, and begin to stir disturbing memories, making Ben question everything he thought he knew.
 
