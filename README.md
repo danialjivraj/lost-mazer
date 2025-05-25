@@ -1,6 +1,6 @@
 # lost-mazer
 
-<img src="https://github.com/user-attachments/assets/32fc64a0-9a34-43f6-a22b-c7c75e1e9b2d"
+<img src="https://github.com/user-attachments/assets/49172243-597e-46f3-b035-b1cb17b44be1"
      alt="Lost Mazer preview"
      width="300"
      align="right" />
