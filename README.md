@@ -31,19 +31,25 @@ You can also save your progress during a game and reload it back to where you we
 | Bonus                             | Multi-player (PUN)<br>Ragdoll<br>Cut scenes<br>Simple audio triggers                                                   |
 
 ## Preview
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/1.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/2.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/3.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/4.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/5.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/6.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/7.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/8.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/9.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/10.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/11.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/12.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/13.png)
+<details>
+<summary>Image Previews</summary>
+
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/1.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/2.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/3.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/4.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/5.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/6.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/7.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/8.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/9.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/10.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/11.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/12.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/13.png)  
+
+</details>
+
 
 ## Controls
 - **Cutscenes**
