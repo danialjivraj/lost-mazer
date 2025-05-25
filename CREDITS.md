@@ -1,4 +1,4 @@
-# Asset Credits
+# CREDITS
 
 ## Images and Sounds
 
