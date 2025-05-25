@@ -86,22 +86,28 @@ git clone https://github.com/danialjivraj/lost-mazer
 To enable multiplayer, you'll need a Photon account and obtain an App ID:
 
 1. Go to [Photon Dashboard](https://dashboard.photonengine.com/). You need to log in or create an account first.
+
 2. Click `Create a New App`.
    - Application Type: `Multiplayer Game`
    - Photon SDK: `Realtime`
    - App Name: (Any name you like, e.g., `Lost Mazer`)
-3. Click `Create`.  
-4. Once created, you'll be given an `App ID` — copy this ID.
-5. Paste the `App ID` into the appropriate field inside the Unity project (through the [PUN Wizard](https://doc.photonengine.com/pun/current/getting-started/initial-setup) pop up or under `PhotonServerSettings` if the popup does not appear). 
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Press `Create`. You will then be given an `App ID` — copy this ID.<br>
+
+3. Paste the `App ID` into the appropriate field inside the Unity project (through the [PUN Wizard](https://doc.photonengine.com/pun/current/getting-started/initial-setup) pop up or under `PhotonServerSettings` if the popup does not appear).
 
 ### Backendless Setup
 1. In order to see the highscores, you will need to have an account in [Backendless](https://backendless.com/).
-2. After creating and logging in, go to `Database` found on the sidebar.
-3. Add a new table by pressing the `+` icon, name the table `HighScores` and press `Create`.
+
+2. After creating and logging in, you will be prompted to `Create New App`. You can select `Blank New App` and name your application to anything you want.
+
+3. Go to `Database` found on the sidebar and add a new table by pressing the `+` icon, name the table `HighScores` and press `Create`.
+
 4. With the table now created, go to `Schema` and `Table Editor`. Press `New` and create the following:
    - Name: `playerId`, Type: `STRING`
    - Name: `level`, Type: `INT`, Default Value: `1`
    - Name: `score`, Type: `INT`, Default Value: `0`
+   
 5. In the code, go to `Assets/_Scripts/BackendlessConfig.cs`, where you will see the following:
 ```
     public const string BASE_URL = "https://";
@@ -109,8 +115,7 @@ To enable multiplayer, you'll need a Photon account and obtain an App ID:
     public const string REST_API_KEY = "";
 ```
 You'll need to paste your APIs from Backendless. You can do this by going to `Manage` in the sidebar, where you will see the following:<br>
-
-*image here*
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Backendless.png)
 
 Copy the `Backendless subdomain` and paste it inside the quotes after `https://` for `BASE_URL`. <br>
 Copy the `Application ID` and paste it inside the quotes for `APP_ID`. <br>
