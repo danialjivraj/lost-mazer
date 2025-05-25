@@ -104,7 +104,7 @@ To enable multiplayer, you'll need a Photon account and obtain an App ID:
    - Name: `score`, Type: `INT`, Default Value: `0`
 5. In the code, go to `Assets/_Scripts/BackendlessConfig.cs`, where you will see the following:
 ```
-    public const string BASE_URL = "";
+    public const string BASE_URL = "https://";
     public const string APP_ID = "";
     public const string REST_API_KEY = "";
 ```
@@ -112,7 +112,7 @@ You'll need to paste your APIs from Backendless. You can do this by going to `Ma
 
 *image here*
 
-Copy the `Backendless subdomain` and paste it inside the quotes for `BASE_URL`. <br>
+Copy the `Backendless subdomain` and paste it inside the quotes after `https://` for `BASE_URL`. <br>
 Copy the `Application ID` and paste it inside the quotes for `APP_ID`. <br>
 Copy the `REST API key` and paste it inside the quotes for `REST_API_KEY`. <br>
 
