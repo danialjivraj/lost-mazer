@@ -1,5 +1,15 @@
 # CREDITS
 
+## Self-made Assets
+
+### Models
+
+- **Map 1**
+- **Map 2**
+- **Locker**
+- **Coin**
+- **Paper Note**
+
 ## Images and Sounds
 
 ### MainMenu
@@ -125,13 +135,3 @@ All enemy animations (idle, walk, chase, attack, and layered parts) were taken f
 - **Great Vibes:** [Great Vibes (Google Fonts)](https://fonts.google.com/specimen/Great+Vibes)
 - **Graphic Psychopathy:** [Graphic Psychopathy (DaFont)](https://www.dafont.com/graphic-psychopathy.font)
 - **Super Rugged:** [Super Rugged (DaFont)](https://www.dafont.com/super-rugged.font)
-
-## Self-made Assets
-
-### Models
-
-- **Map 1**
-- **Map 2**
-- **Locker**
-- **Coin**
-- **Paper Note**
