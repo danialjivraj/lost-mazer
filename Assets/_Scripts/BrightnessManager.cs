@@ -8,29 +8,26 @@ public class BrightnessManager : MonoBehaviour
 {
     public static BrightnessManager Instance { get; private set; }
     const string PREF_KEY = "BrightnessExposure";
-    Slider brightnessSlider;
 
     PostProcessVolume currentVolume;
-    ColorGrading     grading;
+    ColorGrading grading;
 
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-
-            var rootGO = transform.root.gameObject;
-            DontDestroyOnLoad(rootGO);
-
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-        else Destroy(gameObject);
+    if (Instance == null)
+    {
+        Instance = this;
+        var rootGO = transform.root.gameObject;
+        DontDestroyOnLoad(rootGO);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    else Destroy(gameObject);
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         currentVolume = FindObjectOfType<PostProcessVolume>();
-        if (currentVolume != null &&
+        if (currentVolume != null && 
             currentVolume.profile.TryGetSettings(out grading))
         {
             grading.postExposure.value =
@@ -39,24 +36,23 @@ public class BrightnessManager : MonoBehaviour
 
         if (scene.name == "MainMenu")
         {
-            var all = FindObjectsOfType<Slider>();
-            brightnessSlider = all
-              .FirstOrDefault(s => s.gameObject.name == "BrightnessSlider");
+            var slider = Resources
+                .FindObjectsOfTypeAll<Slider>()
+                .FirstOrDefault(s => s.name == "BrightnessSlider");
 
-            if (brightnessSlider == null)
+            if (slider == null)
             {
-                Debug.LogError("Could not find a Slider named 'BrightnessSlider'");
+                Debug.LogError("BrightnessSlider not found in scene");
                 return;
             }
 
-            brightnessSlider.onValueChanged.RemoveAllListeners();
+            slider.onValueChanged.RemoveAllListeners();
 
             float saved = PlayerPrefs.GetFloat(PREF_KEY, 0f);
-            brightnessSlider.minValue = -2f;
-            brightnessSlider.maxValue = +2f;
-            brightnessSlider.SetValueWithoutNotify(saved);
-
-            brightnessSlider.onValueChanged.AddListener(OnSliderChanged);
+            slider.minValue = -2f;
+            slider.maxValue = +2f;
+            slider.SetValueWithoutNotify(saved);
+            slider.onValueChanged.AddListener(OnSliderChanged);
         }
     }
 
