@@ -5,7 +5,7 @@
      width="300"
      align="right" />
 
-**Lost Mazer** is a halloween-themed 3D horror game built in Unity where players must navigate a haunted maze, uncover a chilling mystery, and escape from a terrifying stalker.
+**Lost Mazer** is a first-person halloween-themed 3D horror game built in Unity where players must navigate a haunted maze, uncover a chilling mystery, and escape from a terrifying stalker.
 
 ### Story and Objective
 
@@ -61,8 +61,8 @@ You can also save your progress during a game and reload it back to where you we
     - D: Move Right
     - Q: Peak Left
     - E: Peak Right
-    - SPACE: Jump
-    - CTRL: Crouch
+    - Space: Jump
+    - Ctrl: Crouch
     - Shift: Run
 
   - **Other:**
