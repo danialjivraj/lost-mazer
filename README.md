@@ -1,7 +1,7 @@
 # lost-mazer
 
-<img src="https://github.com/user-attachments/assets/d374b283-8f34-49c2-9672-b4090dcbbb84"
-     alt="Lost Mazer preview"
+<img src="https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/BenAndJerryCartoon.png"
+     alt="Lost Mazer Ben and Jerry Cartoon"
      width="300"
      align="right" />
 
@@ -34,19 +34,19 @@ You can also save your progress during a game and reload it back to where you we
 <details open>
 <summary>Image Previews</summary>
 
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/1.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/2.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/3.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/4.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/5.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/6.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/7.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/8.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/9.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/10.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/11.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/12.png)  
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/13.png)  
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/1.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/2.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/3.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/4.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/5.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/6.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/7.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/8.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/9.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/10.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/11.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/12.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/13.png)
 </details>
 
 ## Controls
