@@ -74,6 +74,7 @@ https://github.com/user-attachments/assets/90773ad6-bf0f-40bb-aee7-baa8cdf92d47
 <summary>Multiplayer Image Previews</summary>
 
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer1.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer2.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer3.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer4.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer5.jpg)
