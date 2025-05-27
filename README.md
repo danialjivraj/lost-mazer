@@ -32,7 +32,20 @@ You can also save your progress during a game and reload it back to where you we
 
 ## Preview
 <details open>
-<summary>Image Previews</summary>
+<summary>Gameplay Video Previews</summary>
+
+https://github.com/user-attachments/assets/e99ebb62-61b4-4bb0-b09a-5f1bd8b54e68
+
+https://github.com/user-attachments/assets/c93d9339-24f2-4c21-8c8a-68a1309e699b
+
+https://github.com/user-attachments/assets/3b9e577c-9a48-41f7-a03f-9c49bfca0c07
+
+https://github.com/user-attachments/assets/b307ab76-0fd8-44d9-bc93-d3e2469e7d2b
+
+</details>
+
+<details>
+<summary>Gameplay Image Previews</summary>
 
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/1.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/2.png)
@@ -48,6 +61,18 @@ You can also save your progress during a game and reload it back to where you we
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/11.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/12.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/13.png)
+</details>
+
+<details>
+<summary>Multiplayer Video Previews</summary>
+
+
+</details>
+
+<details>
+<summary>Multiplayer Image Previews</summary>
+
+
 </details>
 
 ## Controls
