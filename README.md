@@ -47,20 +47,21 @@ https://github.com/user-attachments/assets/b307ab76-0fd8-44d9-bc93-d3e2469e7d2b
 <details>
 <summary>Gameplay Image Previews</summary>
 
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/1.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/2.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/3.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/4.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/14.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/5.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/6.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/7.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/8.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/9.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/10.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/11.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/12.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/13.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay1.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay2.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay3.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay4.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay5.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay6.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay7.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay8.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay9.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay10.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay11.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay12.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay13.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay14.png)
+
 </details>
 
 <details open>
@@ -75,7 +76,6 @@ https://github.com/user-attachments/assets/90773ad6-bf0f-40bb-aee7-baa8cdf92d47
 
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer1.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer2.png)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer2.1.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer3.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer4.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer5.jpg)
@@ -86,6 +86,7 @@ https://github.com/user-attachments/assets/90773ad6-bf0f-40bb-aee7-baa8cdf92d47
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer10.jpg)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer11.jpg)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer12.jpg)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer13.png)
 
 </details>
 
