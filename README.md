@@ -77,13 +77,13 @@ You can also save your progress during a game and reload it back to where you we
 You can download the game by clicking one of the following links:
 
 #### For Windows
-- [Download (408.07MB)](https://www.google.com)
+- [Download (701.75MB)](https://www.mediafire.com/file/65j4vsn8cx2zaha/LostMazer-win.zip/file)
 
 #### For macOS
-- [Download (399.81MB)](https://www.google.com)
+- *Coming soon*
 
 #### For Linux
-- [Download (403.46MB)](https://www.google.com)
+- *Coming soon*
 
 ## Run the Game Locally
 Alternatively to downloading the game, you can clone the project and run it locally. <br>
