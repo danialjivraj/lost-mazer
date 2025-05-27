@@ -63,8 +63,8 @@ https://github.com/user-attachments/assets/b307ab76-0fd8-44d9-bc93-d3e2469e7d2b
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/13.png)
 </details>
 
-<details>
-<summary>Multiplayer Video Previews</summary>
+<details open>
+<summary>Multiplayer Video Preview</summary>
 
 https://github.com/user-attachments/assets/90773ad6-bf0f-40bb-aee7-baa8cdf92d47
 
