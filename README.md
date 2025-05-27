@@ -38,6 +38,7 @@ You can also save your progress during a game and reload it back to where you we
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/2.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/3.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/4.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/14.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/5.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/6.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/7.png)
