@@ -80,7 +80,7 @@ You can download the game by clicking one of the following links:
 - [Download (701.75MB)](https://www.mediafire.com/file/65j4vsn8cx2zaha/LostMazer-win.zip/file)
 
 #### For macOS
-- *Coming soon*
+- [Download (718.36MB)](https://www.mediafire.com/file/4uf57j8x5ja0dxl/LostMazer-mac.zip/file)
 
 #### For Linux
 - *Coming soon*
