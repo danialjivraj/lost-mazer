@@ -61,7 +61,6 @@ https://github.com/user-attachments/assets/b307ab76-0fd8-44d9-bc93-d3e2469e7d2b
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay12.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay13.png)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Gameplay14.png)
-
 </details>
 
 <details open>
@@ -86,7 +85,7 @@ https://github.com/user-attachments/assets/90773ad6-bf0f-40bb-aee7-baa8cdf92d47
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer10.jpg)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer11.jpg)
 ![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer12.jpg)
-![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer13.png)
+![image](https://raw.githubusercontent.com/danialjivraj/lost-mazer/main/githubPreviews/Multiplayer13.jpg)
 
 </details>
 
