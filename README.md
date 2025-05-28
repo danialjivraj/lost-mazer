@@ -5,19 +5,17 @@
      width="300"
      align="right" />
 
-**Lost Mazer** is a first-person halloween-themed 3D horror game built in Unity where players must navigate a haunted maze, uncover a chilling mystery, and escape from a terrifying stalker.
+**Lost Mazer** is a first-person Halloween-themed 3D horror game built in Unity where players must navigate a haunted maze, uncover a chilling mystery, and escape from a terrifying stalker.<br>
+The game contains a **multiplayer** minigame mode, where you can battle your friend and get points for taking them down!<br>
+Settings and levels unlocked are saved using **PlayerPrefs**, and high scores are managed through **Backendless**.<br>
+You can save your progress during a game and reload it to the same point where you left off thanks to **JSON serialization**.
 
 ### Story and Objective
+Step into the shadows as Ben, who mysteriously wakes up trapped in a haunted maze with no memory of how and why he got there.<br>
+You'll have to find a way out of the maze with your fellow *Jerry the Lantern*! Along your exploration, notes left by *someone* will be found scattered across both mazes, detailing insights and clues of the sinister place you're in, making Ben stir disturbing memories as he begins to question everything he once thought he knew.<br>
 
-Step into the shadows as Ben, who wakes up trapped inside a haunted maze with no memory of how or why he got there. As he searches for a way out with his fellow *Jerry the Lantern*, notes scattered throughout the maze provide cryptic insights into the sinister nature of the place, and begin to stir disturbing memories, making Ben question everything he thought he knew.
-
-The game features two unique maze maps. Your objective in each is to find a hidden key that unlocks the door to the next level. But it won’t be easy, as movement makes noise, and *The Red Man* is always listening!<br>
-Walk carefully, remember the route you take, and stay hidden to avoid being caught. As you progress to the next level, new challenges will test your observation and memory.
-
-The game also contains a Multiplayer minigame mode, where you can battle your friend and get points for taking them down!
-
-Progress and settings are saved using **PlayerPrefs**, and high scores are managed through **Backendless**.<br>
-You can also save your progress during a game and reload it back to where you were.
+This game features two unique maze maps. Your objective in each is to find a hidden key, that unlocks a door to proceed to the next level. This won't be easy as any sort of noise you make can alert *The Red Man*!<br>
+You'll have to walk carefully to avoid getting caught, and remember your path so you don't get lost inside the maze!
 
 ## Requirements
 | Category                          | Criteria                                                                                                               |
@@ -99,8 +97,8 @@ https://github.com/user-attachments/assets/90773ad6-bf0f-40bb-aee7-baa8cdf92d47
     - A: Move Left
     - S: Move Backwards
     - D: Move Right
-    - Q: Peak Left
-    - E: Peak Right
+    - Q: Peek Left
+    - E: Peek Right
     - Space: Jump
     - Ctrl: Crouch
     - Shift: Run
