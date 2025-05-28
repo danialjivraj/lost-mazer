@@ -11703,7 +11703,7 @@ GameObject:
   - component: {fileID: 1449931706}
   - component: {fileID: 1449931705}
   m_Layer: 0
-  m_Name: Peak
+  m_Name: Peek
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11750,7 +11750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Peak
+  m_text: Peek
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7eaedb730f1d3814ebd8b9c193a78919, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 5c1e527ad8989824fa7764ad915eedba, type: 2}
